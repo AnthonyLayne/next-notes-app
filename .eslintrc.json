@@ -1,3 +1,58 @@
 {
-  "extends": "next/core-web-vitals"
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["prettier", "@typescript-eslint"],
+  "extends": ["airbnb", "plugin:prettier/recommended", "prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "@typescript-eslint/no-explicit-any": 2,
+
+    // *** IMPORT RULES *** //
+    "import/no-default-export": "error",
+    "import/prefer-default-export": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+
+    // *** REACT RULES *** //
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+    "react/jsx-filename-extension": "off",
+
+    // *** MISC RULES *** //
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-restricted-properties": "off",
+    "no-undef": "off",
+    "no-unused-vars": "off",
+    "no-console": "error"
+  },
+  "ignorePatterns": ["node_modules", ".github", ".next", "public"],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "overrides": [
+    {
+      "files": ["*-test.js", "*.spec.js"],
+      "rules": {}
+    },
+    {
+      "files": ["pages/**/index.tsx", "pages/_document.tsx", "pages/_app.tsx"],
+      "rules": {
+        "import/no-default-export": "off",
+        "import/prefer-default-export": "error"
+      }
+    },
+    {
+      "files": ["pages/api/**/*.ts"],
+      "rules": {
+        "import/no-default-export": "off",
+        "import/prefer-default-export": "error",
+        "no-unused-vars": [
+          "error",
+          {
+            "argsIgnorePattern": "req|res"
+          }
+        ]
+      }
+    }
+  ]
 }
