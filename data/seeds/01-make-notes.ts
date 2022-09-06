@@ -3,34 +3,34 @@ import { Knex } from "knex";
 
 const notes = [
   {
-    note_id: 1,
-    user_username: "test",
-    note_title: "this is a test",
-    note_description: "it either worked or it didnt lol",
+    id: 1,
+    username: "test",
+    title: "this is a test",
+    description: "it either worked or it didnt lol",
   },
   {
-    note_id: 2,
-    user_username: "test",
-    note_title: "test note 2",
-    note_description: "this is another test note",
+    id: 2,
+    username: "test",
+    title: "test note 2",
+    description: "this is another test note",
   },
   {
-    note_id: 3,
-    user_username: "test2",
-    note_title: "test note 3",
-    note_description: "this is another note",
+    id: 3,
+    username: "test2",
+    title: "test note 3",
+    description: "this is another note",
   },
 ];
 const users = [
   {
-    user_id: 1,
-    user_username: "test",
-    user_password: "testpass",
+    id: 1,
+    username: "test",
+    password: "testpass",
   },
   {
-    user_id: 2,
-    user_username: "john",
-    user_password: "testpass2",
+    id: 2,
+    username: "john",
+    password: "testpass2",
   },
 ];
 
