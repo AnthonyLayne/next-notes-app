@@ -11,6 +11,7 @@
     "l": "next lint && yarn run l:ts && yarn run l:es-fix"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "knex": "^2.3.0",
     "next": "12.2.5",
@@ -19,6 +20,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.12",
     "@types/node": "18.7.15",
     "@types/pg": "^8.6.5",
     "@types/react": "18.0.18",
