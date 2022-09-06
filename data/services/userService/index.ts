@@ -1,4 +1,4 @@
-import db from "data/db-config";
+import { db } from "data/db-config";
 
 export const getAllUsers = () => {
   return db("users");

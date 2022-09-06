@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "l:es-fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "l:ts": "tsc",
+    "l": "next lint && yarn run l:ts && yarn run l:es-fix"
   },
   "dependencies": {
     "dotenv": "^16.0.2",
