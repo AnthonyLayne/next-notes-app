@@ -1,0 +1,15 @@
+.headerWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  background-color: rgb(215, 215, 215);
+  border-right: 1px solid var(--borderColor);
+  padding: 18px;
+}
+
+/*
+.headerWrapper > *:not(:last-child) {
+  margin-right: 20px;
+}
+*/

@@ -1,0 +1,38 @@
+.noteEditorWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 30px 30px 60px;
+  height: auto;
+}
+
+.noteEditorWrapper > form > h3 {
+  margin: 65px 0 31px 10px;
+}
+
+.noteEditorWrapper > form > input {
+  height: 52px;
+  width: 425px;
+  padding-left: 15px;
+  font-family: Raleway, Arial, Helvetica, sans-serif;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid var(--borderColor);
+  margin-bottom: 17px;
+}
+
+.noteEditorWrapper > form > textarea {
+  width: 765px;
+  padding-left: 25px;
+  padding-top: 25px;
+  font-family: Raleway, Arial, Helvetica, sans-serif;
+  border: 1px solid var(--borderColor);
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.noteEditorWrapper > form > button {
+  margin-top: 20px;
+}

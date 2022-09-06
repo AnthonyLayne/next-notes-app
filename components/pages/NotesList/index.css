@@ -1,0 +1,9 @@
+.notesListWrapper {
+  margin: 65px 20px 20px;
+  flex: 1;
+  border: 1px solid purple;
+}
+
+.notesListWrapper .header {
+  margin-bottom: 20px;
+}
