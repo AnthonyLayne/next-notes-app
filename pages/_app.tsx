@@ -1,9 +1,19 @@
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
 
+// Context
+import { NotesContextProviderComponent } from "context/notesContext";
+
+import "../styles/globals.css";
+
 function MyApp({ Component, pageProps }: AppProps) {
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return <Component {...pageProps} />;
+  return (
+    <NotesContextProviderComponent>
+      <Component
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...pageProps}
+      />
+    </NotesContextProviderComponent>
+  );
 }
 
 export default MyApp;

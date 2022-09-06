@@ -1,0 +1,54 @@
+import { createContext, ReactNode, useCallback, useMemo, useState } from "react";
+
+// Services
+import { createNote } from "services/api";
+
+// Helpers
+import { useSafeContext } from "context/useSafeContext";
+
+// Types
+import { NoteFrontend } from "services/knex/types";
+
+export type BaseNotesContext = {
+  notes: Record<string, NoteFrontend>;
+  handleCreateNote: ({ title, description }: Pick<NoteFrontend, "title" | "description">) => Promise<NoteFrontend>;
+  // editNote: ({ id, title, description }: Pick<Note, "id" | "title" | "description">) => Promise<Note>;
+  // deleteNote: (id: string) => Promise<void>;
+};
+
+const NotesContext = createContext<Maybe<BaseNotesContext>>(undefined);
+NotesContext.displayName = "NotesContext";
+
+export const useNotesContext = () => useSafeContext(NotesContext);
+
+type TProps = {
+  children: ReactNode;
+};
+
+export function NotesContextProviderComponent({ children }: TProps) {
+  const [notes, setNotes] = useState<Record<string, NoteFrontend>>({});
+
+  const handleCreateNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description">) => {
+    const createdNote = await createNote(note);
+    setNotes((prev) => ({ ...prev, [createdNote.id]: createdNote }));
+
+    return createdNote;
+  }, []);
+
+  const ctx = useMemo(
+    () => ({
+      notes,
+      handleCreateNote,
+      // editNote,
+      // deleteNote,
+    }),
+    [
+      notes,
+      handleCreateNote,
+      // editNote,
+      // deleteNote,
+    ]
+  );
+
+  return <NotesContext.Provider value={ctx}>{children}</NotesContext.Provider>;
+}
