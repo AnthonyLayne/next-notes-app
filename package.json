@@ -8,7 +8,12 @@
     "start": "next start",
     "l:es-fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "l:ts": "tsc",
-    "l": "next lint && yarn run l:ts && yarn run l:es-fix"
+    "l": "next lint && yarn run l:ts && yarn run l:es-fix",
+    "migrate": "knex migrate:latest",
+    "migrate-down": "knex migrate:down",
+    "rollback": "knex migrate:rollback",
+    "reset": "knex migrate:rollback && knex migrate:latest && knex seed:run",
+    "seed": "knex seed:run"
   },
   "dependencies": {
     "cors": "^2.8.5",

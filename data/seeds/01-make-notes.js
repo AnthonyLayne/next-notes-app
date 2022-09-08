@@ -1,6 +1,3 @@
-// eslint-disable-next-line import/no-import-module-exports
-import { Knex } from "knex";
-
 const notes = [
   {
     id: 1,
@@ -34,7 +31,7 @@ const users = [
   },
 ];
 
-exports.seed = async function seed(knex: Knex) {
+exports.seed = async function seed(knex) {
   await knex("notes").insert(notes);
   await knex("users").insert(users);
 };

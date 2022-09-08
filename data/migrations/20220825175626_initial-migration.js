@@ -1,9 +1,4 @@
-// eslint-disable-next-line import/no-import-module-exports
-import { Knex } from "knex";
-
-// TODO: Try changing how the export is handled
-
-exports.up = async function up(knex: Knex) {
+exports.up = async function up(knex) {
   await knex.schema
     .createTable("notes", (table) => {
       table.increments("id");
@@ -19,7 +14,7 @@ exports.up = async function up(knex: Knex) {
     });
 };
 
-exports.down = async function down(knex: Knex) {
+exports.down = async function down(knex) {
   await knex.schema.dropTableIfExists("users");
   await knex.schema.dropTableIfExists("notes");
 };
