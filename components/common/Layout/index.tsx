@@ -1,6 +1,9 @@
 import { ReactNode } from "react";
 
-import styles from "./index.module.css";
+// Components
+import { Header } from "components/common/Header";
+
+import styles from "./styles.module.css";
 
 export type TProps = {
   children: ReactNode;
@@ -9,7 +12,7 @@ export type TProps = {
 export function Layout({ children }: TProps) {
   return (
     <div className={styles.layout}>
-      {/* <NavBar /> */}
+      <Header />
 
       {children}
     </div>
