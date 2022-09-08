@@ -127,7 +127,7 @@ export const apiInit = async (req: NextApiRequest, res: NextApiResponse) => {
   await cors(req, res);
 
   // const { apiKey } = req.query as { apiKey?: string };
-  // TODO: Validate TOKEN OR API Key
+  // TODO: Validate TOKEN OR API key OR JWT
   // const apiKeyValid = true;
 
   return {

@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 // Services
-import { getUserById } from "services/knex";
+import { deleteUserById, getUserById } from "services/knex";
 import { apiInit, notFoundResponse, serverErrorResponse, successResponse } from "services/api/utils";
 
 // Utils
@@ -25,11 +25,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       return successResponse(res, pruneUnwantedFields(user, ["password"]), links, "Fetched user.");
     }
-    if (req.method === "POST") {
-      const users = await getUserById(id);
-      return successResponse(res, users, links, "Fetched all users.");
+    // if (req.method === "POST") {
+    //   const users = await addUser(id);
+    //   return successResponse(res, users, links, "Fetched all users.");
+    // }
+    if (req.method === "DELETE") {
+      const user = await deleteUserById(id);
+      if (!user) return notFoundResponse(res, links, `No user found for id: ${id}`);
+
+      return successResponse(res, pruneUnwantedFields, links, "Deleted user.");
     }
-    return notFoundResponse(res, links, "Only GET, POST requests available");
+    return notFoundResponse(res, links, "Only GET, POST, DELETE requests available");
   } catch (error) {
     return serverErrorResponse(res, error as Error, links);
   }
