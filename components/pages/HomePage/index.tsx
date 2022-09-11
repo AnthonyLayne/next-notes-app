@@ -6,10 +6,15 @@ import styles from "./styles.module.css";
 export const HomePage = memo(() => {
   return (
     <>
-      <Link href="/">
+      <h1>Welcome to NOTES</h1>
+      <h3>Please:</h3>
+      <Link href="/Login">
         <a className={styles.example}>Sign In</a>
       </Link>
-      <Link href="/">Sign Up</Link>
+      <h3>or</h3>
+      <Link href="/">
+        <a className={styles.example}>Sign Up</a>
+      </Link>
     </>
   );
 });

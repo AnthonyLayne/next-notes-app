@@ -16,8 +16,10 @@
     "seed": "knex seed:run"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^2.3.0",
     "next": "12.2.5",
     "pg": "^8.8.0",
