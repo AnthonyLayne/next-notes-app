@@ -24,8 +24,9 @@ export const deleteUserById = (id: string) => {
 // --------------------------------------------------------------------------------------------------------------------
 
 // ---- Notes ---------------------------------------------------------------------------------------------------------
-export const getAllNotesByUser = async (username: string) => {
+export const getAllNotesByUsername = async (username: string) => {
   const allUserNotes = await db("notes").where("username", username);
+
   return allUserNotes || null;
 };
 
@@ -33,14 +34,10 @@ export const addNote = (username: string, title: string, description: string) =>
   return db("notes").insert({ username, title, description });
 };
 
-// export const editNote = (id: string) => {
-//   const updatedNote = db("notes").where("id", id).update();
-// };
-
-// const updateById = async (id, account) => {
-//   await db("accounts").where("id", id).update(account);
-//   return getById(id);
-// };
+export const editNote = (id: string, title: string, description: string) => {
+  const updatedNote = db("notes").where("id", id).update(title, description);
+  return updatedNote;
+};
 
 export const deleteNoteById = (id: string) => {
   return db("notes").where("id", id).del();
