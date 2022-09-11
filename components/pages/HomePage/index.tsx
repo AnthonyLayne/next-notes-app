@@ -7,9 +7,9 @@ export const HomePage = memo(() => {
   return (
     <>
       <Link href="/">
-        <a className={styles.example}>Example</a>
+        <a className={styles.example}>Sign In</a>
       </Link>
-      <Link href="/">Example2</Link>
+      <Link href="/">Sign Up</Link>
     </>
   );
 });
