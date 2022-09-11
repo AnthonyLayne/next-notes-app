@@ -11,7 +11,10 @@ import { NoteFrontend } from "services/knex/types";
 
 export type BaseNotesContext = {
   notes: Record<string, NoteFrontend>;
-  handleCreateNote: ({ title, description }: Pick<NoteFrontend, "title" | "description">) => Promise<NoteFrontend>;
+  handleCreateNote: (
+    { title, description }: Pick<NoteFrontend, "title" | "description">,
+    username: string
+  ) => Promise<NoteFrontend>;
   // editNote: ({ id, title, description }: Pick<Note, "id" | "title" | "description">) => Promise<Note>;
   // deleteNote: (id: string) => Promise<void>;
 };
@@ -28,8 +31,9 @@ type TProps = {
 export function NotesContextProviderComponent({ children }: TProps) {
   const [notes, setNotes] = useState<Record<string, NoteFrontend>>({});
 
-  const handleCreateNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description">) => {
-    const createdNote = await createNote(note);
+  const handleCreateNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description">, username: string) => {
+    const createdNote = await createNote({ ...note, username });
+    // createNote might actually be in .data again, if so pull out in createNote, not here.
     setNotes((prev) => ({ ...prev, [createdNote.id]: createdNote }));
 
     return createdNote;
