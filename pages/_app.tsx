@@ -15,6 +15,8 @@ import { EmptyLayout } from "components/common/Layout/EmptyLayout";
 
 import "../styles/globals.css";
 
+// Page Components
+
 type ComponentWithLayout = AppProps["Component"] & { Layout?: FC<LayoutProps> };
 
 function NotesApp({ Component, pageProps, router }: AppProps) {
