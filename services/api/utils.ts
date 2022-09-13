@@ -6,6 +6,30 @@ import Cors from "cors";
 // Types
 import { Links, ApiResponse, ApiBadRequestResponse, ApiErrorResponse, ServerResponseError } from "./types";
 
+export const PATHS = {
+  getUsers: () => "/users",
+  getUser: (id: string) => `/users/${id}`,
+  getNotes: () => "/notes",
+  getNote: (id: string) => `/notes/${id}`,
+  getUserNote: (username: string) => `/usernotes/${username}`,
+};
+
+export const convertKeys = <Target extends Record<string, unknown>, Origin extends Record<string, unknown>>(
+  obj: Origin,
+  converstionTable: Partial<Record<keyof Origin, keyof Target>>
+) => {
+  // We are fighting typescript by forcing two types together:
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const conversion = { ...obj } as any;
+
+  Object.entries(converstionTable).forEach(([fromKey, toKey]) => {
+    conversion[toKey] = obj[fromKey];
+    delete conversion[fromKey];
+  });
+
+  return conversion as Target;
+};
+
 /*
 ██████╗ ███████╗███████╗██████╗  ██████╗ ███╗   ██╗███████╗███████╗███████╗
 ██╔══██╗██╔════╝██╔════╝██╔══██╗██╔═══██╗████╗  ██║██╔════╝██╔════╝██╔════╝
