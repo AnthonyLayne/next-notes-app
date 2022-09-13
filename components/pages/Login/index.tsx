@@ -28,10 +28,3 @@ export const Login = memo(() => {
     </div>
   );
 });
-
-// const mapStateToProps = (state) => ({
-//   username: state.username,
-//   password: state.password,
-// });
-
-// export default connect(mapStateToProps, { logIn, logOut })(Login);
