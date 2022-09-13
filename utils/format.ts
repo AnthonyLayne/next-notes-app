@@ -11,7 +11,7 @@ export const pruneUnwantedFields = <T extends Record<string, unknown>>(object: T
 export const validateFields = <T extends Record<string, unknown>>(
   object: T,
   validationFields: (keyof T)[],
-  opts: { allowEmptyString: boolean }
+  opts: { allowEmptyString: boolean; allowPartial: boolean }
 ) => {
   const missingFields = validationFields.filter(
     (fieldName) =>
@@ -21,7 +21,7 @@ export const validateFields = <T extends Record<string, unknown>>(
   );
 
   return {
-    valid: !missingFields.length,
+    valid: opts.allowPartial ? missingFields.length < validationFields.length : !missingFields.length,
     missingFields,
   };
 };

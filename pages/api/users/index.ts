@@ -3,24 +3,51 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 // Services
 import { addUser } from "services/knex";
-import { apiInit, notFoundResponse, serverErrorResponse, successResponse } from "services/api/utils";
+import {
+  apiInit,
+  badRequestResponse,
+  notFoundResponse,
+  serverErrorResponse,
+  successResponse,
+} from "services/api/utils";
 
 // Utils
-import { pruneUnwantedFields } from "utils/format";
+import { validateFields } from "utils/format";
+
+// Types
+import { UserFrontend } from "services/knex/types";
+
+export type PostUserBody = UserFrontend;
+
+const REQUIRED_POST_USER_FIELDS: (keyof PostUserBody)[] = ["username", "password"];
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const reqBodyUserPost = req.body as PostUserBody;
+
   const { links } = await apiInit(req, res);
 
   const { username, password } = req.body;
 
   try {
-    if (req.method === "POST") {
-      await addUser(username, password);
+    const { valid, missingFields } = validateFields(reqBodyUserPost, REQUIRED_POST_USER_FIELDS, {
+      allowEmptyString: false,
+      allowPartial: false,
+    });
 
-      return successResponse(res, pruneUnwantedFields, links, "Fetched user.");
+    if (!valid) {
+      const message = `The folloing fields are required: ${missingFields.join(", ")}`;
+      return badRequestResponse(res, { message }, links, message);
     }
 
-    return notFoundResponse(res, links, "Only POST requests available");
+    if (username && password) {
+      if (req.method === "POST") {
+        const user = await addUser(username, password);
+
+        return successResponse(res, user, links, `User: ${user}, has been added.`);
+      }
+    }
+
+    return notFoundResponse(res, links, "Only POST request available");
   } catch (error) {
     return serverErrorResponse(res, error as Error, links);
   }

@@ -1,10 +1,12 @@
-import { getKnex } from "../../data";
-
+import { Knex } from "knex";
 // Types
 // eslint-disable-next-line import/order
-import { UserBackend } from "services/knex/types";
+import { BaseFieldsBackend, NoteBackend, UserBackend } from "services/knex/types";
+import { getKnex } from "data";
 
-const db = getKnex();
+const db: Knex = getKnex();
+
+// Properties must be in {} for insert/update
 
 // ---- Users ---------------------------------------------------------------------------------------------------------
 export const getUserById = async (id: string) => {
@@ -14,8 +16,9 @@ export const getUserById = async (id: string) => {
   return firstRow || null;
 };
 
-export const addUser = (username: string, password: string) => {
-  return db("users").insert({ username, password }, "id");
+export const addUser = async (username: string, password: string) => {
+  const newUser = await db("users").insert({ username, password }, ["id", "username"]);
+  return newUser[0];
 };
 
 export const deleteUserById = (id: string) => {
@@ -30,12 +33,15 @@ export const getAllNotesByUsername = async (username: string) => {
   return allUserNotes || null;
 };
 
-export const addNote = (username: string, title: string, description: string) => {
-  return db("notes").insert({ username, title, description });
+export const addNote = async (note: Omit<NoteBackend, keyof BaseFieldsBackend>) => {
+  const newNote = await db("notes").insert(note, ["username", "description", "title", "id", "created_at"]);
+  return newNote[0];
 };
 
-export const editNote = (id: string, title: string, description: string) => {
-  const updatedNote = db("notes").where("id", id).update(title, description);
+// This works, but may be a bit hacky, instead of just returning a number(the id), it now returns the full edited note, with all data.
+export const editNote = async (id: string, note: Partial<Omit<NoteBackend, keyof BaseFieldsBackend>>) => {
+  await db("notes").where("id", id).update(note);
+  const updatedNote = await db("notes").where("id", id);
   return updatedNote;
 };
 

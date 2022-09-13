@@ -1,26 +1,50 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 // Services
-import {
-  // Types
-  getAllNotesByUsername,
-} from "services/knex";
+import { getAllNotesByUsername } from "services/knex";
 
 // Utils
-import { apiInit, notFoundResponse, serverErrorResponse, successResponse } from "services/api/utils";
-import { pruneUnwantedFields } from "utils/format";
+import {
+  apiInit,
+  badRequestResponse,
+  notFoundResponse,
+  serverErrorResponse,
+  successResponse,
+} from "services/api/utils";
+
+// Types
+import { UserFrontend } from "services/knex/types";
+import { validateFields } from "utils/format";
+
+export type GetNoteBody = Pick<UserFrontend, "username">;
+
+const REQUIRED_GET_FIELDS: (keyof GetNoteBody)[] = ["username"];
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const reqBodyGet = req.body as GetNoteBody;
+
   const { links } = await apiInit(req, res);
 
   const { username } = req.query as { username: string };
 
   try {
-    if (req.method === "GET") {
-      const notes = await getAllNotesByUsername(username);
-      if (!notes) return notFoundResponse(res, links, `No notes found for username: ${username}`);
+    const { valid, missingFields } = validateFields(reqBodyGet, REQUIRED_GET_FIELDS, {
+      allowEmptyString: false,
+      allowPartial: false,
+    });
 
-      return successResponse(res, pruneUnwantedFields, links, `Fetched notes`);
+    if (!valid) {
+      const message = `The ${missingFields} field is missing.`;
+      return badRequestResponse(res, { message }, links, message);
+    }
+    if (username) {
+      if (req.method === "GET") {
+        const notes = await getAllNotesByUsername(username);
+        if (notes.length === 0 || !notes)
+          return notFoundResponse(res, links, `No notes found for username: ${username}`);
+
+        return successResponse(res, notes, links, `Fetched notes`);
+      }
     }
 
     return notFoundResponse(res, links, "Only GET, request available");

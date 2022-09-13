@@ -6,6 +6,7 @@ import { addNote } from "services/knex";
 import {
   apiInit,
   badRequestResponse,
+  convertKeys,
   notFoundResponse,
   serverErrorResponse,
   successResponse,
@@ -15,7 +16,7 @@ import {
 import { validateFields } from "utils/format";
 
 // Types
-import { NoteFrontend, BaseFieldsFrontend } from "services/knex/types";
+import { NoteFrontend, BaseFieldsFrontend, NoteBackend } from "services/knex/types";
 
 type PostNote = Omit<NoteFrontend, keyof BaseFieldsFrontend>;
 export type PostNoteBody = PostNote & { username: string };
@@ -32,6 +33,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { valid, missingFields } = validateFields(reqBody, REQUIRED_FIELDS, {
       allowEmptyString: false,
+      allowPartial: false,
     });
 
     if (!valid) {
@@ -42,9 +44,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // Necessary for TS
     if (title && description && username) {
       if (req.method === "POST") {
-        const newNote = await addNote(title, description, username);
+        const backendNote: NoteBackend = await addNote({ title, description, username });
 
-        return successResponse(res, newNote, links, "Added Note.");
+        const frontendNote = convertKeys<NoteFrontend, NoteBackend>(backendNote, {
+          created_at: "createdAt",
+        });
+
+        return successResponse(res, frontendNote, links, "Added Note.");
       }
     }
 

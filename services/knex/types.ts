@@ -26,4 +26,5 @@ export type NoteFrontend = BaseFieldsFrontend & {
 
 export type UserFrontend = BaseFieldsFrontend & {
   username: string;
+  password: string;
 };
