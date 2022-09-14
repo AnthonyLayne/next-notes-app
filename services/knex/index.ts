@@ -38,14 +38,12 @@ export const addNote = async (note: Omit<NoteBackend, keyof BaseFieldsBackend>) 
   return newNote[0];
 };
 
-// This works, but may be a bit hacky, instead of just returning a number(the id), it now returns the full edited note, with all data.
 export const editNote = async (id: string, note: Partial<Omit<NoteBackend, keyof BaseFieldsBackend>>) => {
-  await db("notes").where("id", id).update(note);
-  const updatedNote = await db("notes").where("id", id);
-  return updatedNote;
+  const updatedNote = await db("notes").where("id", id).update(note, ["id", "title", "description", "created_at"]);
+  return updatedNote[0];
 };
 
-export const deleteNoteById = (id: string) => {
-  return db("notes").where("id", id).del();
+export const deleteNoteById = async (id: string) => {
+  await db("notes").where("id", id).del();
 };
 // --------------------------------------------------------------------------------------------------------------------

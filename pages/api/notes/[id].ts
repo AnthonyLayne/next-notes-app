@@ -7,6 +7,7 @@ import { editNote, deleteNoteById } from "services/knex";
 import {
   apiInit,
   badRequestResponse,
+  convertKeys,
   notFoundResponse,
   serverErrorResponse,
   successResponse,
@@ -14,9 +15,9 @@ import {
 import { validateFields } from "utils/format";
 
 // Types
-import { BaseFieldsFrontend, NoteFrontend } from "services/knex/types";
+import { NoteBackend, NoteFrontend } from "services/knex/types";
 
-export type PutNoteBody = Omit<NoteFrontend, keyof BaseFieldsFrontend>;
+export type PutNoteBody = NoteFrontend;
 
 const REQURIED_PUT_FIELDS: (keyof PutNoteBody)[] = ["title", "description"];
 
@@ -29,8 +30,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     if (req.method === "DELETE") {
-      const note = await deleteNoteById(id);
-      if (!note) return notFoundResponse(res, links, `No note found for note: ${id}`);
+      await deleteNoteById(id);
 
       return successResponse(res, undefined, links, "Deleted note.");
     }
@@ -48,11 +48,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return badRequestResponse(res, { message }, links, message);
       }
       if (title || description) {
-        const editedNote = await editNote(id, { title, description });
+        const backendNote: Partial<NoteBackend> = await editNote(id, { title, description });
 
-        if (!editedNote) return notFoundResponse(res, links, `No note found for note: ${id}`);
+        const frontendNote = convertKeys<NoteFrontend, Partial<NoteBackend>>(backendNote, {
+          created_at: "createdAt",
+        });
 
-        return successResponse(res, editedNote, links, "Edited note.");
+        if (!frontendNote) return notFoundResponse(res, links, `No note found for note: ${id}`);
+
+        return successResponse(res, frontendNote, links, "Edited note.");
       }
     }
 
