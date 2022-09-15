@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 // Services
-import { deleteUserByUsername, getUsername } from "services/knex";
+import { deleteUserByUsername, getByUsername } from "services/knex";
 import {
   apiInit,
   badRequestResponse,
@@ -49,7 +49,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (req.method === "GET") {
-      const user = await getUsername(username);
+      const user = await getByUsername(username);
       if (!user) return notFoundResponse(res, links, `No user found for id: ${username}`);
 
       return successResponse(res, pruneUnwantedFields(user, ["password"]), links, "Fetched user.");
