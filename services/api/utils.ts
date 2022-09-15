@@ -4,6 +4,7 @@ import { IncomingMessage } from "http";
 import Cors from "cors";
 
 // Types
+import { NoteBackend } from "services/knex/types";
 import { Links, ApiResponse, ApiBadRequestResponse, ApiErrorResponse, ServerResponseError } from "./types";
 
 export const PATHS = {
@@ -28,6 +29,17 @@ export const convertKeys = <Target extends Record<string, unknown>, Origin exten
   });
 
   return conversion as Target;
+};
+
+// Needs to be improved/typed
+export const convertArrObjKeys = (arr: NoteBackend[]) => {
+  const arrCopy = [...arr];
+  const converted = arrCopy.map(({ created_at: createdAt, ...rest }) => ({
+    createdAt,
+    ...rest,
+  }));
+
+  return converted;
 };
 
 /*
