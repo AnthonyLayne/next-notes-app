@@ -7,6 +7,7 @@ import { getAllNotesByUsername } from "services/knex";
 import {
   apiInit,
   badRequestResponse,
+  convertArrObjKeys,
   notFoundResponse,
   serverErrorResponse,
   successResponse,
@@ -40,10 +41,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (username) {
       if (req.method === "GET") {
         const notes = await getAllNotesByUsername(username);
-        if (notes.length === 0 || !notes)
+
+        // Check this
+        const frontNotes = convertArrObjKeys(notes);
+        if (frontNotes.length === 0 || !frontNotes)
           return notFoundResponse(res, links, `No notes found for username: ${username}`);
 
-        return successResponse(res, notes, links, `Fetched notes`);
+        return successResponse(res, frontNotes, links, `Fetched notes`);
       }
     }
 
