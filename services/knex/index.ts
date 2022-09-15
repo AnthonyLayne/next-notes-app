@@ -9,11 +9,10 @@ const db: Knex = getKnex();
 // Properties must be in {} for insert/update
 
 // ---- Users ---------------------------------------------------------------------------------------------------------
-export const getUserById = async (id: string) => {
-  const userData = await db("users").where("id", id);
-  const firstRow = userData[0] as Maybe<UserBackend>;
-
-  return firstRow || null;
+export const getUsername = async (username: string) => {
+  const name = await db("users").where("username", username);
+  const firstR = name[0] as Maybe<UserBackend>;
+  return firstR;
 };
 
 export const addUser = async (username: string, password: string) => {
@@ -21,8 +20,8 @@ export const addUser = async (username: string, password: string) => {
   return newUser[0];
 };
 
-export const deleteUserById = (id: string) => {
-  return db("users").where("id", id).del();
+export const deleteUserByUsername = (username: string) => {
+  return db("users").where("username", username).del();
 };
 // --------------------------------------------------------------------------------------------------------------------
 
