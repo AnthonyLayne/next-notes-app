@@ -8,6 +8,7 @@ import { NoteBackend } from "services/knex/types";
 import { Links, ApiResponse, ApiBadRequestResponse, ApiErrorResponse, ServerResponseError } from "./types";
 
 export const PATHS = {
+  userLogin: () => "/login",
   getUsers: () => "/users",
   getUser: (id: string) => `/users/${id}`,
   getNotes: () => "/notes",
