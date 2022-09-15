@@ -34,6 +34,10 @@ export const deleteNote = async (id: string) =>
 // -----------------------------------------------------------------------------------------
 
 // Users------------------------------------------------------------------------------------
+export const loginUser = async (loginBody: PostUserBody) => {
+  apiAxiosInstance.post<UserFrontend>(PATHS.userLogin(), loginBody).then(({ data }) => data);
+};
+
 export const getUser = async (id: string) =>
   apiAxiosInstance.get<UserFrontend>(PATHS.getUser(id)).then(({ data }) => data);
 
