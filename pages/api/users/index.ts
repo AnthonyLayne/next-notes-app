@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import bcrypt from "bcrypt";
 
 // Services
 import { addUser } from "services/knex";
@@ -26,7 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { links } = await apiInit(req, res);
 
-  const { username, password } = req.body;
+  const { username, password } = req.body as PostUserBody;
 
   try {
     const { valid, missingFields } = validateFields(reqBodyUserPost, REQUIRED_POST_USER_FIELDS, {
@@ -35,15 +36,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     if (!valid) {
-      const message = `The folloing fields are required: ${missingFields.join(", ")}`;
+      const message = `The following fields are required: ${missingFields.join(", ")}`;
       return badRequestResponse(res, { message }, links, message);
     }
 
     if (username && password) {
       if (req.method === "POST") {
-        const user = await addUser(username, password);
+        const hash = bcrypt.hashSync(password, 8);
+        const user = await addUser(username, hash);
 
-        return successResponse(res, user, links, `User: ${user}, has been added.`);
+        return successResponse(res, user, links, `User: ${username}, has been added.`);
       }
     }
 
