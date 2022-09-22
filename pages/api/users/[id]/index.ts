@@ -2,17 +2,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 // Services
-import { deleteUserByUsername, getByUsername } from "services/knex";
-import {
-  apiInit,
-  badRequestResponse,
-  notFoundResponse,
-  serverErrorResponse,
-  successResponse,
-} from "services/api/utils";
+import { deleteUserById } from "services/knex";
+import { apiInit, badRequestResponse, notFoundResponse, serverErrorResponse, successResponse } from "utils/api";
 
 // Utils
-import { pruneUnwantedFields, validateFields } from "utils/format";
+import { validateFields } from "utils/format";
 
 // Types
 import { UserFrontend } from "services/knex/types";
@@ -28,7 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { links } = await apiInit(req, res);
 
-  const { username } = req.query as { username: string };
+  const { id } = req.query as { id: string };
 
   // `id` must be replaced with whatever the file is named in the square brackets
   // const { id } = req.query as { id: string };
@@ -48,20 +42,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return badRequestResponse(res, { message }, links, message);
     }
 
-    if (req.method === "GET") {
-      const user = await getByUsername(username);
-      if (!user) return notFoundResponse(res, links, `No user found for id: ${username}`);
+    // if (req.method === "GET") {
+    //   const user = await getById(id);
+    //   if (!user) return notFoundResponse(res, links, `No user found for id: ${id}`);
 
-      return successResponse(res, pruneUnwantedFields(user, ["password"]), links, "Fetched user.");
-    }
+    //   return successResponse(res, pruneUnwantedFields(user, ["password"]), links, "Fetched user.");
+    // }
 
     if (req.method === "DELETE") {
-      const user = await deleteUserByUsername(username);
-      if (!user) return notFoundResponse(res, links, `No user found for id: ${username}`);
+      const user = await deleteUserById(id);
+      if (!user) return notFoundResponse(res, links, `No user found for id: ${id}`);
 
       return successResponse(res, user, links, "Deleted user.");
     }
-    return notFoundResponse(res, links, "Only GET and DELETE requests available");
+    return notFoundResponse(res, links, "Only DELETE requests available");
   } catch (error) {
     return serverErrorResponse(res, error as Error, links);
   }

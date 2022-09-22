@@ -11,7 +11,7 @@ import {
   notFoundResponse,
   serverErrorResponse,
   successResponse,
-} from "services/api/utils";
+} from "utils/api";
 import { validateFields } from "utils/format";
 
 // Types
@@ -24,7 +24,10 @@ const REQURIED_PUT_FIELDS: (keyof PutNoteBody)[] = ["title", "description"];
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const reqBodyPut = req.body as Partial<PutNoteBody>;
 
+  // TODO: change to user_id, update paths, update api/knex functs.
+  // Need to get/del via user_id, as the "id" of the note is the same as the userid.
   const { id } = req.query as { id: string };
+  // const user_id = res.body;
 
   const { links } = await apiInit(req, res);
 
