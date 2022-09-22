@@ -4,6 +4,7 @@ import Head from "next/head";
 
 // Context
 import { NotesContextProviderComponent } from "context/notesContext";
+import { AuthContextProviderComponent } from "context/authContext";
 
 // Hooks
 import { usePageTitle } from "hooks/usePageTitle";
@@ -41,12 +42,14 @@ function NotesApp({ Component, pageProps, router }: AppProps) {
 
 const NotesAppWrapper = memo((props: AppProps) => {
   return (
-    <NotesContextProviderComponent>
-      <NotesApp
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
-      />
-    </NotesContextProviderComponent>
+    <AuthContextProviderComponent>
+      <NotesContextProviderComponent>
+        <NotesApp
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...props}
+        />
+      </NotesContextProviderComponent>
+    </AuthContextProviderComponent>
   );
 });
 
