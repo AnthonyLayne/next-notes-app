@@ -1,6 +1,6 @@
 export type BaseFieldsBackend = {
   id: string;
-  created_at: number;
+  created_at?: number;
 };
 
 export type BaseFieldsFrontend = {
@@ -9,7 +9,6 @@ export type BaseFieldsFrontend = {
 };
 
 export type NoteBackend = BaseFieldsBackend & {
-  username: string;
   title: string;
   description: string;
 };
@@ -26,5 +25,4 @@ export type NoteFrontend = BaseFieldsFrontend & {
 
 export type UserFrontend = BaseFieldsFrontend & {
   username: string;
-  password: string;
 };

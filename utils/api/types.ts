@@ -43,3 +43,8 @@ export type ApiResponse<T> = ApiErrorResponse &
     data?: T;
     jwt: string;
   }>;
+
+export type JwtForm = {
+  exp: number;
+  uid: string;
+};

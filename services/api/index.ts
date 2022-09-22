@@ -1,7 +1,8 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
 // Helpers
 import { isDev } from "utils/isDev";
+import { getLocal } from "utils/storage";
 
 // Types
 import { NoteFrontend, UserFrontend } from "services/knex/types";
@@ -12,38 +13,49 @@ import { PostUserBody } from "pages/api/users";
 // Local
 import { PATHS } from "./utils";
 
-const apiAxiosInstance = axios.create({
-  baseURL: isDev() ? "http://localhost:3000/api" : "http://next-notes-app-eta.vercel.app/api",
-  headers: {
-    Accept: "application/vnd.heroku+json; version=3",
-  },
-});
+export const getApiAxiosInstance = () => {
+  const apiInstance = axios.create({
+    baseURL: isDev() ? "http://localhost:3000/api" : "http://next-notes-app-eta.vercel.app/api",
+    headers: {
+      Accept: "application/vnd.heroku+json; version=3",
+    },
+  });
+
+  const { jwt } = getLocal("auth", { jwt: "" }) || {};
+  if (jwt) apiInstance.defaults.headers.common.authorization = `Bearer ${jwt}`;
+
+  return apiInstance;
+};
 
 // Notes------------------------------------------------------------------------------------
-export const createNote = async (postBody: PostNoteBody) =>
-  apiAxiosInstance.post<NoteFrontend>(PATHS.getNotes(), postBody).then(({ data }) => data);
 
-export const getNoteByUser = async (username: string) =>
-  apiAxiosInstance.get<NoteFrontend>(PATHS.getUserNote(username)).then(({ data }) => data);
+// TODO: check all paths and what is getting passed into them
+export const createNote = async (apiInstance: AxiosInstance, postBody: PostNoteBody) =>
+  apiInstance.post<NoteFrontend>(PATHS.getNotes(), postBody).then(({ data }) => data);
 
-export const editNote = async (editBody: PutNoteBody, id: string) =>
-  apiAxiosInstance.put<NoteFrontend>(PATHS.getNote(id), editBody).then(({ data }) => data);
+export const getNoteById = async (apiInstance: AxiosInstance, username: string) =>
+  apiInstance.get<NoteFrontend>(PATHS.getUserNote(username)).then(({ data }) => data);
 
-export const deleteNote = async (id: string) =>
-  apiAxiosInstance.delete<undefined>(PATHS.getNote(id)).then(({ data }) => data);
+export const editNote = async (apiInstance: AxiosInstance, editBody: PutNoteBody, id: string) =>
+  apiInstance.put<NoteFrontend>(PATHS.getNote(id), editBody).then(({ data }) => data);
+
+export const deleteNote = async (apiInstance: AxiosInstance, id: string) =>
+  apiInstance.delete<undefined>(PATHS.getNote(id)).then(({ data }) => data);
 // -----------------------------------------------------------------------------------------
 
 // Users------------------------------------------------------------------------------------
-export const loginUser = async (loginBody: PostUserBody) => {
-  apiAxiosInstance.post<UserFrontend>(PATHS.userLogin(), loginBody).then(({ data }) => data);
-};
+export const checkAuth = async (apiInstance: AxiosInstance) =>
+  apiInstance.get<{ user: UserFrontend; jwt: string }>(PATHS.userLogin()).then(({ data }) => data);
 
-export const getUser = async (id: string) =>
-  apiAxiosInstance.get<UserFrontend>(PATHS.getUser(id)).then(({ data }) => data);
+export const loginUser = async (apiInstance: AxiosInstance, loginBody: PostUserBody) =>
+  apiInstance.post<UserFrontend>(PATHS.userLogin(), loginBody).then(({ data }) => data);
 
-export const createUser = async (postBody: PostUserBody) =>
-  apiAxiosInstance.post<UserFrontend>(PATHS.getUsers(), postBody).then(({ data }) => data);
+export const getUser = async (apiInstance: AxiosInstance, id: string) =>
+  apiInstance.get<UserFrontend>(PATHS.getUser(id)).then(({ data }) => data);
 
-export const deleteUser = async (id: string) =>
-  apiAxiosInstance.delete<undefined>(PATHS.getUser(id)).then(({ data }) => data);
+export const createUser = async (apiInstance: AxiosInstance, postBody: PostUserBody) =>
+  apiInstance.post<UserFrontend>(PATHS.getUsers(), postBody).then(({ data }) => data);
+
+export const deleteUser = async (apiInstance: AxiosInstance, id: string) =>
+  apiInstance.delete<undefined>(PATHS.getUser(id)).then(({ data }) => data);
 // -----------------------------------------------------------------------------------------

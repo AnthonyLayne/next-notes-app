@@ -9,31 +9,41 @@ const db: Knex = getKnex();
 // Properties must be in {} for insert/update
 
 // ---- Users ---------------------------------------------------------------------------------------------------------
-export const getUsername = async (username: string) => {
+export const getByUsername = async (username: string) => {
   const name = await db("users").where("username", username);
-  const firstR = name[0] as Maybe<UserBackend>;
-  return firstR;
+  return name[0] as Maybe<UserBackend>;
+};
+
+export const getById = async (id: string) => {
+  const name = await db("users").where("id", id);
+  return name[0] as Maybe<UserBackend>;
+};
+
+export const getHashedPass = async (username: string) => {
+  const hp = await db("users").where("username", username).select("password");
+  return hp[0].password;
 };
 
 export const addUser = async (username: string, password: string) => {
-  const newUser = await db("users").insert({ username, password }, ["id", "username"]);
+  const newUser = await db("users").insert({ username, password }, ["id", "username", "created_at"]);
   return newUser[0];
 };
 
-export const deleteUserByUsername = (username: string) => {
-  return db("users").where("username", username).del();
+export const deleteUserById = (id: string) => {
+  return db("users").where("id", id).del();
 };
 // --------------------------------------------------------------------------------------------------------------------
 
 // ---- Notes ---------------------------------------------------------------------------------------------------------
-export const getAllNotesByUsername = async (username: string) => {
-  const allUserNotes = await db("notes").where("username", username);
+// TODO: getAllNotesById may have to be a join, check data
+export const getAllNotesById = async (id: string) => {
+  const allUserNotes = await db("notes").where("id", id);
 
   return allUserNotes || null;
 };
 
-export const addNote = async (note: Omit<NoteBackend, keyof BaseFieldsBackend>) => {
-  const newNote = await db("notes").insert(note, ["username", "description", "title", "id", "created_at"]);
+export const addNote = async (note: NoteBackend) => {
+  const newNote = await db("notes").insert(note, ["description", "title", "id", "created_at", "note_id"]);
   return newNote[0];
 };
 
