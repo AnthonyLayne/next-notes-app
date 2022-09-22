@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useCallback, useMemo, useState } from "react";
 
 // Services
-import { createNote } from "services/api";
+import { createNote, getApiAxiosInstance } from "services/api";
 
 // Helpers
 import { useSafeContext } from "context/useSafeContext";
@@ -31,8 +31,10 @@ type TProps = {
 export function NotesContextProviderComponent({ children }: TProps) {
   const [notes, setNotes] = useState<Record<string, NoteFrontend>>({});
 
+  const apiInstance = useMemo(() => getApiAxiosInstance(), []);
+
   const handleCreateNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description">, username: string) => {
-    const createdNote = await createNote({ ...note, username });
+    const createdNote = await createNote(apiInstance, { ...note, username });
     // createNote might actually be in .data again, if so pull out in createNote, not here.
     setNotes((prev) => ({ ...prev, [createdNote.id]: createdNote }));
 
