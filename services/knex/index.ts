@@ -36,22 +36,27 @@ export const deleteUserById = (id: string) => {
 
 // ---- Notes ---------------------------------------------------------------------------------------------------------
 // TODO: getAllNotesById may have to be a join, check data
-export const getAllNotesById = async (id: string) => {
-  const allUserNotes = await db("notes").where("id", id);
+// eslint-disable-next-line camelcase
+export const getAllNotesById = async (user_id: string) => {
+  const allUserNotes = await db("notes").where("user_id", user_id);
 
   return allUserNotes || null;
 };
 
 export const addNote = async (note: NoteBackend) => {
-  const newNote = await db("notes").insert(note, ["description", "title", "id", "created_at", "note_id"]);
+  const newNote = await db("notes").insert(note, ["description", "title", "id", "created_at", "user_id"]);
   return newNote[0];
 };
 
+// eslint-disable-next-line camelcase
 export const editNote = async (id: string, note: Partial<Omit<NoteBackend, keyof BaseFieldsBackend>>) => {
-  const updatedNote = await db("notes").where("id", id).update(note, ["id", "title", "description", "created_at"]);
+  const updatedNote = await db("notes")
+    .where("id", id)
+    .update(note, ["id", "title", "description", "created_at", "user_id"]);
   return updatedNote[0];
 };
 
+// eslint-disable-next-line camelcase
 export const deleteNoteById = async (id: string) => {
   await db("notes").where("id", id).del();
 };

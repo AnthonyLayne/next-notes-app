@@ -1,11 +1,13 @@
 export type BaseFieldsBackend = {
-  id: string;
+  id?: string;
   created_at?: number;
+  user_id?: string;
 };
 
 export type BaseFieldsFrontend = {
   id: string;
   createdAt: number;
+  userId: string;
 };
 
 export type NoteBackend = BaseFieldsBackend & {
