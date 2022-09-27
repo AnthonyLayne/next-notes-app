@@ -12,20 +12,20 @@ const users = [
 ];
 const notes = [
   {
-    note_id: 1,
-    id: 234,
+    id: 999,
+    user_id: 234,
     title: "this is a test",
     description: "it either worked or it didnt lol",
   },
   {
-    note_id: 2,
-    id: 234,
+    id: 998,
+    user_id: 234,
     title: "test note 2",
     description: "this is another test note",
   },
   {
-    note_id: 3,
-    id: 456,
+    id: 997,
+    user_id: 456,
     title: "test note 3",
     description: "this is another note",
   },
