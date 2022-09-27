@@ -18,8 +18,8 @@ type Auth = {
 
 export type AuthContextType = {
   auth: Auth;
-  // handleSignIn: asdadsf;
-  // handleSignUp: asdadsf;
+  handleSignIn: (loginBody: UserFrontend) => Promise<UserFrontend>;
+  handleSignUp: (postBody: UserFrontend) => Promise<UserFrontend>;
 };
 
 const AuthContext = createContext<Maybe<AuthContextType>>(undefined);

@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useCallback, useMemo, useState } from "react";
 
 // Services
-import { createNote, getApiAxiosInstance } from "services/api";
+import { createNote, deleteNote, editNote, getApiAxiosInstance } from "services/api";
 
 // Helpers
 import { useSafeContext } from "context/useSafeContext";
@@ -13,10 +13,11 @@ export type BaseNotesContext = {
   notes: Record<string, NoteFrontend>;
   handleCreateNote: (
     { title, description }: Pick<NoteFrontend, "title" | "description">,
-    username: string
+    id: string
   ) => Promise<NoteFrontend>;
-  // editNote: ({ id, title, description }: Pick<Note, "id" | "title" | "description">) => Promise<Note>;
-  // deleteNote: (id: string) => Promise<void>;
+
+  handleEditNote: ({ title, description }: NoteFrontend) => Promise<NoteFrontend>;
+  handleDeleteNote: (id: string) => Promise<void>;
 };
 
 const NotesContext = createContext<Maybe<BaseNotesContext>>(undefined);
@@ -33,27 +34,35 @@ export function NotesContextProviderComponent({ children }: TProps) {
 
   const apiInstance = useMemo(() => getApiAxiosInstance(), []);
 
-  const handleCreateNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description">, username: string) => {
-    const createdNote = await createNote(apiInstance, { ...note, username });
+  // eslint-disable-next-line camelcase
+  const handleCreateNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description">, userId: string) => {
+    const createdNote = await createNote(apiInstance, { ...note, userId });
     // createNote might actually be in .data again, if so pull out in createNote, not here.
     setNotes((prev) => ({ ...prev, [createdNote.id]: createdNote }));
 
     return createdNote;
   }, []);
 
+  const handleEditNote = useCallback(async (note: NoteFrontend) => {
+    const editedNote = await editNote(apiInstance, note);
+
+    setNotes((prev) => ({ ...prev, [editedNote.id]: editedNote }));
+
+    return editedNote;
+  }, []);
+
+  const handleDeleteNote = useCallback(async (id: string) => {
+    await deleteNote(apiInstance, id);
+  }, []);
+
   const ctx = useMemo(
     () => ({
       notes,
       handleCreateNote,
-      // editNote,
-      // deleteNote,
+      handleEditNote,
+      handleDeleteNote,
     }),
-    [
-      notes,
-      handleCreateNote,
-      // editNote,
-      // deleteNote,
-    ]
+    [notes, handleCreateNote, handleEditNote, handleDeleteNote]
   );
 
   return <NotesContext.Provider value={ctx}>{children}</NotesContext.Provider>;
