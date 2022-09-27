@@ -17,7 +17,7 @@ export type GetNoteBody = UserFrontend;
 
 const REQUIRED_USER_GET_FIELDS: (keyof GetNoteBody)[] = ["username"];
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse<UserFrontend>) => {
   const reqBodyUser = req.body as GetNoteBody;
 
   const { links } = await apiInit(req, res);
