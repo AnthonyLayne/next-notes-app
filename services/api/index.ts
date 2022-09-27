@@ -36,9 +36,10 @@ export const createNote = async (apiInstance: AxiosInstance, postBody: PostNoteB
 export const getNoteById = async (apiInstance: AxiosInstance, username: string) =>
   apiInstance.get<NoteFrontend>(PATHS.getUserNote(username)).then(({ data }) => data);
 
-export const editNote = async (apiInstance: AxiosInstance, editBody: PutNoteBody, id: string) =>
-  apiInstance.put<NoteFrontend>(PATHS.getNote(id), editBody).then(({ data }) => data);
+export const editNote = async (apiInstance: AxiosInstance, editBody: PutNoteBody) =>
+  apiInstance.put<NoteFrontend>(PATHS.getNote(editBody.id), editBody).then(({ data }) => data);
 
+// TODO: check this again
 export const deleteNote = async (apiInstance: AxiosInstance, id: string) =>
   apiInstance.delete<undefined>(PATHS.getNote(id)).then(({ data }) => data);
 // -----------------------------------------------------------------------------------------
