@@ -23,7 +23,6 @@ export const convertKeys = <Target extends Record<string, unknown>, Origin exten
     conversion[toKey] = obj[fromKey];
     delete conversion[fromKey];
   });
-
   return conversion as Target;
 };
 
