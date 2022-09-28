@@ -11,23 +11,20 @@ import {
   notFoundResponse,
   serverErrorResponse,
   successResponse,
+  SuccessResponse,
 } from "utils/api";
 import { validateFields } from "utils/format";
 
 // Types
 import { NoteBackend, NoteFrontend } from "services/knex/types";
 
-// change NoteFrontend to have id
 export type PutNoteBody = NoteFrontend;
 
 const REQURIED_PUT_FIELDS: (keyof PutNoteBody)[] = ["title", "description"];
 
-export default async (req: NextApiRequest, res: NextApiResponse<NoteFrontend>) => {
+export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<Nullable<NoteFrontend>>>) => {
   const reqBodyPut = req.body as Partial<PutNoteBody>;
 
-  // TODO: change to user_id, update paths, update api/knex functs.
-  // Need to get/del via user_id, as the "id" of the note is the same as the userid.
-  // won't use req.query, will have to pull from req.body
   const { id } = req.query as { id: string };
 
   const { links } = await apiInit(req, res);
@@ -36,7 +33,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<NoteFrontend>) =
     if (req.method === "DELETE") {
       await deleteNoteById(id);
 
-      return successResponse(res, undefined, links, "Deleted note.");
+      return successResponse(res, null, links, "Deleted note.");
     }
 
     if (req.method === "PUT") {
@@ -51,6 +48,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<NoteFrontend>) =
         const message = `At least one of these fields must be included: ${missingFields}`;
         return badRequestResponse(res, { message }, links, message);
       }
+
       if (title || description) {
         const backendNote: Partial<NoteBackend> = await editNote(id, { title, description });
 

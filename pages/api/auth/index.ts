@@ -12,6 +12,7 @@ import {
   serverErrorResponse,
   signJwt,
   successResponse,
+  SuccessResponse,
 } from "utils/api";
 
 // Utils
@@ -20,14 +21,15 @@ import { validateFields } from "utils/format";
 // Types
 import { BaseFieldsFrontend, UserBackend, UserFrontend } from "services/knex/types";
 
-export type PostLoginUser = Omit<UserFrontend, keyof BaseFieldsFrontend> & { password: string };
+export type AuthUser = Omit<UserFrontend, keyof BaseFieldsFrontend> & { password: string };
+export type AuthResponse = { user: UserFrontend; jwt: string };
 
-const REQUIRED_AUTH_USER_FIELDS: (keyof PostLoginUser)[] = ["username", "password"];
+const REQUIRED_AUTH_USER_FIELDS: (keyof AuthUser)[] = ["username", "password"];
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<AuthResponse>>) => {
   const { links, jwtInfo } = await apiInit(req, res);
 
-  const reqBody = req.body as Partial<PostLoginUser>;
+  const reqBody = req.body as Partial<AuthUser>;
   const { username, password } = reqBody;
 
   try {
@@ -43,15 +45,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     let user: Nullable<UserFrontend> = null;
 
+    // Validate Auth
     if (req.method === "GET") {
       if (jwtInfo.uid) {
         const backendUser = await getById(jwtInfo.uid);
         if (!backendUser) return badRequestResponse(res, { error: "Bad jwt, invalid uid." }, links);
 
         user = convertKeys<UserFrontend, Omit<UserBackend, "password">>(backendUser, { created_at: "createdAt" });
-      } else {
-        return badRequestResponse(res, { error: jwtInfo.jwtError }, links, "Bad jwt.");
+
+        return successResponse(res, { user, jwt: jwtInfo.jwtToken }, links, "User has been signed up.");
       }
+      return badRequestResponse(res, { error: jwtInfo.jwtError }, links, "Bad jwt.");
     }
 
     // Sign Up
@@ -65,7 +69,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
         const backendUser = await addUser(username, bcrypt.hashSync(password, 8));
         user = convertKeys<UserFrontend, Omit<UserBackend, "password">>(backendUser, { created_at: "createdAt" });
-        return successResponse(res, user, links, "User has been signed up.");
+        return successResponse(res, { user, jwt: signJwt(user.id) }, links, "User has been signed up.");
       }
     }
 
@@ -93,7 +97,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     }
 
-    return notFoundResponse(res, links, "Only PUT, POST, GET requests available");
+    return notFoundResponse(res, links, "Only PUT, POST requests available");
   } catch (err) {
     return serverErrorResponse(res, err as Error, links);
   }

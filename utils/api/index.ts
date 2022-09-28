@@ -9,7 +9,7 @@ import { getEnvVar } from "services/server/getEnvVar";
 import { days } from "utils/time";
 
 // Types
-import { Links, ApiResponse, ApiBadRequestResponse, ApiErrorResponse, ServerResponseError, JwtForm } from "./types";
+import { Links, ApiBadRequestResponse, ApiErrorResponse, ServerResponseError, JwtForm } from "./types";
 
 export const convertKeys = <Target extends Record<string, unknown>, Origin extends Record<string, unknown>>(
   obj: Origin,
@@ -34,21 +34,21 @@ export const convertKeys = <Target extends Record<string, unknown>, Origin exten
 ██║  ██║███████╗███████║██║     ╚██████╔╝██║ ╚████║███████║███████╗███████║
 ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚══════╝╚══════╝
 */
+export type SuccessResponse<T> = { links: Links; data: T; success: true; message: string };
+
 export const successResponse = <T>(
-  res: NextApiResponse,
+  res: NextApiResponse<{ links: Links; data: T; success: true; message: string }>,
   data: T,
   links: Links,
   message: string,
   status: number = 200
 ) =>
-  res.status(status).send(
-    JSON.stringify({
-      links,
-      data,
-      success: true,
-      message,
-    } as ApiResponse<T>)
-  );
+  res.status(status).json({
+    links,
+    data,
+    success: true,
+    message,
+  });
 
 export const badRequestResponse = (
   res: NextApiResponse,

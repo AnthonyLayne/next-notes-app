@@ -14,11 +14,6 @@ import {
 // Utils
 // import { validateFields } from "utils/format";
 
-// Types
-import { UserFrontend } from "services/knex/types";
-
-export type PostUserBody = UserFrontend;
-
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { links } = await apiInit(req, res);
 

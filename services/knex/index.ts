@@ -29,9 +29,7 @@ export const addUser = async (username: string, password: string) => {
   return newUser[0];
 };
 
-export const deleteUserById = (id: string) => {
-  return db("users").where("id", id).del();
-};
+export const deleteUserById = (id: string) => db("users").where("id", id).del();
 // --------------------------------------------------------------------------------------------------------------------
 
 // ---- Notes ---------------------------------------------------------------------------------------------------------

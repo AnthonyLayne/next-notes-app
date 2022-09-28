@@ -10,6 +10,7 @@ import {
   notFoundResponse,
   serverErrorResponse,
   successResponse,
+  SuccessResponse,
 } from "utils/api";
 
 // Utils
@@ -23,7 +24,7 @@ export type PostNoteBody = PostNote & { userId: string };
 
 const REQUIRED_FIELDS: (keyof PostNoteBody)[] = ["title", "description", "userId"];
 
-export default async (req: NextApiRequest, res: NextApiResponse<NoteFrontend>) => {
+export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<NoteFrontend>>) => {
   const reqBody = req.body as Partial<PostNoteBody>;
 
   const { links } = await apiInit(req, res);
