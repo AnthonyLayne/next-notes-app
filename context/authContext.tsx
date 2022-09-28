@@ -9,6 +9,7 @@ import { setLocal } from "utils/storage";
 
 // Types
 import { UserFrontend } from "services/knex/types";
+import { AuthUser, AuthResponse } from "pages/api/auth";
 
 type Auth = {
   initiallyLoading: boolean;
@@ -18,8 +19,9 @@ type Auth = {
 
 export type AuthContextType = {
   auth: Auth;
-  handleSignIn: (loginBody: UserFrontend) => Promise<UserFrontend>;
-  handleSignUp: (postBody: UserFrontend) => Promise<UserFrontend>;
+  handleSignIn: (loginBody: AuthUser) => Promise<void>;
+  handleSignUp: (postBody: AuthUser) => Promise<void>;
+  handleSignOut: () => void;
 };
 
 const AuthContext = createContext<Maybe<AuthContextType>>(undefined);
@@ -36,19 +38,36 @@ export function AuthContextProviderComponent({ children }: TProps) {
 
   const apiInstance = useMemo(() => getApiAxiosInstance(), []);
 
-  const handleSignIn = useCallback((loginBody: UserFrontend) => loginUser(apiInstance, loginBody), [apiInstance]);
+  const setAuthResponse = useCallback(({ user, jwt }: AuthResponse) => {
+    setLocal("auth", { jwt });
+    setAuth({ initiallyLoading: false, loggedIn: true, user });
+  }, []);
 
-  const handleSignUp = useCallback((postBody: UserFrontend) => createUser(apiInstance, postBody), [apiInstance]);
+  const handleSignIn = useCallback(
+    async (loginBody: AuthUser) => {
+      const authRes = await loginUser(apiInstance, loginBody);
+      setAuthResponse(authRes);
+    },
+    [apiInstance]
+  );
+
+  const handleSignUp = useCallback(
+    async (postBody: AuthUser) => {
+      const authRes = await createUser(apiInstance, postBody);
+      setAuthResponse(authRes);
+    },
+    [apiInstance]
+  );
+
+  const handleSignOut = () => {
+    setAuth({ initiallyLoading: false, loggedIn: false, user: null });
+    localStorage.clear();
+  };
 
   useEffect(() => {
     checkAuth(apiInstance)
-      .then(({ user, jwt }) => {
-        setLocal("auth", { jwt });
-        setAuth({ initiallyLoading: false, loggedIn: true, user });
-      })
-      .catch(() => {
-        setAuth({ initiallyLoading: false, loggedIn: false, user: null });
-      });
+      .then(setAuthResponse)
+      .catch(() => setAuth({ initiallyLoading: false, loggedIn: false, user: null }));
   }, []);
 
   const ctx = useMemo(
@@ -56,8 +75,9 @@ export function AuthContextProviderComponent({ children }: TProps) {
       auth,
       handleSignIn,
       handleSignUp,
+      handleSignOut,
     }),
-    [auth, handleSignIn, handleSignUp]
+    [auth, handleSignIn, handleSignUp, handleSignOut]
   );
 
   return <AuthContext.Provider value={ctx}>{children}</AuthContext.Provider>;
