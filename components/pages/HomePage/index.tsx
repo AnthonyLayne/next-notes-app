@@ -8,7 +8,7 @@ export const HomePage = memo(() => {
     <>
       <h1>Welcome to NOTES</h1>
       <h3>Please:</h3>
-      <Link href="/Login">
+      <Link href="/login">
         <a className={styles.example}>Sign In</a>
       </Link>
       <h3>or</h3>
