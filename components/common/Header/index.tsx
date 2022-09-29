@@ -1,15 +1,12 @@
 import { useAuthContext } from "context/authContext";
-import { useRouter } from "next/router";
 
 import Link from "next/link";
 
 import styles from "./styles.module.css";
 
 export function Header() {
-  const router = useRouter();
-  const { auth, handleSignOut } = useAuthContext();
+  const { handleSignOut } = useAuthContext();
 
-  if (!auth.loggedIn) router.push("/login");
   return (
     <div className={styles.headerWrapper}>
       <h1 className={styles.noteHeader}>Notes</h1>

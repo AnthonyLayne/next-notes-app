@@ -1,5 +1,4 @@
 import { ChangeEvent, memo, useState, useCallback } from "react";
-import { useRouter } from "next/router";
 
 // Components
 import { Input } from "components/common/Input";
@@ -11,9 +10,7 @@ import { useAuthContext } from "context/authContext";
 import styles from "./styles.module.css";
 
 export const Login = memo(() => {
-  const router = useRouter();
   const { handleSignIn, auth } = useAuthContext();
-  // TODO: sign out probably put on the header? Check design googlekeep, redirect to notes page after successful sign in
 
   const [{ username, password }, setData] = useState({ username: "", password: "" });
 
@@ -21,8 +18,6 @@ export const Login = memo(() => {
     ({ target: { name, value } }: ChangeEvent<HTMLInputElement>) => setData((prev) => ({ ...prev, [name]: value })),
     []
   );
-
-  if (auth.loggedIn) router.push("/notes");
 
   return (
     <div className={styles.wrapper}>
