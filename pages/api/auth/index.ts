@@ -29,20 +29,7 @@ const REQUIRED_AUTH_USER_FIELDS: (keyof AuthUser)[] = ["username", "password"];
 export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<AuthResponse>>) => {
   const { links, jwtInfo } = await apiInit(req, res);
 
-  const reqBody = req.body as Partial<AuthUser>;
-  const { username, password } = reqBody;
-
   try {
-    const { valid, missingFields } = validateFields(reqBody, REQUIRED_AUTH_USER_FIELDS, {
-      allowEmptyString: false,
-      allowPartial: false,
-    });
-
-    if (!valid) {
-      const message = `The following fields are required: ${missingFields.join(", ")}`;
-      return badRequestResponse(res, { message }, links, message);
-    }
-
     let user: Nullable<UserFrontend> = null;
 
     // Validate Auth
@@ -56,6 +43,19 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
         return successResponse(res, { user, jwt: jwtInfo.jwtToken }, links, "User has been signed up.");
       }
       return badRequestResponse(res, { error: jwtInfo.jwtError }, links, "Bad jwt.");
+    }
+
+    const reqBody = req.body as Partial<AuthUser>;
+    const { username, password } = reqBody;
+
+    const { valid, missingFields } = validateFields(reqBody, REQUIRED_AUTH_USER_FIELDS, {
+      allowEmptyString: false,
+      allowPartial: false,
+    });
+
+    if (!valid) {
+      const message = `The following fields are required: ${missingFields.join(", ")}`;
+      return badRequestResponse(res, { message }, links, message);
     }
 
     // Sign Up
@@ -85,8 +85,9 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
           if (validPass) {
             user = convertKeys<UserFrontend, Omit<UserBackend, "password">>(backendUser, { created_at: "createdAt" });
 
-            if (user)
-              return successResponse(res, { user, jwt: jwtInfo.jwtToken || signJwt(user.id) }, links, "Success");
+            if (user) {
+              return successResponse(res, { user, jwt: signJwt(user.id) }, links, "Success");
+            }
           } else {
             const badCreds = "Username or Password is incorrect.";
 
