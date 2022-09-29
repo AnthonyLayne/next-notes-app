@@ -45,6 +45,7 @@ export type ApiResponse<T> = ApiErrorResponse &
   }>;
 
 export type JwtForm = {
+  /** `exp` is stored in seconds, not milliseconds */
   exp: number;
   uid: string;
 };

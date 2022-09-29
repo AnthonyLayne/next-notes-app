@@ -6,7 +6,7 @@ import jwtLib from "jsonwebtoken";
 
 // Helpers
 import { getEnvVar } from "services/server/getEnvVar";
-import { days } from "utils/time";
+import { milliseconds, days } from "utils/time";
 
 // Types
 import { Links, ApiBadRequestResponse, ApiErrorResponse, ServerResponseError, JwtForm } from "./types";
@@ -141,7 +141,11 @@ const getLinks = (req: NextApiRequest) => {
 
 const verifyJwt = (jwtToken: string) => jwtLib.verify(jwtToken, getEnvVar("JWT_SECRET")) as JwtForm;
 
-export const signJwt = (uid: string) => jwtLib.sign({ uid, exp: Date.now() + days(14).ms }, getEnvVar("JWT_SECRET"));
+export const signJwt = (uid: string) =>
+  jwtLib.sign(
+    { uid, exp: Math.round(milliseconds(Date.now()).in("seconds") + days(14).in("seconds")) },
+    getEnvVar("JWT_SECRET")
+  );
 
 export const apiInit = async (req: NextApiRequest, res: NextApiResponse) => {
   res.setHeader("Content-Type", "application/json;charset=UTF-8");
@@ -160,7 +164,8 @@ export const apiInit = async (req: NextApiRequest, res: NextApiResponse) => {
   if (jwtToken) {
     try {
       const payload = verifyJwt(jwtToken);
-      if (payload.exp > Date.now()) uid = payload.uid;
+
+      if (payload.exp > milliseconds(Date.now()).in("seconds")) uid = payload.uid;
       else jwtError = "Jwt expired.";
     } catch (err) {
       jwtError = err;
