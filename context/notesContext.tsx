@@ -1,7 +1,10 @@
 import { createContext, ReactNode, useCallback, useMemo, useState } from "react";
 
 // Services
-import { createNote, deleteNote, editNote, getApiAxiosInstance } from "services/api";
+import { createNote, deleteNote, editNote } from "services/api";
+
+// Context
+import { useAuthContext } from "context/authContext";
 
 // Helpers
 import { useSafeContext } from "context/useSafeContext";
@@ -18,6 +21,7 @@ export type BaseNotesContext = {
 
   handleEditNote: ({ title, description }: NoteFrontend) => Promise<NoteFrontend>;
   handleDeleteNote: (id: string) => Promise<void>;
+  // handleGetNotes: (uid: string) => Promise<NoteFrontend[]>;
 };
 
 const NotesContext = createContext<Maybe<BaseNotesContext>>(undefined);
@@ -30,9 +34,9 @@ type TProps = {
 };
 
 export function NotesContextProviderComponent({ children }: TProps) {
-  const [notes, setNotes] = useState<Record<string, NoteFrontend>>({});
+  const { apiInstance } = useAuthContext();
 
-  const apiInstance = useMemo(() => getApiAxiosInstance(), []);
+  const [notes, setNotes] = useState<Record<string, NoteFrontend>>({});
 
   // eslint-disable-next-line camelcase
   const handleCreateNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description">, userId: string) => {
@@ -55,14 +59,27 @@ export function NotesContextProviderComponent({ children }: TProps) {
     await deleteNote(apiInstance, id);
   }, []);
 
+  // const handleGetNotes = useCallback(async (uid: string) => {
+  //   const userNotes = await getUserNotes(apiInstance, uid);
+
+  //   return userNotes;
+  // }, []);
+
   const ctx = useMemo(
     () => ({
       notes,
       handleCreateNote,
       handleEditNote,
       handleDeleteNote,
+      // handleGetNotes,
     }),
-    [notes, handleCreateNote, handleEditNote, handleDeleteNote]
+    [
+      notes,
+      handleCreateNote,
+      handleEditNote,
+      handleDeleteNote,
+      // handleGetNostes
+    ]
   );
 
   return <NotesContext.Provider value={ctx}>{children}</NotesContext.Provider>;
