@@ -141,7 +141,7 @@ const getLinks = (req: NextApiRequest) => {
 
 const verifyJwt = (jwtToken: string) => jwtLib.verify(jwtToken, getEnvVar("JWT_SECRET")) as JwtForm;
 
-export const signJwt = (uid: string) =>
+export const signJwt = (uid: number) =>
   jwtLib.sign(
     { uid, exp: Math.round(milliseconds(Date.now()).in("seconds") + days(14).in("seconds")) },
     getEnvVar("JWT_SECRET")
@@ -158,14 +158,14 @@ export const apiInit = async (req: NextApiRequest, res: NextApiResponse) => {
   const { authorization } = req.headers as { authorization?: string };
   const jwtToken = authorization?.split("Bearer ")[1];
 
-  let uid: Maybe<string>;
+  let uid: Maybe<number>;
   let jwtError: Maybe<unknown>;
 
   if (jwtToken) {
     try {
       const payload = verifyJwt(jwtToken);
 
-      if (payload.exp > milliseconds(Date.now()).in("seconds")) uid = payload.uid;
+      if (payload.exp > milliseconds(Date.now()).in("seconds")) uid = Number(payload.uid);
       else jwtError = "Jwt expired.";
     } catch (err) {
       jwtError = err;

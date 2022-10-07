@@ -1,7 +1,7 @@
-import { createContext, ReactNode, useCallback, useMemo, useState } from "react";
+import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 
 // Services
-import { createNote, deleteNote, editNote } from "services/api";
+import { createNote, deleteNote, editNote, getUserNotes } from "services/api";
 
 // Context
 import { useAuthContext } from "context/authContext";
@@ -13,15 +13,14 @@ import { useSafeContext } from "context/useSafeContext";
 import { NoteFrontend } from "services/knex/types";
 
 export type BaseNotesContext = {
-  notes: Record<string, NoteFrontend>;
+  notes: NoteFrontend[];
   handleCreateNote: (
     { title, description }: Pick<NoteFrontend, "title" | "description">,
-    id: string
+    userId: number
   ) => Promise<NoteFrontend>;
 
-  handleEditNote: ({ title, description }: NoteFrontend) => Promise<NoteFrontend>;
-  handleDeleteNote: (id: string) => Promise<void>;
-  // handleGetNotes: (uid: string) => Promise<NoteFrontend[]>;
+  handleEditNote: ({ title, description }: Pick<NoteFrontend, "title" | "description" | "id">) => Promise<NoteFrontend>;
+  handleDeleteNote: (id: number) => Promise<null>;
 };
 
 const NotesContext = createContext<Maybe<BaseNotesContext>>(undefined);
@@ -34,36 +33,43 @@ type TProps = {
 };
 
 export function NotesContextProviderComponent({ children }: TProps) {
-  const { apiInstance } = useAuthContext();
+  const { apiInstance, auth } = useAuthContext();
+  // new note stat
+  // PUT IN COMPONENT FOR ADDING/EDITING A-> const [note, setNote] = useState<Record<string, NoteFrontend>>({});
+  const [notes, setNotes] = useState<NoteFrontend[]>([]);
 
-  const [notes, setNotes] = useState<Record<string, NoteFrontend>>({});
+  useEffect(() => {
+    if (auth.user?.id) getUserNotes(apiInstance, auth.user.id).then(setNotes);
+  }, [auth.user?.id]);
 
   // eslint-disable-next-line camelcase
-  const handleCreateNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description">, userId: string) => {
+  const handleCreateNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description">, userId: number) => {
     const createdNote = await createNote(apiInstance, { ...note, userId });
-    // createNote might actually be in .data again, if so pull out in createNote, not here.
-    setNotes((prev) => ({ ...prev, [createdNote.id]: createdNote }));
+    setNotes((prev) => [...prev, createdNote]);
 
     return createdNote;
   }, []);
 
-  const handleEditNote = useCallback(async (note: NoteFrontend) => {
+  const handleEditNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description" | "id">) => {
     const editedNote = await editNote(apiInstance, note);
 
-    setNotes((prev) => ({ ...prev, [editedNote.id]: editedNote }));
+    setNotes((prev) =>
+      prev.map((n) => {
+        if (editedNote.id === n.id) return editedNote;
+        return n;
+      })
+    );
 
     return editedNote;
   }, []);
 
-  const handleDeleteNote = useCallback(async (id: string) => {
+  const handleDeleteNote = useCallback(async (id: number) => {
     await deleteNote(apiInstance, id);
+
+    setNotes((prev) => prev.filter((n) => id !== n.id));
+
+    return null;
   }, []);
-
-  // const handleGetNotes = useCallback(async (uid: string) => {
-  //   const userNotes = await getUserNotes(apiInstance, uid);
-
-  //   return userNotes;
-  // }, []);
 
   const ctx = useMemo(
     () => ({
@@ -71,15 +77,8 @@ export function NotesContextProviderComponent({ children }: TProps) {
       handleCreateNote,
       handleEditNote,
       handleDeleteNote,
-      // handleGetNotes,
     }),
-    [
-      notes,
-      handleCreateNote,
-      handleEditNote,
-      handleDeleteNote,
-      // handleGetNostes
-    ]
+    [notes, handleCreateNote, handleEditNote, handleDeleteNote]
   );
 
   return <NotesContext.Provider value={ctx}>{children}</NotesContext.Provider>;

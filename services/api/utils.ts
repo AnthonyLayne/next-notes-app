@@ -3,10 +3,10 @@ export const PATHS = {
   userLogin: () => "/auth" as const,
 
   // Users
-  getUser: (id: string) => `/users/${id}` as const,
-  getUserNotes: (id: string) => `/users/${id}/notes` as const,
+  getUser: (id: number) => `/users/${id}` as const,
+  getUserNotes: (id: number) => `/users/${id}/notes` as const,
 
   // Notes
   getNotes: () => "/notes" as const,
-  getNote: (id: string) => `/notes/${id}` as const,
+  getNote: (id: number) => `/notes/${id}` as const,
 };

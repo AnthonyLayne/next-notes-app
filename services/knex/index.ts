@@ -14,7 +14,7 @@ export const getByUsername = async (username: string) => {
   return name[0] as Maybe<UserBackend>;
 };
 
-export const getById = async (id: string) => {
+export const getById = async (id: number) => {
   const name = await db("users").where("id", id);
   return name[0] as Maybe<UserBackend>;
 };

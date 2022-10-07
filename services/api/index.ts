@@ -10,17 +10,19 @@ import { AuthUser, AuthResponse } from "pages/api/auth";
 import { SuccessResponse } from "utils/api";
 import { PATHS } from "./utils";
 
+// TODO: add some validation on the server that makes sure that the note you're requesting is owned or collab by user
+
 // Notes------------------------------------------------------------------------------------
 export const createNote = async (apiInstance: AxiosInstance, postBody: PostNoteBody) =>
   apiInstance.post<SuccessResponse<NoteFrontend>>(PATHS.getNotes(), postBody).then(({ data }) => data.data);
 
-export const getUserNotes = async (apiInstance: AxiosInstance, uid: string) =>
+export const getUserNotes = async (apiInstance: AxiosInstance, uid: number) =>
   apiInstance.get<SuccessResponse<NoteFrontend[]>>(PATHS.getUserNotes(uid)).then(({ data }) => data.data);
 
 export const editNote = async (apiInstance: AxiosInstance, editBody: PutNoteBody) =>
   apiInstance.put<SuccessResponse<NoteFrontend>>(PATHS.getNote(editBody.id), editBody).then(({ data }) => data.data);
 
-export const deleteNote = async (apiInstance: AxiosInstance, id: string) =>
+export const deleteNote = async (apiInstance: AxiosInstance, id: number) =>
   apiInstance.delete<SuccessResponse<null>>(PATHS.getNote(id)).then(({ data }) => data.data);
 // -----------------------------------------------------------------------------------------
 
@@ -34,6 +36,6 @@ export const loginUser = async (apiInstance: AxiosInstance, loginBody: AuthUser)
 export const createUser = async (apiInstance: AxiosInstance, postBody: AuthUser) =>
   apiInstance.post<SuccessResponse<AuthResponse>>(PATHS.userLogin(), postBody).then(({ data }) => data.data);
 
-export const deleteUser = async (apiInstance: AxiosInstance, id: string) =>
+export const deleteUser = async (apiInstance: AxiosInstance, id: number) =>
   apiInstance.delete<SuccessResponse<null>>(PATHS.getUser(id)).then(({ data }) => data.data);
 // -----------------------------------------------------------------------------------------

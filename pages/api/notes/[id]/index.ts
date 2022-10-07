@@ -18,7 +18,7 @@ import { validateFields } from "utils/format";
 // Types
 import { NoteBackend, NoteFrontend } from "services/knex/types";
 
-export type PutNoteBody = NoteFrontend;
+export type PutNoteBody = Omit<NoteFrontend, "createdAt" | "userId">;
 
 const REQURIED_PUT_FIELDS: (keyof PutNoteBody)[] = ["title", "description"];
 

@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "l:es-fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "l:scss-fix": "sass-lint-auto-fix",
+    "l:scss": "sass-lint -c .sasslintrc -v -q --max-warnings 0",
     "l:ts": "tsc",
     "l": "next lint && yarn run l:ts && yarn run l:es-fix",
     "migrate": "knex migrate:latest",
@@ -27,7 +29,8 @@
     "pg": "^8.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "^6.4.1"
+    "react-router-dom": "^6.4.1",
+    "sass": "^1.55.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -40,6 +43,7 @@
     "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
+    "css-loader": "^6.7.1",
     "eslint": "^8.23.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "^12.2.5",
@@ -50,6 +54,9 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.7",
     "prettier": "^2.7.1",
+    "sass-lint": "^1.13.1",
+    "sass-lint-auto-fix": "^0.21.2",
+    "style-loader": "^3.3.1",
     "typescript": "4.8.2"
   }
 }

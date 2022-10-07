@@ -6,24 +6,24 @@ import { getAllNotesById } from "services/knex";
 // Utils
 import {
   apiInit,
-  badRequestResponse,
+  // badRequestResponse,
   convertKeys,
   notFoundResponse,
   serverErrorResponse,
   successResponse,
   SuccessResponse,
 } from "utils/api";
-import { validateFields } from "utils/format";
+// import { validateFields } from "utils/format";
 
 // Types
 import { NoteBackend, NoteFrontend, UserFrontend } from "services/knex/types";
 
 export type GetNoteBody = Pick<UserFrontend, "id">;
 
-const REQUIRED_GET_FIELDS: (keyof GetNoteBody)[] = ["id"];
+// const REQUIRED_GET_FIELDS: (keyof GetNoteBody)[] = ["id"];
 
 export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<NoteFrontend[]>>) => {
-  const reqBodyGet = req.body as GetNoteBody;
+  // const reqBodyGet = req.body as GetNoteBody;
 
   const { links } = await apiInit(req, res);
 
@@ -31,22 +31,22 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
   const { id } = req.query as { id: string };
 
   try {
-    const { valid, missingFields } = validateFields(reqBodyGet, REQUIRED_GET_FIELDS, {
-      allowEmptyString: false,
-      allowPartial: false,
-    });
+    // const { valid, missingFields } = validateFields(reqBodyGet, REQUIRED_GET_FIELDS, {
+    //   allowEmptyString: false,
+    //   allowPartial: false,
+    // });
 
-    if (!valid) {
-      const message = `The ${missingFields} field is missing.`;
-      return badRequestResponse(res, { message }, links, message);
-    }
+    // if (!valid) {
+    //   const message = `The ${missingFields} field is missing.`;
+    //   return badRequestResponse(res, { message }, links, message);
+    // }
     // eslint-disable-next-line camelcase
     if (id) {
       if (req.method === "GET") {
         const notes = await getAllNotesById(id);
 
         const frontNotes = notes.map((note) =>
-          convertKeys<NoteFrontend, NoteBackend>(note, { created_at: "createdAt" })
+          convertKeys<NoteFrontend, NoteBackend>(note, { created_at: "createdAt", user_id: "userId" })
         );
 
         if (frontNotes.length === 0 || !frontNotes) {
