@@ -6,15 +6,17 @@ import Head from "next/head";
 import { NotesContextProviderComponent } from "context/notesContext";
 import { AuthContextProviderComponent, useAuthContext } from "context/authContext";
 
+// Components
+import { EmptyLayout } from "components/common/Layout/EmptyLayout";
+
 // Hooks
 import { usePageTitle } from "hooks/usePageTitle";
 import { useRouting } from "hooks/useRouting";
 
 // Types
 import { TProps as LayoutProps } from "components/common/Layout";
-import { EmptyLayout } from "components/common/Layout/EmptyLayout";
 
-import "../styles/globals.css";
+import "../styles/index.css";
 
 const MIN_LOAD_TIME_MS = 500;
 

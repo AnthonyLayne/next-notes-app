@@ -1,15 +1,16 @@
-import { useOpenStateHandler } from "hooks/useAnimatedOpenState";
 import { PropsWithChildren, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 // Utils
 import { handleKeyDown, updateFocusableElements } from "utils/modalUtils";
+import { getCSSNumberProperty } from "styles/utils";
+import { useOpenStateHandler } from "hooks/useAnimatedOpenState";
+
+// Constants
 import { KEY } from "utils/modalUtils/constants";
 
 // Styles
 import cx from "classnames";
-import styles from "./styles.module.scss";
-
-const transitionTime = 250;
+import styles from "./styles.module.css";
 
 type TProps = PropsWithChildren<{
   isOpen: boolean;
@@ -19,6 +20,8 @@ type TProps = PropsWithChildren<{
 }>;
 
 export function Modal({ isOpen, children, handleClose, innerWrapperClassnames }: TProps) {
+  const transitionTime = getCSSNumberProperty("--modalTransitionTime");
+
   const modalOverlayRef = useRef<HTMLDivElement>(null); // prints {current: null}
   const allFocusableEl = useRef<Maybe<HTMLElement>[]>([]); // prints {current: []}
   const [focusedIndex, setFocusedIndex] = useState(0);
@@ -26,7 +29,7 @@ export function Modal({ isOpen, children, handleClose, innerWrapperClassnames }:
   const bodyOverflowProperty = useRef<string>(""); // prints {current: ""}
 
   // useOpenStateHandler recieves isOpen: bool, opts: {}
-  const openState = useOpenStateHandler(isOpen, { transitionTime, immediateOpen: true });
+  const openState = useOpenStateHandler(isOpen, { transitionTime, immediateOpen: false });
   // updates the elements that can be focused, sets the current focused index
   const setFocusableElements = useCallback(() => {
     // if modalOverlayRef.current---> set allFocusableEl.current -> to -> whatever html element
@@ -125,12 +128,7 @@ export function Modal({ isOpen, children, handleClose, innerWrapperClassnames }:
       })}
     >
       {/* eslint-disable jsx-a11y/click-events-have-key-events */}
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className={innerWrapperClassnames}
-      >
+      <div onClick={(e) => e.stopPropagation()} className={innerWrapperClassnames}>
         <div>
           <button type="button" onClick={handleClose}>
             <h3>Close</h3>

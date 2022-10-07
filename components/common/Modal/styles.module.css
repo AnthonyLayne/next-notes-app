@@ -1,0 +1,46 @@
+.modalOverlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--modalIndex);
+  background: var(--modalOverlayColor);
+
+  opacity: 0; /* It should fade in and out as it opens and closes */
+  transition: opacity var(--modalTransitionTime);
+}
+
+.modalOverlay > div {
+  display: flex;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow-y: auto;
+
+  transform: scale(0.5); /* It should scale up as it opens, but not as it closes */
+  transition: transform var(--modalTransitionTime);
+}
+
+.modalOverlay.closed {
+  display: none;
+}
+
+.modalOverlay.closed > div {
+  transform: scale(1);
+}
+
+.modalOverlay.closing > div {
+  transform: scale(1);
+}
+
+.modalOverlay.open {
+  opacity: 1;
+}
+
+.modalOverlay.open > div {
+  transform: scale(1);
+}

@@ -11,7 +11,7 @@ const EMPTY_NOTE = { title: "", description: "" };
 const getDefaultNote = (n: Maybe<NoteFrontend>) => (n ? { title: n.title, description: n.description } : EMPTY_NOTE);
 
 type TProps = {
-  noteId?: number;
+  noteId?: Nullable<number>;
 };
 
 export function NoteEditor({ noteId }: TProps) {

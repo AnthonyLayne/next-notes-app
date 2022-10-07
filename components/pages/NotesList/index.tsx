@@ -23,7 +23,7 @@ export function NotesList() {
 
   return (
     <>
-      <NoteModal noteId={Number(noteId)} />
+      <NoteModal noteId={noteId ? Number(noteId) : null} />
 
       <div className={styles.notesListWrapper}>
         <h2 className={styles.header}>Your Notes:</h2>
