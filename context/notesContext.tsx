@@ -40,36 +40,45 @@ export function NotesContextProviderComponent({ children }: TProps) {
 
   useEffect(() => {
     if (auth.user?.id) getUserNotes(apiInstance, auth.user.id).then(setNotes);
-  }, [auth.user?.id]);
+  }, [auth.user?.id, apiInstance]);
 
   // eslint-disable-next-line camelcase
-  const handleCreateNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description">, userId: number) => {
-    const createdNote = await createNote(apiInstance, { ...note, userId });
-    setNotes((prev) => [...prev, createdNote]);
+  const handleCreateNote = useCallback(
+    async (note: Pick<NoteFrontend, "title" | "description">, userId: number) => {
+      const createdNote = await createNote(apiInstance, { ...note, userId });
+      setNotes((prev) => [...prev, createdNote]);
 
-    return createdNote;
-  }, []);
+      return createdNote;
+    },
+    [apiInstance]
+  );
 
-  const handleEditNote = useCallback(async (note: Pick<NoteFrontend, "title" | "description" | "id">) => {
-    const editedNote = await editNote(apiInstance, note);
+  const handleEditNote = useCallback(
+    async (note: Pick<NoteFrontend, "title" | "description" | "id">) => {
+      const editedNote = await editNote(apiInstance, note);
 
-    setNotes((prev) =>
-      prev.map((n) => {
-        if (editedNote.id === n.id) return editedNote;
-        return n;
-      })
-    );
+      setNotes((prev) =>
+        prev.map((n) => {
+          if (editedNote.id === n.id) return editedNote;
+          return n;
+        })
+      );
 
-    return editedNote;
-  }, []);
+      return editedNote;
+    },
+    [apiInstance]
+  );
 
-  const handleDeleteNote = useCallback(async (id: number) => {
-    await deleteNote(apiInstance, id);
+  const handleDeleteNote = useCallback(
+    async (id: number) => {
+      await deleteNote(apiInstance, id);
 
-    setNotes((prev) => prev.filter((n) => id !== n.id));
+      setNotes((prev) => prev.filter((n) => id !== n.id));
 
-    return null;
-  }, []);
+      return null;
+    },
+    [apiInstance]
+  );
 
   const ctx = useMemo(
     () => ({

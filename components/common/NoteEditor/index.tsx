@@ -1,18 +1,21 @@
-import { useState, ChangeEvent, useMemo, useCallback } from "react";
-// import { useRouter } from "next/router";
+import { useState, ChangeEvent, useMemo, useCallback, useEffect, FormEvent } from "react";
+import { useRouter } from "next/router";
 
 // Context
 import { useNotesContext } from "context/notesContext";
 import { useAuthContext } from "context/authContext";
+import { NoteFrontend } from "services/knex/types";
 
 const EMPTY_NOTE = { title: "", description: "" };
+
+const getDefaultNote = (n: Maybe<NoteFrontend>) => (n ? { title: n.title, description: n.description } : EMPTY_NOTE);
 
 type TProps = {
   noteId?: number;
 };
 
 export function NoteEditor({ noteId }: TProps) {
-  // const router = useRouter();
+  const router = useRouter();
 
   const {
     auth: { user },
@@ -20,24 +23,41 @@ export function NoteEditor({ noteId }: TProps) {
 
   const { handleCreateNote, handleEditNote, notes } = useNotesContext();
 
+  // ------------------------------------------------------------------------------------------------------------------
   const userNote = useMemo(() => notes.find((n) => n.id === noteId), [notes, noteId]);
-  // console.log("THIS--->", userNote);
-  const [noteFormState, setNoteFormState] = useState(
-    userNote ? { title: userNote.title, description: userNote.description } : EMPTY_NOTE
-  );
+
+  const [noteFormState, setNoteFormState] = useState(getDefaultNote(userNote));
+
+  useEffect(() => {
+    setNoteFormState(getDefaultNote(userNote));
+  }, [userNote]);
+  // ------------------------------------------------------------------------------------------------------------------
+
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
       setNoteFormState((prevState) => ({ ...prevState, [e.target.name]: e.target.value })),
     []
   );
 
-  const handleSubmit = useCallback(async () => {
-    if (user) {
-      if (noteId) await handleEditNote({ ...noteFormState, id: noteId });
-      else await handleCreateNote(noteFormState, user.id);
-    }
-    // clear state
-  }, [user, noteId, noteFormState, handleCreateNote, handleEditNote]);
+  const handleSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      if (user) {
+        try {
+          if (noteId) await handleEditNote({ ...noteFormState, id: noteId });
+          else await handleCreateNote(noteFormState, user.id);
+
+          setNoteFormState(EMPTY_NOTE);
+          router.push("/notes");
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(err);
+        }
+      }
+    },
+    [user, noteId, noteFormState, handleCreateNote, handleEditNote]
+  );
 
   return (
     <div className="noteEditorWrapper">
