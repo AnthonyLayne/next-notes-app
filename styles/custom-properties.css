@@ -5,7 +5,7 @@
   /* ------------------------------*/
 
   /* Colors -----------------------*/
-  --teal: #00ffff;
+  --purple: #4800ff;
   --red: #d90033;
 
   --modalOverlayColor: #1111134d;
@@ -17,7 +17,7 @@
   --lightGray: #e5e5e5;
   --white: #fff;
   /* ------------------------------*/
-  --primaryColor: var(--parmTeal);
+  --primaryColor: var(--purple);
   --secondaryColor: var(--darkBlack);
   --errorColor: var(--red);
   /* ------------------------------*/
@@ -41,9 +41,7 @@
   --appWrapperMaxPercentage: 95%;
 
   --headerHeight: var(--s4);
-  --modalSliderHeaderHeight: var(--s4);
-  --modalSliderWidth: 445px;
-  --inputHeight: 50px;
+  --inputHeight: var(--s4);
 
   --scrollBarWidth: 5px;
   /* ------------------------------*/
@@ -65,5 +63,6 @@
 
   /* Animation --------------------*/
   --standardTransitionTime: 250ms;
+  --modalTransitionTime: 200ms;
   /* ------------------------------*/
 }

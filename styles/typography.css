@@ -1,18 +1,17 @@
-@import "styles/_variables";
-@import "styles/_mixins";
-
 html {
   font-family: var(--mainFontFamily);
-  font-size: 62.5%; // This allows you to set rems in pixel sizes (16px => 1.6rem)
+  font-size: 62.5%; /* This allows you to set rems in pixel sizes (16px => 1.6rem) */
 }
 
 body,
 input,
 textarea {
-  @include use-regular-font-size;
   color: var(--lightBlack);
   font-family: var(--mainFontFamily);
   line-height: 2.2rem;
+
+  font-size: var(--regularFontSize);
+  line-height: 120%;
 }
 
 button {
@@ -20,38 +19,49 @@ button {
 }
 
 h1 {
-  @include use-h1-font-size;
   color: var(--darkBlack);
   font-family: var(--mainFontFamily);
+
+  font-size: var(--h1FontSize);
+  line-height: 140%;
 }
 
 h2 {
-  @include use-h2-font-size;
   color: var(--darkBlack);
   font-family: var(--mainFontFamily);
+
+  font-size: var(--h2FontSize);
+  line-height: 135%;
 }
 
 h3 {
-  @include use-h3-font-size;
   color: var(--lightBlack);
   font-family: var(--mainFontFamily);
+
+  font-size: var(--h3FontSize);
+  line-height: 130%;
 }
 
 h4 {
-  @include use-h4-font-size;
   color: var(--lightBlack);
   font-family: var(--mainFontFamily);
+
+  font-size: var(--h4FontSize);
+  line-height: 130%;
 }
 
 h5 {
-  @include use-regular-font-size;
   color: var(--lightBlack);
   font-family: var(--mainFontFamily);
   font-weight: var(--bold);
+
+  font-size: var(--regularFontSize);
+  line-height: 120%;
 }
 
 small {
-  @include small-tag;
+  font-size: var(--smallestFontSize);
+  line-height: 100%;
 }
 
 a {
@@ -75,4 +85,32 @@ p {
 b,
 strong {
   font-weight: var(--bold);
+}
+
+@media (max-width: 900px) {
+  body,
+  input,
+  textarea {
+    font-size: var(--smallFontSize);
+    line-height: 100%;
+  }
+
+  h1 {
+    font-size: var(--h2FontSize);
+    line-height: 135%;
+  }
+
+  h2 {
+    font-size: var(--h3FontSize);
+    line-height: 130%;
+  }
+
+  h3 {
+    font-size: var(--h4FontSize);
+    line-height: 130%;
+  }
+
+  h4 {
+    line-height: 120%;
+  }
 }

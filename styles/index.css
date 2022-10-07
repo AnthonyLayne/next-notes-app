@@ -1,0 +1,51 @@
+@import "./custom-properties";
+@import "./reset";
+@import "./typography";
+
+/* For debugging */
+/* body * {
+  border: 1px solid red;
+} */
+
+body {
+  background-color: var(--mediumGray);
+}
+
+body ::selection {
+  background-color: var(--primaryColor);
+  color: red;
+}
+
+body *:focus {
+  outline: 2px solid var(--darkGray);
+}
+
+/* ---- Scrollbar ------------------------------------------------------------------------------------------------- */
+body * {
+  overflow-y: auto;
+}
+
+/* For Chrome, Edge, Safari */
+body *::-webkit-scrollbar {
+  width: var(--scrollBarWidth);
+  height: var(--scrollBarWidth);
+}
+
+body *::-webkit-scrollbar-thumb {
+  background: var(--primaryColor);
+}
+
+body *::-webkit-scrollbar-track {
+  background: var(--mediumGray);
+}
+
+body * {
+  /* For FireFox */
+  scrollbar-color: var(--primaryColor);
+  scrollbar-face-color: var(--primaryColor);
+
+  /* For IE */
+  scrollbar-track-color: var(--mediumGray);
+  scrollbar-width: var(--scrollBarWidth);
+}
+/* ---------------------------------------------------------------------------------------------------------------- */
