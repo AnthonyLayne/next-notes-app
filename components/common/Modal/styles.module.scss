@@ -1,0 +1,129 @@
+// @import "styles/config";
+
+// .modalOverlay {
+//   @include flex-center;
+//   user-select: none;
+//   opacity: 0; // It should fade in and out as it opens and closes
+//   width: 100vw;
+//   height: 100vh;
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   z-index: var(--modalIndex);
+
+//   background: var(--modalOverlayColor);
+//   transition: opacity var(--standardTransitionTime);
+
+//   > div {
+//     display: flex;
+//     max-width: 100vw;
+//     max-height: 100vh;
+//     transform: scale(0.5); // It should scale up as it opens, but not as it closes
+//     transition: transform var(--standardTransitionTime);
+//     overflow-y: auto;
+//   }
+
+//   &.closed {
+//     display: none;
+
+//     > div {
+//       transform: scale(1);
+//     }
+//   }
+
+//   &.closing {
+//     > div {
+//       transform: scale(1);
+//     }
+//   }
+
+//   &.open {
+//     opacity: 1;
+
+//     > div {
+//       transform: scale(1);
+//     }
+//   }
+
+//   &.noDimBackground {
+//     background: unset;
+//   }
+
+//   &.fullscreen {
+//     > div {
+//       width: 100vw;
+//       height: 100vh;
+//       background-color: var(--lightGray);
+//     }
+//   }
+
+//   &.noScroll {
+//     > div {
+//       overflow-y: unset;
+//     }
+//   }
+
+//   &.sideSliderOverlay {
+//     background-color: transparent;
+
+//     > div {
+//       opacity: 1;
+//       display: flex;
+//       flex-direction: column;
+//       width: var(--modalSliderWidth);
+//       height: 100vh;
+//       position: absolute;
+//       top: 0;
+//       right: 0;
+//       background-color: var(--white);
+//       transform: translateX(100%);
+
+//       // Replace the modal transform
+//       transition: transform var(--standardTransitionTime);
+
+//       overflow-y: auto;
+
+//       @media (max-width: $mobile) {
+//         width: 100vw;
+//       }
+
+//       .header {
+//         display: flex;
+//         justify-content: space-between;
+//         align-items: center;
+//         min-height: var(--modalSliderHeaderHeight);
+//         padding: 0 var(--s1);
+
+//         .closeButton {
+//           @include flex-center;
+//           cursor: pointer;
+//           display: flex;
+//           padding: var(--s0);
+//           border: none;
+//           background: none;
+//           transition: transform --standardTransitionTime;
+
+//           &:hover {
+//             transform: scale(1.04);
+//           }
+
+//           &.hideClose {
+//             visibility: hidden;
+//           }
+
+//           > h3 {
+//             margin-left: 12px;
+//             font-weight: initial;
+//           }
+//         }
+//       }
+//     }
+
+//     &.open {
+//       > div {
+//         transform: translateX(0);
+//         box-shadow: 4px 0 20px var(--darkGray);
+//       }
+//     }
+//   }
+// }

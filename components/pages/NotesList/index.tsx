@@ -1,27 +1,50 @@
-// import { useNotesContext } from "context/notsesContext";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
+// Context
+import { useNotesContext } from "context/notesContext";
+
+// Components
+import { NoteModal } from "components/common/NoteModal";
+
+// Styles
+// import cx from "classnames";
+import styles from "./styles.module.css";
+
+// check query for an id, if id is in query use it to set the modal state to open.
+// a button will also set the modal state to open
+// For later...
 
 export function NotesList() {
-  // const { handleGetNotes } = useNotesContext();
+  const router = useRouter();
+  const { noteId } = router.query as { noteId?: string };
 
-  // const id = localStorage.getItem("token");
-  // console.log(id);
-
-  // const notes = handleGetNotes();
+  const { notes } = useNotesContext();
 
   return (
-    <div className="notesListWrapper">
-      <h2 className="header">Your Notes:</h2>
-      {/*
-      {Object.entries(notes).map(([id, note]) => (
-        <Link key={id} to={`/edit/${id}`} className="note">
-        {note.title}
-        </Link>
-      ))} */}
-    </div>
+    <>
+      <NoteModal noteId={Number(noteId)} />
+
+      <div className={styles.notesListWrapper}>
+        <h2 className={styles.header}>Your Notes:</h2>
+
+        <span>{noteId}</span>
+
+        <div className={styles.grid}>
+          {notes.map((note) => (
+            <Link href={`/notes?noteId=${note.id}`} key={note.id}>
+              <a className={styles.note}>
+                <h4>{note.title}</h4>
+                <p>{note.description}</p>
+              </a>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
 
-// TODO: get userId off of token, build a getNotes handler func in notes context, give the id to the func to get the usersnotes
 // TODO: list out the users notes
 // TODO: create an onclick that opens the note in a modal, where it can be edited
 // TODO: modal should have, a close button, that should do a PUT req and close at the same time, and a last edited time

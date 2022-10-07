@@ -1,9 +1,34 @@
 .notesListWrapper {
   margin: 65px 20px 20px;
   flex: 1;
-  border: 1px solid purple;
+  border: 1px solid red;
 }
 
 .notesListWrapper .header {
   margin-bottom: 20px;
+  border: 1px solid red;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 200px 200px 200px;
+  grid-template-rows: 200px 200px 200px;
+  border: 1px solid red;
+}
+.note {
+  border: 2px solid black;
+  border-radius: 7px;
+  border-color: black;
+  background-color: lightgrey;
+  margin: 2px;
+  display: flex;
+  flex-direction: column;
+}
+.note h4 {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* word-wrap: normal; */
+
+  /* align-self: flex-start; */
 }

@@ -1,0 +1,69 @@
+:root {
+  /* Z-Index ----------------------*/
+  --headerIndex: 50;
+  --modalIndex: 300;
+  /* ------------------------------*/
+
+  /* Colors -----------------------*/
+  --teal: #00ffff;
+  --red: #d90033;
+
+  --modalOverlayColor: #1111134d;
+
+  --darkBlack: #111113;
+  --lightBlack: #414141;
+  --darkGray: #8a8a8c;
+  --mediumGray: #d7d7d7;
+  --lightGray: #e5e5e5;
+  --white: #fff;
+  /* ------------------------------*/
+  --primaryColor: var(--parmTeal);
+  --secondaryColor: var(--darkBlack);
+  --errorColor: var(--red);
+  /* ------------------------------*/
+
+  /* Sizing -----------------------*/
+  --ratio: 1.5;
+  --s-5: calc(var(--s-4) / var(--ratio));
+  --s-4: calc(var(--s-3) / var(--ratio));
+  --s-3: calc(var(--s-2) / var(--ratio));
+  --s-2: calc(var(--s-1) / var(--ratio));
+  --s-1: calc(var(--s0) / var(--ratio));
+  --s0: 1rem;
+  --s1: calc(var(--s0) * var(--ratio));
+  --s2: calc(var(--s1) * var(--ratio));
+  --s3: calc(var(--s2) * var(--ratio));
+  --s4: calc(var(--s3) * var(--ratio));
+  --s5: calc(var(--s4) * var(--ratio));
+  --s6: calc(var(--s5) * var(--ratio));
+
+  --appWrapperMaxWidth: 1360px;
+  --appWrapperMaxPercentage: 95%;
+
+  --headerHeight: var(--s4);
+  --modalSliderHeaderHeight: var(--s4);
+  --modalSliderWidth: 445px;
+  --inputHeight: 50px;
+
+  --scrollBarWidth: 5px;
+  /* ------------------------------*/
+
+  /* Typography -------------------*/
+  --mainFontFamily: Helvetica, Arial, sans-serif;
+  --h1FontSize: 4rem;
+  --h2FontSize: 3.3rem;
+  --h3FontSize: 2.6rem;
+  --h4FontSize: 2.3rem;
+  --h5FontSize: 2rem;
+  --regularFontSize: 1.6rem;
+  --smallFontSize: calc(var(--regularFontSize) - 2px);
+  --smallestFontSize: calc(var(--regularFontSize) - 4px);
+  --lightWeight: 400;
+  --regularWeight: 500;
+  --bold: 800;
+  /* ------------------------------*/
+
+  /* Animation --------------------*/
+  --standardTransitionTime: 250ms;
+  /* ------------------------------*/
+}

@@ -1,0 +1,15 @@
+/*
+NOTE: We do not use Global Sass Variables in this repo, we use CSS Custom Properties.
+Only put global sass variables here that need to be exported to JS or used for media
+queries. Sass variables are be used for one-off values in individual files where css
+custom properties would break the sass linter.
+
+TL;DR - CSS Custom Properties for the global scope & Sass Variables for the local scope.
+*/
+
+// Media Breakpoints
+$mobile: 600px;
+$mobileLarge: 700px;
+$tablet: 900px;
+$smallDesktop: 1000px;
+$largeDesktop: 1300px;

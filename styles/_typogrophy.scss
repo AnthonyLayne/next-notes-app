@@ -1,0 +1,78 @@
+@import "styles/_variables";
+@import "styles/_mixins";
+
+html {
+  font-family: var(--mainFontFamily);
+  font-size: 62.5%; // This allows you to set rems in pixel sizes (16px => 1.6rem)
+}
+
+body,
+input,
+textarea {
+  @include use-regular-font-size;
+  color: var(--lightBlack);
+  font-family: var(--mainFontFamily);
+  line-height: 2.2rem;
+}
+
+button {
+  font-family: var(--mainFontFamily);
+}
+
+h1 {
+  @include use-h1-font-size;
+  color: var(--darkBlack);
+  font-family: var(--mainFontFamily);
+}
+
+h2 {
+  @include use-h2-font-size;
+  color: var(--darkBlack);
+  font-family: var(--mainFontFamily);
+}
+
+h3 {
+  @include use-h3-font-size;
+  color: var(--lightBlack);
+  font-family: var(--mainFontFamily);
+}
+
+h4 {
+  @include use-h4-font-size;
+  color: var(--lightBlack);
+  font-family: var(--mainFontFamily);
+}
+
+h5 {
+  @include use-regular-font-size;
+  color: var(--lightBlack);
+  font-family: var(--mainFontFamily);
+  font-weight: var(--bold);
+}
+
+small {
+  @include small-tag;
+}
+
+a {
+  color: var(--darkBlack);
+  font-family: var(--mainFontFamily);
+}
+
+a,
+a:active,
+a:link,
+a:visited,
+a:hover {
+  text-decoration: none;
+}
+
+p {
+  line-height: 150%;
+  white-space: pre-line;
+}
+
+b,
+strong {
+  font-weight: var(--bold);
+}
