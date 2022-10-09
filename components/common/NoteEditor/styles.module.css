@@ -1,16 +1,34 @@
 .noteEditorWrapper {
+  border: 2px solid orange;
+  background-color: cadetblue;
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin: 30px 30px 60px;
-  height: auto;
+  margin: 30px;
+  height: 100%;
+}
+
+.noteEditorWrapper .close {
+  display: flex;
+  align-self: flex-end;
+  justify-content: center;
+  width: 15%;
+}
+
+.noteEditorWrapper > form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .noteEditorWrapper > form > h3 {
+  border: 1px solid red;
   margin: 65px 0 31px 10px;
 }
 
 .noteEditorWrapper > form > input {
+  border: 1px solid red;
   height: 52px;
   width: 425px;
   padding-left: 15px;
@@ -23,9 +41,8 @@
 }
 
 .noteEditorWrapper > form > textarea {
+  border: 1px solid red;
   width: 765px;
-  padding-left: 25px;
-  padding-top: 25px;
   font-family: Raleway, Arial, Helvetica, sans-serif;
   border: 1px solid var(--borderColor);
   border-radius: 4px;
@@ -34,5 +51,10 @@
 }
 
 .noteEditorWrapper > form > button {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  border: 1px solid red;
   margin-top: 20px;
+  width: 15%;
 }

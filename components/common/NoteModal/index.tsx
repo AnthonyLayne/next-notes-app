@@ -14,8 +14,8 @@ export function NoteModal({ noteId }: TProps) {
   const handleClose = useCallback(() => router.push(router.pathname), [router]);
 
   return (
-    <Modal isOpen={typeof noteId === "number"} handleClose={handleClose}>
-      <NoteEditor noteId={noteId} />
+    <Modal isOpen={typeof noteId === "number"} handleClose={handleClose} hideCloseButton>
+      <NoteEditor noteId={noteId} onSave={handleClose} />
     </Modal>
   );
 }

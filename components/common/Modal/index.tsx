@@ -16,10 +16,12 @@ type TProps = PropsWithChildren<{
   isOpen: boolean;
   handleClose: VoidFunction;
   children: ReactNode;
+
+  hideCloseButton?: boolean;
   innerWrapperClassnames?: string;
 }>;
 
-export function Modal({ isOpen, children, handleClose, innerWrapperClassnames }: TProps) {
+export function Modal({ isOpen, children, handleClose, hideCloseButton, innerWrapperClassnames }: TProps) {
   const transitionTime = getCSSNumberProperty("--modalTransitionTime");
 
   const modalOverlayRef = useRef<HTMLDivElement>(null); // prints {current: null}
@@ -129,11 +131,11 @@ export function Modal({ isOpen, children, handleClose, innerWrapperClassnames }:
     >
       {/* eslint-disable jsx-a11y/click-events-have-key-events */}
       <div onClick={(e) => e.stopPropagation()} className={innerWrapperClassnames}>
-        <div>
+        {!hideCloseButton && (
           <button type="button" onClick={handleClose}>
             <h3>Close</h3>
           </button>
-        </div>
+        )}
         {children}
       </div>
     </div>

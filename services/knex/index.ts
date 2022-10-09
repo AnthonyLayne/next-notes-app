@@ -33,10 +33,8 @@ export const deleteUserById = (id: string) => db("users").where("id", id).del();
 // --------------------------------------------------------------------------------------------------------------------
 
 // ---- Notes ---------------------------------------------------------------------------------------------------------
-// TODO: getAllNotesById may have to be a join, check data
-// eslint-disable-next-line camelcase
-export const getAllNotesById = async (user_id: string) => {
-  const allUserNotes = await db("notes").where("user_id", user_id);
+export const getAllNotesById = async (userId: string) => {
+  const allUserNotes = await db("notes").where("user_id", userId);
 
   return allUserNotes || null;
 };

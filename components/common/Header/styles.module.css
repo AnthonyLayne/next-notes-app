@@ -1,15 +1,16 @@
 .headerWrapper {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--s1);
 
-  background-color: rgb(215, 215, 215);
+  background-color: lavender;
   border-right: 1px solid var(--borderColor);
-  padding: 18px;
+  padding: var(--s5);
 }
 
-/*
-.headerWrapper > *:not(:last-child) {
-  margin-right: 20px;
+.headerWrapper .signOut {
+  display: flex;
+  align-self: flex-end;
+  justify-content: center;
+  width: 8%;
 }
-*/

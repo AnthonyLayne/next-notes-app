@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import cx from "classnames";
 
 // Context
 import { useNotesContext } from "context/notesContext";
@@ -11,9 +12,8 @@ import { NoteModal } from "components/common/NoteModal";
 // import cx from "classnames";
 import styles from "./styles.module.css";
 
-// check query for an id, if id is in query use it to set the modal state to open.
-// a button will also set the modal state to open
-// For later...
+// TODO: need a hamburger button to appear when hovering over a note, with delete, copy, and label opts inside.
+// TODO: when the hamburger icon is clicked a small modal opens
 
 export function NotesList() {
   const router = useRouter();
@@ -28,14 +28,12 @@ export function NotesList() {
       <div className={styles.notesListWrapper}>
         <h2 className={styles.header}>Your Notes:</h2>
 
-        <span>{noteId}</span>
-
         <div className={styles.grid}>
-          {notes.map((note) => (
-            <Link href={`/notes?noteId=${note.id}`} key={note.id}>
-              <a className={styles.note}>
-                <h4>{note.title}</h4>
-                <p>{note.description}</p>
+          {notes.map(({ id, title, description }) => (
+            <Link href={`/notes?noteId=${id}`} key={id}>
+              <a className={cx(styles.note, { [styles.hidden]: noteId })}>
+                <h4>{title}</h4>
+                <p>{description}</p>
               </a>
             </Link>
           ))}
@@ -44,11 +42,3 @@ export function NotesList() {
     </>
   );
 }
-
-// TODO: list out the users notes
-// TODO: create an onclick that opens the note in a modal, where it can be edited
-// TODO: modal should have, a close button, that should do a PUT req and close at the same time, and a last edited time
-// TODO: see if you can figure out how to pin notes at the top of the list
-// TODO: need a delete button, consider a small hamburger icon to appear when hovering over a note, with delete opt inside.
-// TODO: when the hamburger icon is clicked a small modal opens
-// TODO: need a + button to create a new note

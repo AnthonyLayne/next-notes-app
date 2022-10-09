@@ -9,18 +9,20 @@ export function Header() {
 
   return (
     <div className={styles.headerWrapper}>
-      <h1 className={styles.noteHeader}>Notes</h1>
-
-      <button type="button" className={styles.example} onClick={handleSignOut}>
+      <button type="button" className={styles.signOut} onClick={handleSignOut}>
         Sign Out
       </button>
 
+      <h1 className={styles.noteHeader}>Notes</h1>
+
       <Link href="/notes" className={styles.primaryButton}>
-        <a>View Your Notes</a>
+        <a>View Your Notes </a>
       </Link>
 
-      <Link href="/edit" className={styles.primaryButton}>
-        <a>+ Create A New Note</a>
+      <Link href="/notes?noteId=0" className={styles.primaryButton}>
+        <a>
+          <img src="/icons/new-note.svg" alt="" /> new
+        </a>
       </Link>
     </div>
   );
