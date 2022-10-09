@@ -20,8 +20,10 @@ export const convertKeys = <Target extends Record<string, unknown>, Origin exten
   const conversion = { ...obj } as any;
 
   Object.entries(converstionTable).forEach(([fromKey, toKey]) => {
-    conversion[toKey] = obj[fromKey];
-    delete conversion[fromKey];
+    if (conversion[fromKey]) {
+      conversion[toKey] = obj[fromKey];
+      delete conversion[fromKey];
+    }
   });
   return conversion as Target;
 };
