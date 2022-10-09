@@ -56,6 +56,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
 
         const frontendNote = convertKeys<NoteFrontend, NoteBackend>(backendNote, {
           created_at: "createdAt",
+          updated_at: "updatedAt",
           user_id: "userId",
         });
 

@@ -46,7 +46,11 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
         const notes = await getAllNotesById(id);
 
         const frontNotes = notes.map((note) =>
-          convertKeys<NoteFrontend, NoteBackend>(note, { created_at: "createdAt", user_id: "userId" })
+          convertKeys<NoteFrontend, NoteBackend>(note, {
+            created_at: "createdAt",
+            updated_at: "updatedAt",
+            user_id: "userId",
+          })
         );
 
         if (frontNotes.length === 0 || !frontNotes) {
