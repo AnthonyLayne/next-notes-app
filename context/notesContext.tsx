@@ -34,15 +34,14 @@ type TProps = {
 
 export function NotesContextProviderComponent({ children }: TProps) {
   const { apiInstance, auth } = useAuthContext();
-  // new note stat
-  // PUT IN COMPONENT FOR ADDING/EDITING A-> const [note, setNote] = useState<Record<string, NoteFrontend>>({});
+
   const [notes, setNotes] = useState<NoteFrontend[]>([]);
 
   useEffect(() => {
     if (auth.user?.id) getUserNotes(apiInstance, auth.user.id).then(setNotes);
+    else setNotes([]);
   }, [auth.user?.id, apiInstance]);
 
-  // eslint-disable-next-line camelcase
   const handleCreateNote = useCallback(
     async (note: Pick<NoteFrontend, "title" | "description">, userId: number) => {
       const createdNote = await createNote(apiInstance, { ...note, userId });
