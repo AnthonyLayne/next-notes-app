@@ -70,6 +70,7 @@ export function NoteEditor({ noteId, onSave }: TProps) {
 
   return (
     <div className={styles.noteEditorWrapper}>
+      {/* // TODO: Revist this button having `onSave` */}
       <button type="button" onClick={onSave} className={styles.close}>
         <h3>Close</h3>
       </button>
