@@ -61,7 +61,7 @@ export const badRequestResponse = (
   res.status(400).send(
     JSON.stringify({
       links,
-      success: true,
+      success: false,
       message,
       errors,
     } as ApiBadRequestResponse)
