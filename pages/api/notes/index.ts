@@ -19,8 +19,7 @@ import { validateFields } from "utils/format";
 // Types
 import { NoteFrontend, BaseFieldsFrontend, NoteBackend } from "services/knex/types";
 
-type PostNote = Omit<NoteFrontend, keyof BaseFieldsFrontend>;
-export type PostNoteBody = PostNote & { userId: number };
+export type PostNoteBody = Omit<NoteFrontend, keyof BaseFieldsFrontend>;
 
 const REQUIRED_FIELDS: (keyof PostNoteBody)[] = ["title", "description", "userId"];
 

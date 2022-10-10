@@ -13,7 +13,7 @@ export type NoteBackend = BaseFieldsBackend & {
 
   title: string;
   description: string;
-  user_id?: string;
+  user_id?: number;
   pinned?: boolean;
 };
 
@@ -27,7 +27,7 @@ export type NoteFrontend = BaseFieldsFrontend & {
 
   title: string;
   description: string;
-  userId: string;
+  userId: number;
   pinned?: boolean;
 };
 
