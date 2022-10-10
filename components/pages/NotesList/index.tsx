@@ -31,7 +31,7 @@ export function NotesList() {
         <div className={styles.grid}>
           {notes.map(({ id, title, description }) => (
             <Link href={`/notes?noteId=${id}`} key={id}>
-              <a className={cx(styles.note, { [styles.hidden]: noteId })}>
+              <a className={cx(styles.note, { [styles.hidden]: Number(noteId) === id })}>
                 <h4>{title}</h4>
                 <p>{description}</p>
               </a>

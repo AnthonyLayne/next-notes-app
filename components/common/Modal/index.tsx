@@ -31,7 +31,8 @@ export function Modal({ isOpen, children, handleClose, hideCloseButton, innerWra
   const bodyOverflowProperty = useRef<string>(""); // prints {current: ""}
 
   // useOpenStateHandler recieves isOpen: bool, opts: {}
-  const openState = useOpenStateHandler(isOpen, { transitionTime, immediateOpen: false });
+  const openState = useOpenStateHandler(isOpen, { transitionTime, immediateOpen: true });
+
   // updates the elements that can be focused, sets the current focused index
   const setFocusableElements = useCallback(() => {
     // if modalOverlayRef.current---> set allFocusableEl.current -> to -> whatever html element

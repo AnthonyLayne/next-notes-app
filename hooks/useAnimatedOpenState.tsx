@@ -1,5 +1,7 @@
 import { useRef, useState, useLayoutEffect, useCallback } from "react";
 
+const REACT_CYCLE_BUFFER = 10;
+
 export type OpenStates = "CLOSING" | "CLOSED" | "OPENING" | "OPEN";
 type Options = Maybe<{
   initialState?: OpenStates;
@@ -54,10 +56,12 @@ export const useAnimatedOpenState = ({
 
     // setTimeout(function, delay) sets a timer(and stores the timer id) then executes code once the timer runs out
     // after 200ms sets the state from OPENING to OPEN (if the openstate is equal to OPENING)
-    if (openState === "OPENING") timeout.current = setTimeout(() => setOpenState("OPEN"), openDelay);
-    // (if openState is equal to CLOSING) sets the openState to Closed after 200ms
-    if (openState === "CLOSING") timeout.current = setTimeout(() => setOpenState("CLOSED"), closeDelay);
-    // if openState changes useLayoutEffect will rerun
+    if (openState === "OPENING") {
+      timeout.current = setTimeout(() => setTimeout(() => setOpenState("OPEN"), openDelay), REACT_CYCLE_BUFFER);
+    } // (if openState is equal to CLOSING) sets the openState to Closed after 200ms
+    if (openState === "CLOSING") {
+      timeout.current = setTimeout(() => setTimeout(() => setOpenState("CLOSED"), closeDelay), REACT_CYCLE_BUFFER);
+    } // if openState changes useLayoutEffect will rerun
   }, [openState]);
   // useAnimatedOpenState returns stateful values
   return { openState, open, close, toggle } as const;

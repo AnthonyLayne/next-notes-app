@@ -4,7 +4,7 @@
   background-color: lightsteelblue;
 }
 
-.notesListWrapper .header {
+.notesListWrapper > .header {
   margin-bottom: 20px;
 }
 
@@ -21,9 +21,16 @@
   margin: 2px;
   display: flex;
   flex-direction: column;
+
+  opacity: 1;
+  transition: opacity var(--modalTransitionTime);
 }
 
-.note h4 {
+.note.hidden {
+  opacity: 0;
+}
+
+.note > h4 {
   display: flex;
   justify-content: center;
   align-items: flex-start;
