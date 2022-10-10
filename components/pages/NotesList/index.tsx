@@ -9,7 +9,6 @@ import { useNotesContext } from "context/notesContext";
 import { NoteModal } from "components/common/NoteModal";
 
 // Styles
-// import cx from "classnames";
 import styles from "./styles.module.css";
 
 // TODO: need a hamburger button to appear when hovering over a note, with delete, copy, and label opts inside.
