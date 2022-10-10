@@ -36,12 +36,14 @@
   --s4: calc(var(--s3) * var(--ratio));
   --s5: calc(var(--s4) * var(--ratio));
   --s6: calc(var(--s5) * var(--ratio));
+  --s7: calc(var(--s6) * var(--ratio));
+  --s8: calc(var(--s7) * var(--ratio));
 
   --appWrapperMaxWidth: 1360px;
   --appWrapperMaxPercentage: 95%;
 
   --headerHeight: var(--s4);
-  --inputHeight: var(--s4);
+  --inputHeight: var(--s3);
 
   --scrollBarWidth: 5px;
   /* ------------------------------*/
