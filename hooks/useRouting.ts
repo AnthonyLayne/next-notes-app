@@ -31,5 +31,5 @@ export const useRouting = (router: NextRouter) => {
         router.push("/notes");
       }
     }
-  }, [auth.loggedIn, pathname]);
+  }, [auth.initiallyLoading, auth.loggedIn, pathname]);
 };
