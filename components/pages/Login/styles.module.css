@@ -1,15 +1,27 @@
 .wrapper {
   border: 1px solid red;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.username {
-  border: 1px solid green;
+.wrapper > form {
+  margin-top: var(--s7);
 }
 
-.password {
-  border: 1px solid blue;
+.wrapper > form > .password {
+  border: 5px solid blue;
 }
 
-.loginButton {
-  border: 1px solid purple;
+.wrapper > form > .loginButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--h4FontSize);
+  height: var(--s3);
+  width: var(--s6);
+  margin-top: var(--s2);
+  margin-bottom: var(--s3);
+  margin-right: 0;
 }

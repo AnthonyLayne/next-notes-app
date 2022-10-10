@@ -58,7 +58,7 @@ type InputAutocompleteType =
 
 type InputType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
-type RequiredInputTypes = Mandate<InputType, "type" | "id" | "name" | "required">;
+type RequiredInputTypes = Mandate<InputType, "type" | "id" | "name">;
 
 export type InputProps = Omit<RequiredInputTypes, "autoComplete"> & { autoComplete: InputAutocompleteType };
 

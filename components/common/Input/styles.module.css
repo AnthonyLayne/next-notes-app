@@ -1,23 +1,26 @@
 .inputWrapper {
   display: flex;
   position: relative;
+  width: var(--s8);
+  height: var(--inputHeight);
+  margin-top: var(--s1);
 }
 
-.input {
+.inputWrapper > input {
   height: var(--inputHeight);
   position: relative;
-  padding-top: 7%;
   border: 2px solid var(--darkBlack);
   border-radius: 3px;
+  font-size: var(--regularFontSize);
 }
 
-.label {
+.inputWrapper > label {
   user-select: none;
   pointer-events: none;
   display: flex;
   align-items: center;
-  height: calc(var(--inputHeight) / 2);
-  position: absolute;
+  align-self: center;
+  height: calc(var(--inputHeight));
   top: 20%;
   transition: transform 100ms;
 }

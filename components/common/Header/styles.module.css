@@ -1,16 +1,24 @@
 .headerWrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-evenly;
   gap: var(--s1);
-
-  background-color: lavender;
-  border-right: 1px solid var(--borderColor);
-  padding: var(--s5);
+  padding: var(--s2);
+  border-bottom: 2px solid var(--mediumGray);
 }
 
-.headerWrapper .signOut {
+.headerWrapper > .signOut {
   display: flex;
   align-self: flex-end;
   justify-content: center;
-  width: 8%;
+  align-items: center;
+  width: var(--s6);
+  height: var(--s3);
+  cursor: pointer;
+  font-size: var(--regularFontSize);
+  margin-bottom: var(--s0);
+}
+
+.headerWrapper > .newButton {
+  width: var(--s4);
 }

@@ -5,16 +5,16 @@ import styles from "./styles.module.css";
 
 export const HomePage = memo(() => {
   return (
-    <>
-      <h1>Welcome to NOTES</h1>
-      <h3>Please:</h3>
+    <div className={styles.homeWrapper}>
+      <h1 className={styles.title}>Welcome to Hold</h1>
+
       <Link href="/login">
-        <a className={styles.example}>Sign In</a>
+        <a className={styles.signIn}>Sign In</a>
       </Link>
       <h3>or</h3>
-      <Link href="/">
-        <a className={styles.example}>Sign Up</a>
+      <Link href="/sign-up">
+        <a className={styles.signUp}>Sign Up</a>
       </Link>
-    </>
+    </div>
   );
 });

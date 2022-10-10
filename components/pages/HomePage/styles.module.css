@@ -1,2 +1,35 @@
-.example {
+.homeWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.homeWrapper > .title {
+  display: flex;
+  justify-content: center;
+  font-size: var(--h1FontSize);
+}
+
+.homeWrapper > .signIn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--s5);
+  width: var(--s56);
+  font-size: var(--h3FontSize);
+  margin-top: var(--s6);
+  margin-bottom: var(--s4);
+  color: var(--primaryColor);
+}
+
+.homeWrapper > .signUp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--s5);
+  width: var(--s56);
+  font-size: var(--h3FontSize);
+  margin-top: var(--s3);
+  margin-bottom: var(--s4);
+  color: var(--primaryColor);
 }
