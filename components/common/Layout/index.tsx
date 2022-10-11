@@ -14,8 +14,12 @@ export function Layout({ children }: TProps) {
   return (
     <div className={styles.layout}>
       <Header />
-      <SideBar />
-      {children}
+
+      <div className={styles.body}>
+        <SideBar />
+
+        {children}
+      </div>
     </div>
   );
 }

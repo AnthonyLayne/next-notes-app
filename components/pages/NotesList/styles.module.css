@@ -1,7 +1,6 @@
 .notesListWrapper {
-  margin: 65px 20px 20px;
-  padding-left: var(--s7);
   flex: 1;
+  border: 1px solid red;
 }
 
 .notesListWrapper > .header {
@@ -10,9 +9,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 200px 200px 200px 200px 200px 200px;
-  grid-template-rows: 200px 200px 200px;
-  grid-auto-flow: row;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  gap: 1rem;
 }
 
 .note {
