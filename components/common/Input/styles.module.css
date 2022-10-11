@@ -1,26 +1,100 @@
 .inputWrapper {
-  display: flex;
   position: relative;
-  width: var(--s8);
-  height: var(--inputHeight);
-  margin-top: var(--s1);
 }
 
-.inputWrapper > input {
-  height: var(--inputHeight);
-  position: relative;
-  border: 2px solid var(--darkBlack);
-  border-radius: 3px;
-  font-size: var(--regularFontSize);
-}
-
-.inputWrapper > label {
+.inputWrapper > .label {
   user-select: none;
-  pointer-events: none;
   display: flex;
   align-items: center;
-  align-self: center;
-  height: calc(var(--inputHeight));
-  top: 20%;
-  transition: transform 100ms;
+  height: 20px;
+
+  position: absolute;
+  top: calc((var(--inputHeight) / 2) - (var(--labelHeight) / 2));
+  z-index: 1;
+  color: var(--darkGray);
+  transition: font-size 0.17s, top 0.12s ease-in-out, color 0.15s ease-in-out;
+  left: var(--inputLeftPadding);
+}
+
+.inputWrapper > input,
+.inputWrapper > textarea {
+  width: 100%;
+  min-height: calc(var(--inputHeight) - 2px);
+  height: 100%;
+  padding: 15px 0 0 var(--inputLeftPadding);
+  border: none;
+  background-color: var(--lightGray);
+}
+
+.inputWrapper > input[type="date"] {
+  /* // For mobile safari ------------ */
+  min-width: 100%;
+  appearance: textfield;
+  -webkit-appearance: textfield;
+  /* // ------------------------------ */
+}
+
+.inputWrapper > textarea {
+  /* This is necessary to override the native inline styles from resizing the textarea */
+  width: 100% !important;
+  min-height: var(--inputHeight);
+  height: unset;
+  padding-top: 24px;
+}
+
+.inputWrapper.shrink > label {
+  top: calc((var(--inputHeight) / 3.5) - (var(--labelHeight) / 2));
+  font-size: 1.2rem;
+}
+
+.inputWrapper.showBorder > input,
+.inputWrapper.showBorder > textarea {
+  border: 1px solid var(--darkGray);
+}
+
+.inputWrapper.isDisabled > input,
+.inputWrapper.isDisabled > textarea {
+  color: var(--darkGray);
+}
+
+.inputWrapper:not(.isDisabled) > .label {
+  cursor: text;
+  pointer-events: none;
+}
+
+.inputWrapper:not(.isDisabled):hover > .label {
+  color: var(--lightBlack);
+}
+
+.inputWrapper > input:not(:placeholder-shown) + label,
+.inputWrapper > textarea:not(:placeholder-shown) + label {
+  top: calc((var(--inputHeight) / 3.5) - (var(--labelHeight) / 2));
+  font-size: 1.2rem;
+}
+
+.inputWrapper:focus-within > .label {
+  top: calc((var(--inputHeight) / 3.5) - (var(--labelHeight) / 2));
+  font-size: 1.2rem;
+  color: var(--lightBlack);
+}
+
+.inputWrapper.error > .label {
+  color: var(--errorColor) !important;
+}
+
+.inputWrapper.error > input,
+.inputWrapper.error > textarea {
+  border: 1px solid var(--errorColor);
+}
+
+.inputWrapper .remainingChars {
+  position: absolute;
+  right: 9px;
+  bottom: 6px;
+  padding: 0 6px;
+  background-color: var(--lightGray);
+}
+
+.inputWrapper .remainingChars.maxed {
+  color: var(--errorColor);
 }

@@ -44,6 +44,8 @@
 
   --headerHeight: var(--s4);
   --inputHeight: var(--s3);
+  --labelHeight: 20px;
+  --inputLeftPadding: 9px;
 
   --scrollBarWidth: 5px;
   /* ------------------------------*/

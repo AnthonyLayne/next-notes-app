@@ -1,6 +1,6 @@
 .noteEditorWrapper {
   border: 2px solid orange;
-  background-color: cadetblue;
+  background-color: var(--white);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -23,7 +23,6 @@
 }
 
 .noteEditorWrapper > form > h3 {
-  border: 1px solid red;
   margin: 65px 0 31px 10px;
 }
 

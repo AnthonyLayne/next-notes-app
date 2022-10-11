@@ -18,7 +18,15 @@ export function Header() {
           <img src="/icons/new-note.svg" alt="" />
         </a>
       </Link>
-      <Input type="search" autoComplete="on" id="search" name="search" labelText="Search" className={styles.search} />
+      <Input
+        id="search"
+        name="search"
+        ariaLabel="search"
+        label="Search"
+        value=""
+        className={styles.search}
+        input={{ type: "search" }}
+      />
 
       <button type="button" className={styles.signOut} onClick={handleSignOut}>
         Sign Out

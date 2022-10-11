@@ -5,6 +5,9 @@ import { useRouter } from "next/router";
 import { useNotesContext } from "context/notesContext";
 import { useAuthContext } from "context/authContext";
 
+// Components
+import { Input } from "components/common/Input";
+
 // Types
 import { NoteFrontend } from "services/knex/types";
 
@@ -75,14 +78,23 @@ export function NoteEditor({ noteId, onSave }: TProps) {
         <h3>Close</h3>
       </button>
       <form onSubmit={handleSubmit}>
-        <h3>{userNote ? "Edit" : "Create"} Note:</h3>
-        <input name="title" value={noteFormState?.title} placeholder="New Note" onChange={handleChange} />
-        <textarea
+        <Input
+          id="title"
+          label="Title"
+          ariaLabel="title"
+          name="title"
+          value={noteFormState?.title}
+          onChange={handleChange}
+          input={{ type: "text" }}
+        />
+        <Input
+          id="description"
+          label="Take a note..."
+          ariaLabel="description"
           name="description"
           value={noteFormState?.description}
-          placeholder="Note Content"
-          rows={12}
           onChange={handleChange}
+          textarea={{ rows: 12 }}
         />
         <button type="submit" className="primary-button">
           Save

@@ -1,6 +1,6 @@
-import { DetailedHTMLProps, InputHTMLAttributes, LabelHTMLAttributes } from "react";
+import { DetailedHTMLProps, InputHTMLAttributes } from "react";
 
-type InputAutocompleteType =
+export type InputAutocompleteType =
   | "off"
   | "on"
   | "name"
@@ -56,10 +56,53 @@ type InputAutocompleteType =
   | "url"
   | "photo";
 
+export type InputTypeProp =
+  | "button"
+  | "checkbox"
+  | "color"
+  | "date"
+  | "datetime-local"
+  | "email"
+  | "file"
+  | "hidden"
+  | "image"
+  | "month"
+  | "number"
+  | "password"
+  | "radio"
+  | "range"
+  | "reset"
+  | "search"
+  | "submit"
+  | "tel"
+  | "text"
+  | "time"
+  | "url"
+  | "week";
+
 type InputType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+type TextAreaType = DetailedHTMLProps<InputHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>;
 
-type RequiredInputTypes = Mandate<InputType, "type" | "id" | "name">;
+export type DefaultType = InputType | TextAreaType;
+type Required = "id" | "name" | "value";
 
-export type InputProps = Omit<RequiredInputTypes, "autoComplete"> & { autoComplete: InputAutocompleteType };
+export type RequiredDefaultTypes = Pick<Mandate<DefaultType, Required>, Required>;
 
-export type LabelProps = DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>;
+type RemoveCustomProperties<T extends object> = Omit<
+  T,
+  | "id"
+  | "name"
+  | "value"
+  | "type"
+  | "autoComplete"
+  | "onChange"
+  | "onBlur"
+  | "onFocus"
+  | "aria-label"
+  | "required"
+  | "disabled"
+  | "placeholder"
+>;
+
+export type BaseInputProps = RemoveCustomProperties<InputType>;
+export type BaseTextAreaProps = RemoveCustomProperties<TextAreaType>;
