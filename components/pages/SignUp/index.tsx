@@ -15,7 +15,8 @@ export const SignUp = memo(() => {
   const [{ username, password }, setData] = useState({ username: "", password: "" });
 
   const handleChange = useCallback(
-    ({ target: { name, value } }: ChangeEvent<HTMLInputElement>) => setData((prev) => ({ ...prev, [name]: value })),
+    ({ target: { name, value } }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setData((prev) => ({ ...prev, [name]: value })),
     []
   );
 
@@ -34,34 +35,34 @@ export const SignUp = memo(() => {
       <form onSubmit={handleSubmit}>
         <Input
           required
-          type="username"
           autoComplete="username"
           id="username"
-          aria-label="username"
-          labelText="username"
+          ariaLabel="username"
+          label="username"
           className={styles.username}
           name="username"
           value={username}
           onChange={handleChange}
+          input={{ type: "text" }}
         />
-
         <Input
           required
-          type="password"
           autoComplete="current-password"
           id="password"
-          aria-label="password"
-          labelText="password"
+          ariaLabel="password"
+          label="password"
           className={styles.password}
           name="password"
           value={password}
           onChange={handleChange}
+          input={{ type: "password" }}
         />
+
+        {/* // TODO: Add confirm password */}
 
         <button type="submit" aria-label="login" className={styles.signUpButton}>
           Sign Up
         </button>
-
         {/* {auth.loggedIn ? <h4>Redirecting to your notes.</h4> : <h4>Incorrect username or password.</h4>} */}
       </form>
     </div>
