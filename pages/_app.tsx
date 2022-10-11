@@ -3,8 +3,9 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 
 // Context
-import { NotesContextProviderComponent } from "context/notesContext";
 import { AuthContextProviderComponent, useAuthContext } from "context/authContext";
+import { NotesContextProviderComponent } from "context/notesContext";
+import { SidebarContextProviderComponent } from "context/sidebarContext";
 
 // Components
 import { EmptyLayout } from "components/common/Layout/EmptyLayout";
@@ -67,10 +68,12 @@ const NotesAppWrapper = memo((props: AppProps) => {
   return (
     <AuthContextProviderComponent>
       <NotesContextProviderComponent>
-        <NotesApp
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...props}
-        />
+        <SidebarContextProviderComponent>
+          <NotesApp
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...props}
+          />
+        </SidebarContextProviderComponent>
       </NotesContextProviderComponent>
     </AuthContextProviderComponent>
   );
