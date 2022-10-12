@@ -1,0 +1,27 @@
+.hamburger {
+  all: unset;
+  cursor: pointer;
+}
+
+.hamburger .line {
+  display: block;
+  width: var(--s3);
+  height: 2px;
+  background: var(--primaryColor);
+  margin-block: 0.8rem;
+  border-radius: 1rem;
+  transition: transform var(--standardTransitionTime) ease-in-out, opacity var(--standardTransitionTime) ease-in-out;
+}
+
+.hamburger.active .line:nth-of-type(1) {
+  transform: translateY(1rem) rotate(45deg);
+}
+
+.hamburger.active .line:nth-of-type(2) {
+  transform: translateX(15px);
+  opacity: 0;
+}
+
+.hamburger.active .line:nth-of-type(3) {
+  transform: translateY(-1rem) rotate(-45deg);
+}
