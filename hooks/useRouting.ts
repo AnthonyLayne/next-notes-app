@@ -4,7 +4,7 @@ import { NextRouter } from "next/router";
 // Context
 import { useAuthContext } from "context/authContext";
 
-const NON_AUTHED_ROUTES = ["/sign-up", "/login"];
+const NON_AUTHED_ROUTES = ["/sign-up", "/"];
 
 export const useRouting = (router: NextRouter) => {
   const { pathname } = router;
@@ -19,7 +19,7 @@ export const useRouting = (router: NextRouter) => {
         // ...and you're not on a not-logged-in route...
         !NON_AUTHED_ROUTES.includes(pathname)
       ) {
-        // ...go to `/`
+        // ...go to `/` (login page)
         router.push("/");
       } else if (
         // Otherwise, if you are logged in...
