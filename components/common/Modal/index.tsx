@@ -1,5 +1,8 @@
 import { PropsWithChildren, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+// Components
+import { Button } from "components/common/Button";
+
 // Utils
 import { handleKeyDown, updateFocusableElements } from "utils/modalUtils";
 import { getCSSNumberProperty } from "styles/utils";
@@ -133,9 +136,9 @@ export function Modal({ isOpen, children, handleClose, hideCloseButton, innerWra
       {/* eslint-disable jsx-a11y/click-events-have-key-events */}
       <div onClick={(e) => e.stopPropagation()} className={innerWrapperClassnames}>
         {!hideCloseButton && (
-          <button type="button" onClick={handleClose}>
-            <h3>Close</h3>
-          </button>
+          <Button version="ghost" className={styles.defaultCloseButton} type="button" onClick={handleClose}>
+            <img src="/icons/close.svg" alt="" />
+          </Button>
         )}
         {children}
       </div>

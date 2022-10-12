@@ -44,3 +44,10 @@
 .modalOverlay.open > div {
   transform: scale(1);
 }
+
+.defaultCloseButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: var(--s0);
+}
