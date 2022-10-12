@@ -19,8 +19,8 @@ export const useRouting = (router: NextRouter) => {
         // ...and you're not on a not-logged-in route...
         !NON_AUTHED_ROUTES.includes(pathname)
       ) {
-        // ...go to `/login`
-        router.push("/login");
+        // ...go to `/`
+        router.push("/");
       } else if (
         // Otherwise, if you are logged in...
         auth.loggedIn &&
