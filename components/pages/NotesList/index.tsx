@@ -15,8 +15,8 @@ import styles from "./styles.module.css";
 // TODO: when the hamburger icon is clicked a small modal opens
 
 export function NotesList() {
-  const router = useRouter();
-  const { noteId } = router.query as { noteId?: string };
+  const { pathname, query } = useRouter();
+  const { noteId } = query as { noteId?: string };
 
   const { notes } = useNotesContext();
 
@@ -25,11 +25,9 @@ export function NotesList() {
       <NoteModal noteId={noteId ? Number(noteId) : null} />
 
       <div className={styles.notesListWrapper}>
-        <h2 className={styles.header}>Your Notes:</h2>
-
         <div className={styles.grid}>
           {notes.map(({ id, title, description }) => (
-            <Link href={`/notes?noteId=${id}`} key={id}>
+            <Link href={`${pathname}?noteId=${id}`} key={id}>
               <a className={cx(styles.note, { [styles.hidden]: Number(noteId) === id })}>
                 <h4>{title}</h4>
                 <p>{description}</p>

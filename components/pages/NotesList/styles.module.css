@@ -1,40 +1,25 @@
 .notesListWrapper {
   flex: 1;
-  border: 1px solid red;
-}
-
-.notesListWrapper > .header {
-  margin-bottom: var(--s2);
+  margin-right: var(--s2);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
   gap: 1rem;
 }
 
 .note {
-  border-radius: 7px;
-  border-color: black;
-  border: 1px solid var(--darkGray);
-  margin: 2px;
   display: flex;
   flex-direction: column;
-  word-wrap: break-word;
+  border: 1px solid var(--mediumGray);
+  border-radius: var(--buttonBorderRadius);
+  padding: var(--s1);
+
   opacity: 1;
   transition: opacity var(--modalTransitionTime);
 }
 
-.note > h4 {
-  margin-bottom: var(--s1);
-}
-
 .note.hidden {
   opacity: 0;
-}
-
-.note > h4 {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
 }
