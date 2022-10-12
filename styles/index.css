@@ -13,7 +13,7 @@ body {
 
 body ::selection {
   background-color: var(--primaryColor);
-  color: red;
+  color: var(--white);
 }
 
 body *:focus {

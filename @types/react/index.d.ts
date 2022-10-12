@@ -5,5 +5,7 @@ declare module "react" {
     "--i"?: number;
     "--standardTransitionTime"?: string;
     "--modalTransitionTime"?: string;
+    "--customColor"?: string;
+    "--shrinkWidth"?: string;
   }
 }

@@ -6,6 +6,7 @@
 
   /* Colors -----------------------*/
   --purple: #4800ff;
+  --purpleTransparent: #4800ff50;
   --red: #d90033;
 
   --modalOverlayColor: #1111134d;
@@ -18,6 +19,7 @@
   --white: #fff;
   /* ------------------------------*/
   --primaryColor: var(--purple);
+  --primaryColorTransparent: var(--purpleTransparent);
   --secondaryColor: var(--darkBlack);
   --errorColor: var(--red);
   /* ------------------------------*/
@@ -39,27 +41,33 @@
   --s7: calc(var(--s6) * var(--ratio));
   --s8: calc(var(--s7) * var(--ratio));
 
+  /* // TODO: Do something with this */
   --appWrapperMaxWidth: 1360px;
   --appWrapperMaxPercentage: 95%;
 
-  --headerHeight: var(--s4);
+  --headerHeight: 64px;
   --inputHeight: var(--s3);
   --labelHeight: 20px;
   --inputLeftPadding: 9px;
+  --buttonHeight: var(--s3);
+  --horizontalButtonPadding: var(--s2);
+  --buttonBorderRadius: 5px;
 
   --scrollBarWidth: 5px;
+
+  --modalWidth: 600px;
   /* ------------------------------*/
 
   /* Typography -------------------*/
   --mainFontFamily: Helvetica, Arial, sans-serif;
-  --h1FontSize: 4rem;
-  --h2FontSize: 3.3rem;
-  --h3FontSize: 2.6rem;
+  --h1FontSize: 3rem;
+  --h2FontSize: 2.7rem;
+  --h3FontSize: 2.5rem;
   --h4FontSize: 2.3rem;
   --h5FontSize: 2rem;
   --regularFontSize: 1.6rem;
-  --smallFontSize: calc(var(--regularFontSize) - 2px);
-  --smallestFontSize: calc(var(--regularFontSize) - 4px);
+  --smallFontSize: calc(var(--regularFontSize) - 1px);
+  --smallestFontSize: calc(var(--regularFontSize) - 3px);
   --lightWeight: 400;
   --regularWeight: 500;
   --bold: 800;
