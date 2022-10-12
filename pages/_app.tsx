@@ -1,4 +1,5 @@
 import { memo, FC, useState, useEffect, useMemo } from "react";
+import { ToastContainer } from "react-toastify";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 
@@ -17,6 +18,7 @@ import { useRouting } from "hooks/useRouting";
 // Types
 import { TProps as LayoutProps } from "components/common/Layout";
 
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/index.css";
 
 const MIN_LOAD_TIME_MS = 500;
@@ -55,6 +57,8 @@ function NotesApp({ Component, pageProps, router }: AppProps) {
       <Head>
         <title>{pageTitle}</title>
       </Head>
+
+      <ToastContainer />
 
       <Component
         // eslint-disable-next-line react/jsx-props-no-spreading

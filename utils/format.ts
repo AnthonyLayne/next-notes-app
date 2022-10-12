@@ -1,3 +1,13 @@
+import axios from "axios";
+
+type PotentialAxiosErrors = { message?: string };
+const DEFAULT_ERROR_MSG = "There was an unknown error. Please contact your system administrator.";
+
+export const getError = (e: unknown) =>
+  axios.isAxiosError(e) && !(e.response?.status === 500)
+    ? (e.response?.data as PotentialAxiosErrors)?.message ?? DEFAULT_ERROR_MSG
+    : DEFAULT_ERROR_MSG;
+
 export const getDbTimestamp = (ms?: number) =>
   new Date(ms || Date.now()).toISOString().replace("Z", "").replace("T", " ");
 

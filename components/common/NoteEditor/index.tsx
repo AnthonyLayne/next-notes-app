@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useMemo, useCallback, useEffect } from "react";
-import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 // Context
 import { useNotesContext } from "context/notesContext";
@@ -11,8 +11,7 @@ import { Button } from "components/common/Button";
 
 // Helpers
 import { getDisplayMonthDateAndYear } from "utils/time";
-import { getDbTimestamp } from "utils/format";
-
+import { getDbTimestamp, getError } from "utils/format";
 // Types
 import { NoteFrontend } from "services/knex/types";
 
@@ -29,8 +28,6 @@ type TProps = {
 };
 
 export function NoteEditor({ noteId, onSave }: TProps) {
-  const router = useRouter();
-
   const {
     auth: { user },
   } = useAuthContext();
@@ -41,6 +38,8 @@ export function NoteEditor({ noteId, onSave }: TProps) {
   const userNote = useMemo(() => notes.find((n) => n.id === noteId), [notes, noteId]);
 
   const [noteFormState, setNoteFormState] = useState(getDefaultNote(userNote));
+
+  const saveDisabled = useMemo(() => !noteFormState?.title || !noteFormState?.description, [noteFormState]);
 
   useEffect(() => {
     setNoteFormState(getDefaultNote(userNote));
@@ -54,7 +53,7 @@ export function NoteEditor({ noteId, onSave }: TProps) {
   );
 
   const handleSubmit = useCallback(
-    async (opts?: { archive?: boolean; delete?: boolean }) => {
+    async (opts?: { archive: boolean; delete?: undefined } | { archive?: undefined; delete: boolean }) => {
       if (user) {
         try {
           const body = {
@@ -70,10 +69,11 @@ export function NoteEditor({ noteId, onSave }: TProps) {
           setNoteFormState(EMPTY_NOTE);
           await onSave?.();
 
-          router.push("/notes");
-        } catch (err) {
-          // eslint-disable-next-line no-console
-          console.error(err);
+          toast.success(
+            `Note ${noteId === 0 ? "created" : "edited"}${opts ? ` and ${opts.archive ? "archived" : "deleted"}` : ""}.`
+          );
+        } catch (e: unknown) {
+          toast.error(getError(e));
         }
       }
     },
@@ -115,15 +115,25 @@ export function NoteEditor({ noteId, onSave }: TProps) {
 
         <div className={styles.controls}>
           <div className={styles.left}>
-            <Button version="ghost" type="button" onClick={() => handleSubmit({ archive: true })}>
+            <Button
+              disabled={saveDisabled}
+              version="ghost"
+              type="button"
+              onClick={() => handleSubmit({ archive: true })}
+            >
               <img src="/icons/archive.svg" alt="archive" />
             </Button>
-            <Button version="ghost" type="button" onClick={() => handleSubmit({ delete: true })}>
+            <Button
+              disabled={saveDisabled}
+              version="ghost"
+              type="button"
+              onClick={() => handleSubmit({ delete: true })}
+            >
               <img src="/icons/trash.svg" alt="delete" />
             </Button>
           </div>
 
-          <Button version="ghost" type="submit">
+          <Button disabled={saveDisabled} className={styles.saveButton} version="ghost" type="submit">
             Save
           </Button>
         </div>

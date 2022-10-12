@@ -7,7 +7,7 @@
   min-height: var(--buttonHeight);
   padding: 0 var(--horizontalButtonPadding);
   border: 0;
-  border-radius: var(--buttonBorderRadius);
+  border-radius: var(--standardBorderRadius);
   font-family: var(--mainFontFamily);
   font-size: var(--regularFontSize);
 

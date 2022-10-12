@@ -4,7 +4,7 @@
   width: var(--modalWidth);
   height: 100%;
   padding: var(--s2) var(--s0);
-  border-radius: var(--buttonBorderRadius);
+  border-radius: var(--standardBorderRadius);
   background-color: var(--white);
 }
 
@@ -45,13 +45,23 @@
 
 .noteEditorWrapper > form .controls .left {
   display: flex;
-  gap: var(--s0);
+  gap: var(--s2);
 }
 
 .noteEditorWrapper > form .controls .left button {
   padding: 0;
+  border-radius: 100%;
+}
+
+.noteEditorWrapper > form .controls .left button:not(:disabled):hover {
+  background-color: var(--lightGray) !important; /* competing with the style prop */
 }
 
 .noteEditorWrapper > form .controls .left img {
-  width: var(--s3);
+  width: 50px;
+  padding: 10px;
+}
+
+.noteEditorWrapper > form .controls .saveButton {
+  font-size: var(--h5FontSize);
 }
