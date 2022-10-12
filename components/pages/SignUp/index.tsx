@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, memo, useState, useCallback } from "react";
+import Link from "next/link";
 
 // Components
 import { Input } from "components/common/Input";
@@ -64,6 +65,8 @@ export const SignUp = memo(() => {
           Sign Up
         </button>
         {/* {auth.loggedIn ? <h4>Redirecting to your notes.</h4> : <h4>Incorrect username or password.</h4>} */}
+        <h3>Already have an account?</h3>
+        <Link href="/">Sign In</Link>
       </form>
     </div>
   );
