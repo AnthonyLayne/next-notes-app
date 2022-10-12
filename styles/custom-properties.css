@@ -46,10 +46,10 @@
   --appWrapperMaxPercentage: 95%;
 
   --headerHeight: 64px;
-  --inputHeight: var(--s3);
+  --inputHeight: var(--s4);
   --labelHeight: 20px;
   --inputLeftPadding: 9px;
-  --buttonHeight: var(--s3);
+  --buttonHeight: var(--s4);
   --horizontalButtonPadding: var(--s2);
   --buttonBorderRadius: 5px;
 
