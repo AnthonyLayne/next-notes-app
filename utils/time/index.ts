@@ -52,6 +52,18 @@ export const getDisplayDayMonthDateAndYear = (
   return `${DAY_OF_WEEK[dayOfWeek]}, ${date}`;
 };
 
+/** Dec 10, 2021 for US Locale */
+export const getDisplayMonthDateAndYear = (
+  timestamp: number,
+  { locale = "default", options }: { locale?: string; options?: Intl.DateTimeFormatOptions } = { locale: "default" }
+) =>
+  Intl.DateTimeFormat(locale, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    ...options,
+  }).format(new Date(timestamp));
+
 /** 3:04 PM for US Locale */
 export const getDisplayTime = (timestamp: number, locale = "default") => {
   const date = Intl.DateTimeFormat(locale, {
