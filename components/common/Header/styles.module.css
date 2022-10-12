@@ -25,7 +25,10 @@
 
 .headerWrapper .search {
   flex: 1;
-  height: calc(var(--headerHeight) - var(--s2));
+}
+
+.headerWrapper .search input {
+  border-radius: var(--standardBorderRadius);
 }
 
 .headerWrapper .newButton > img {
