@@ -1,7 +1,10 @@
 import { ChangeEvent, FormEvent, memo, useState, useCallback } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 // Components
 import { Input } from "components/common/Input";
+import { Button } from "components/common/Button";
 
 // Context
 import { useAuthContext } from "context/authContext";
@@ -10,6 +13,7 @@ import { useAuthContext } from "context/authContext";
 import styles from "./styles.module.css";
 
 export const Login = memo(() => {
+  const router = useRouter();
   const { handleSignIn, auth } = useAuthContext();
 
   const [{ username, password }, setData] = useState({ username: "", password: "" });
@@ -19,7 +23,6 @@ export const Login = memo(() => {
       setData((prev) => ({ ...prev, [name]: value })),
     []
   );
-
   const handleSubmit = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -27,44 +30,50 @@ export const Login = memo(() => {
     },
     [handleSignIn, username, password]
   );
+  if (auth.loggedIn) router.push("/notes");
 
   return (
     <div className={styles.wrapper}>
-      <h1>Please log in to view your notes.</h1>
+      <div className={styles.content}>
+        <h1>Welcome to Hold</h1>
+        <h3>Please log in to view your notes.</h3>
+        <form onSubmit={handleSubmit}>
+          <Input
+            required
+            autoComplete="username"
+            id="username"
+            ariaLabel="username"
+            label="Username"
+            className={styles.username}
+            name="username"
+            value={username}
+            onChange={handleChange}
+            input={{ type: "text" }}
+          />
 
-      <form onSubmit={handleSubmit}>
-        <Input
-          required
-          autoComplete="username"
-          id="username"
-          ariaLabel="username"
-          label="username"
-          className={styles.username}
-          name="username"
-          value={username}
-          onChange={handleChange}
-          input={{ type: "text" }}
-        />
+          <Input
+            required
+            autoComplete="current-password"
+            id="password"
+            ariaLabel="password"
+            label="Password"
+            className={styles.password}
+            name="password"
+            value={password}
+            onChange={handleChange}
+            input={{ type: "password" }}
+          />
 
-        <Input
-          required
-          autoComplete="current-password"
-          id="password"
-          ariaLabel="password"
-          label="password"
-          className={styles.password}
-          name="password"
-          value={password}
-          onChange={handleChange}
-          input={{ type: "password" }}
-        />
-
-        <button type="submit" aria-label="login" className={styles.loginButton}>
-          Login
-        </button>
-
-        {auth.loggedIn ? <h4>Redirecting to your notes.</h4> : <h4>Incorrect username or password.</h4>}
-      </form>
+          <Button version="primary" type="submit" aria-label="login" className={styles.loginButton}>
+            Login
+          </Button>
+          {/* <div>This: {message}</div> */}
+        </form>
+        <h3>No Account?</h3>
+        <Link href="/sign-up">
+          <a className={styles.signUp}>Sign Up</a>
+        </Link>
+      </div>
     </div>
   );
 });

@@ -1,27 +1,46 @@
 .wrapper {
-  border: 1px solid red;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: var(--s6);
 }
 
-.wrapper > form {
-  margin-top: var(--s7);
+.wrapper .content {
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 600px;
+  width: min(100%, 900px);
+  padding-top: var(--s3);
+  box-shadow: 2px 2px 12px -3px var(--darkBlack);
 }
 
-.wrapper > form > .password {
-  border: 5px solid blue;
+.wrapper .content > h1 {
+  margin-bottom: var(--s1);
 }
 
-.wrapper > form > .loginButton {
+.wrapper .content > h3 {
+  margin-bottom: var(--s1);
+}
+
+.wrapper .content > form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  width: 300px;
+  margin: var(--s3) 0;
+}
+
+.wrapper .content > form > .loginButton {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: var(--h4FontSize);
-  height: var(--s3);
-  width: var(--s6);
-  margin-top: var(--s2);
-  margin-bottom: var(--s3);
-  margin-right: 0;
+  width: 100%;
+}
+
+.wrapper .content > .signUp {
+  color: var(--primaryColor);
 }
