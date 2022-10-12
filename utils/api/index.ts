@@ -11,6 +11,29 @@ import { milliseconds, days } from "utils/time";
 // Types
 import { Links, ApiBadRequestResponse, ApiErrorResponse, ServerResponseError, JwtForm } from "./types";
 
+export const STANDARD_NOTE_FRONT_TO_BACK_CONVERSION = {
+  createdAt: "created_at",
+  updatedAt: "updated_at",
+  archivedAt: "archived_at",
+  deletedAt: "deleted_at",
+} as const;
+
+export const STANDARD_NOTE_BACK_TO_FRONT_CONVERSION = {
+  created_at: "createdAt",
+  updated_at: "updatedAt",
+  archived_at: "archivedAt",
+  deleted_at: "deletedAt",
+  user_id: "userId",
+} as const;
+
+export const STANDARD_USER_FRONT_TO_BACK_CONVERSION = {
+  createdAt: "created_at",
+} as const;
+
+export const STANDARD_USER_BACK_TO_FRONT_CONVERSION = {
+  created_at: "createdAt",
+} as const;
+
 export const convertKeys = <Target extends Record<string, unknown>, Origin extends Record<string, unknown>>(
   obj: Origin,
   converstionTable: Partial<Record<keyof Origin, keyof Target>>
