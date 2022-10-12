@@ -95,6 +95,18 @@
   background-color: var(--lightGray);
 }
 
-.inputWrapper .remainingChars.maxed {
-  color: var(--errorColor);
+/* Clears the 'x' in the `type="search"` inputs from Internet Explorer */
+.inputWrapper > input[type="search"]::-ms-clear,
+.inputWrapper > input[type="search"]::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Clears the 'x' in the `type="search"` inputs from Chrome */
+.inputWrapper > input[type="search"]::-webkit-search-decoration,
+.inputWrapper > input[type="search"]::-webkit-search-cancel-button,
+.inputWrapper > input[type="search"]::-webkit-search-results-button,
+.inputWrapper > input[type="search"]::-webkit-search-results-decoration {
+  display: none;
 }
