@@ -1,13 +1,51 @@
 .sideBarWrapper {
   display: flex;
-  gap: var(--s1);
   flex-direction: column;
   width: 300px;
-  border: 3px solid red;
+  margin-right: var(--s4);
 
   transition: width var(--standardTransitionTime);
 }
 
 .sideBarWrapper.shrink {
-  width: var(--iconWidth, 100px);
+  width: var(--shrinkWidth);
+}
+
+.sideBarWrapper > .link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  font-weight: var(--bold);
+  overflow: hidden;
+  padding: var(--s1) 0;
+  padding-left: var(--s2);
+
+  transition: background-color var(--standardTransitionTime), border-radius var(--standardTransitionTime);
+}
+
+.sideBarWrapper > .link:focus {
+  outline: none;
+}
+
+.sideBarWrapper > .link.selected {
+  background-color: var(--primaryColorTransparent);
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.sideBarWrapper.shrink {
+  margin-left: 10px;
+}
+.sideBarWrapper.shrink > .link {
+  padding-left: calc(var(--s2) - 10px);
+}
+
+.sideBarWrapper.shrink > .link.selected {
+  border-radius: 30px;
+}
+
+.sideBarWrapper > .link > img {
+  min-width: var(--s3);
+  width: var(--s3);
 }
