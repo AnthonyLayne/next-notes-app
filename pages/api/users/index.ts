@@ -2,17 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 // Services
-// import { addUser } from "services/knex";
-import {
-  apiInit,
-  // badRequestResponse,
-  notFoundResponse,
-  serverErrorResponse,
-  // successResponse,
-} from "utils/api";
-
-// Utils
-// import { validateFields } from "utils/format";
+import { apiInit, notFoundResponse, serverErrorResponse } from "utils/api";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { links } = await apiInit(req, res);
