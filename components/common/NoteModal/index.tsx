@@ -11,7 +11,11 @@ type TProps = {
 
 export function NoteModal({ noteId }: TProps) {
   const router = useRouter();
-  const handleClose = useCallback(() => router.push(router.pathname), [router]);
+  const { pathname, query } = useRouter();
+
+  const literalPathname = pathname.replace("[category]", query.category as string);
+
+  const handleClose = useCallback(() => router.push(literalPathname), [router]);
 
   return (
     <Modal isOpen={typeof noteId === "number"} handleClose={handleClose} hideCloseButton>

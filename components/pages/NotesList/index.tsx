@@ -20,6 +20,8 @@ export function NotesList() {
 
   const { notes } = useNotesContext();
 
+  const literalPathname = pathname.replace("[category]", query.category as string);
+
   return (
     <>
       <NoteModal noteId={noteId ? Number(noteId) : null} />
@@ -27,7 +29,7 @@ export function NotesList() {
       <div className={styles.notesListWrapper}>
         <div className={styles.grid}>
           {notes.map(({ id, title, description }) => (
-            <Link href={`${pathname}?noteId=${id}`} key={id}>
+            <Link href={`${literalPathname}?noteId=${id}`} key={id}>
               <a className={cx(styles.note, { [styles.hidden]: Number(noteId) === id })}>
                 <h4>{title}</h4>
                 <p>{description}</p>
