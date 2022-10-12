@@ -37,6 +37,7 @@ export const Login = memo(() => {
       <div className={styles.content}>
         <h1>Welcome to Hold</h1>
         <h3>Please log in to view your notes.</h3>
+
         <form onSubmit={handleSubmit}>
           <Input
             required

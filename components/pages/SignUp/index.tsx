@@ -3,6 +3,7 @@ import Link from "next/link";
 
 // Components
 import { Input } from "components/common/Input";
+import { Button } from "components/common/Button";
 
 // Context
 import { useAuthContext } from "context/authContext";
@@ -31,43 +32,48 @@ export const SignUp = memo(() => {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Please sign up to begin taking notes.</h1>
+      <div className={styles.content}>
+        <h1>Welcome to Hold</h1>
+        <h3>Please sign up to begin taking notes.</h3>
 
-      <form onSubmit={handleSubmit}>
-        <Input
-          required
-          autoComplete="username"
-          id="username"
-          ariaLabel="username"
-          label="username"
-          className={styles.username}
-          name="username"
-          value={username}
-          onChange={handleChange}
-          input={{ type: "text" }}
-        />
-        <Input
-          required
-          autoComplete="current-password"
-          id="password"
-          ariaLabel="password"
-          label="password"
-          className={styles.password}
-          name="password"
-          value={password}
-          onChange={handleChange}
-          input={{ type: "password" }}
-        />
+        <form onSubmit={handleSubmit}>
+          <Input
+            required
+            autoComplete="username"
+            id="username"
+            ariaLabel="username"
+            label="Username"
+            className={styles.username}
+            name="username"
+            value={username}
+            onChange={handleChange}
+            input={{ type: "text" }}
+          />
+          <Input
+            required
+            autoComplete="current-password"
+            id="password"
+            ariaLabel="password"
+            label="Password"
+            className={styles.password}
+            name="password"
+            value={password}
+            onChange={handleChange}
+            input={{ type: "password" }}
+          />
 
-        {/* // TODO: Add confirm password */}
+          {/* // TODO: Add confirm password */}
 
-        <button type="submit" aria-label="login" className={styles.signUpButton}>
-          Sign Up
-        </button>
-        {/* {auth.loggedIn ? <h4>Redirecting to your notes.</h4> : <h4>Incorrect username or password.</h4>} */}
+          <Button version="primary" type="submit" aria-label="sign up" className={styles.signUpButton}>
+            Sign Up
+          </Button>
+          {/* {auth.loggedIn ? <h4>Redirecting to your notes.</h4> : <h4>Incorrect username or password.</h4>} */}
+        </form>
         <h3>Already have an account?</h3>
-        <Link href="/">Sign In</Link>
-      </form>
+        <Link href="/">
+          <a className={styles.signIn}>Sign In</a>
+        </Link>
+      </div>
     </div>
   );
 });
