@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useMemo, useCallback, useEffect, FormEvent } from "react";
+import { useState, ChangeEvent, useMemo, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 
 // Context
@@ -7,6 +7,11 @@ import { useAuthContext } from "context/authContext";
 
 // Components
 import { Input } from "components/common/Input";
+import { Button } from "components/common/Button";
+
+// Helpers
+import { getDisplayMonthDateAndYear } from "utils/time";
+import { getDbTimestamp } from "utils/format";
 
 // Types
 import { NoteFrontend } from "services/knex/types";
@@ -49,14 +54,18 @@ export function NoteEditor({ noteId, onSave }: TProps) {
   );
 
   const handleSubmit = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-
+    async (opts?: { archive?: boolean; delete?: boolean }) => {
       if (user) {
         try {
+          const body = {
+            ...noteFormState,
+            archivedAt: opts?.archive ? getDbTimestamp() : undefined,
+            deletedAt: opts?.delete ? getDbTimestamp() : undefined,
+          };
+
           // Create Note sets the local temporary id to 0
-          if (noteId && noteId > 0) await handleEditNote({ ...noteFormState, id: noteId });
-          else await handleCreateNote(noteFormState, user.id);
+          if (noteId && noteId > 0) await handleEditNote({ ...body, id: noteId });
+          else await handleCreateNote(body, user.id);
 
           setNoteFormState(EMPTY_NOTE);
           await onSave?.();
@@ -73,11 +82,12 @@ export function NoteEditor({ noteId, onSave }: TProps) {
 
   return (
     <div className={styles.noteEditorWrapper}>
-      {/* // TODO: Revist this button having `onSave` */}
-      <button type="button" onClick={onSave} className={styles.close}>
-        <h3>Close</h3>
-      </button>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <Input
           id="title"
           label="Title"
@@ -96,9 +106,27 @@ export function NoteEditor({ noteId, onSave }: TProps) {
           onChange={handleChange}
           textarea={{ rows: 12 }}
         />
-        <button type="submit" className="primary-button">
-          Save
-        </button>
+        {(userNote?.updatedAt ?? userNote?.createdAt) && (
+          <small>
+            {userNote.updatedAt ? "Edited" : "Created"}{" "}
+            {getDisplayMonthDateAndYear(new Date(userNote.updatedAt || userNote.createdAt).valueOf())}
+          </small>
+        )}
+
+        <div className={styles.controls}>
+          <div className={styles.left}>
+            <Button version="ghost" type="button" onClick={() => handleSubmit({ archive: true })}>
+              <img src="/icons/archive.svg" alt="archive" />
+            </Button>
+            <Button version="ghost" type="button" onClick={() => handleSubmit({ delete: true })}>
+              <img src="/icons/trash.svg" alt="delete" />
+            </Button>
+          </div>
+
+          <Button version="ghost" type="submit">
+            Save
+          </Button>
+        </div>
       </form>
     </div>
   );

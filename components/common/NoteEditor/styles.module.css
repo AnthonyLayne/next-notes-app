@@ -1,59 +1,57 @@
 .noteEditorWrapper {
-  border: 2px solid orange;
-  background-color: var(--white);
-  width: 100%;
   display: flex;
   flex-direction: column;
-  margin: 30px;
+  width: var(--modalWidth);
   height: 100%;
-}
-
-.noteEditorWrapper .close {
-  display: flex;
-  align-self: flex-end;
-  justify-content: center;
-  width: 15%;
+  padding: var(--s2) var(--s0);
+  border-radius: var(--buttonBorderRadius);
+  background-color: var(--white);
 }
 
 .noteEditorWrapper > form {
-  width: 100%;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  gap: var(--s0);
 }
 
-.noteEditorWrapper > form > h3 {
-  margin: 65px 0 31px 10px;
+.noteEditorWrapper > form input,
+.noteEditorWrapper > form textarea {
+  background-color: var(--white);
+  outline: none;
 }
 
-.noteEditorWrapper > form > input {
-  border: 1px solid red;
-  height: 52px;
-  width: 425px;
-  padding-left: 15px;
-  font-family: Raleway, Arial, Helvetica, sans-serif;
-  border-radius: 4px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  border: 1px solid var(--borderColor);
-  margin-bottom: 17px;
+.noteEditorWrapper > form input {
+  font-size: var(--h3FontSize);
 }
 
-.noteEditorWrapper > form > textarea {
-  border: 1px solid red;
-  width: 765px;
-  font-family: Raleway, Arial, Helvetica, sans-serif;
-  border: 1px solid var(--borderColor);
-  border-radius: 4px;
-  box-sizing: border-box;
-  resize: vertical;
+.noteEditorWrapper > form textarea {
+  resize: none;
 }
 
-.noteEditorWrapper > form > button {
+.noteEditorWrapper > form button,
+.noteEditorWrapper > form small {
+  margin-left: auto;
+}
+
+.noteEditorWrapper > form small {
+  height: var(--s1);
+  margin-right: var(--s2);
+}
+
+.noteEditorWrapper > form .controls {
   display: flex;
-  align-self: center;
-  justify-content: center;
-  border: 1px solid red;
-  margin-top: 20px;
-  width: 15%;
+  padding-left: var(--s0);
+}
+
+.noteEditorWrapper > form .controls .left {
+  display: flex;
+  gap: var(--s0);
+}
+
+.noteEditorWrapper > form .controls .left button {
+  padding: 0;
+}
+
+.noteEditorWrapper > form .controls .left img {
+  width: var(--s3);
 }
