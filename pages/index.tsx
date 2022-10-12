@@ -1,7 +1,7 @@
-import { HomePage } from "components/pages/HomePage";
+import { Login } from "components/pages/Login";
 
 function Home() {
-  return <HomePage />;
+  return <Login />;
 }
 
 export default Home;
