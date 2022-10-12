@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Fuse from "fuse.js";
 
 // Services
-import { createNote, deleteNote, editNote, getUserNotes } from "services/api";
+import { createNote, editNote, getUserNotes } from "services/api";
 
 // Context
 import { useAuthContext } from "context/authContext";
@@ -33,7 +33,6 @@ export type BaseNotesContext = {
     title,
     description,
   }: Pick<NoteFrontend, "title" | "description" | "archivedAt" | "deletedAt" | "id">) => Promise<NoteFrontend>;
-  handleDeleteNote: (id: number) => Promise<null>;
 };
 
 const NotesContext = createContext<Maybe<BaseNotesContext>>(undefined);
@@ -104,17 +103,6 @@ export function NotesContextProviderComponent({ children }: TProps) {
     [apiInstance]
   );
 
-  const handleDeleteNote = useCallback(
-    async (id: number) => {
-      await deleteNote(apiInstance, id);
-
-      setNotes((prev) => prev.filter((n) => n.id !== id));
-
-      return null;
-    },
-    [apiInstance]
-  );
-
   const ctx = useMemo(
     () => ({
       notes: searchString.length > 2 ? searchResults : displayNotes,
@@ -123,9 +111,8 @@ export function NotesContextProviderComponent({ children }: TProps) {
 
       handleCreateNote,
       handleEditNote,
-      handleDeleteNote,
     }),
-    [displayNotes, searchString, setSearchString, searchResults, handleCreateNote, handleEditNote, handleDeleteNote]
+    [displayNotes, searchString, setSearchString, searchResults, handleCreateNote, handleEditNote]
   );
 
   return <NotesContext.Provider value={ctx}>{children}</NotesContext.Provider>;
