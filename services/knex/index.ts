@@ -33,6 +33,17 @@ export const deleteUserById = (id: string) => db("users").where("id", id).del();
 // --------------------------------------------------------------------------------------------------------------------
 
 // ---- Notes ---------------------------------------------------------------------------------------------------------
+const NOTE_RETURN_FIELDS = [
+  "id",
+  "title",
+  "description",
+  "created_at",
+  "updated_at",
+  "archived_at",
+  "deleted_at",
+  "user_id",
+];
+
 export const getAllNotesById = async (userId: string) => {
   const allUserNotes = await db("notes").where("user_id", userId);
 
@@ -40,15 +51,13 @@ export const getAllNotesById = async (userId: string) => {
 };
 
 export const addNote = async (note: NoteBackend) => {
-  const newNote = await db("notes").insert(note, ["description", "title", "id", "created_at", "updated_at", "user_id"]);
+  const newNote = await db("notes").insert(note, NOTE_RETURN_FIELDS);
   return newNote[0];
 };
 
 // eslint-disable-next-line camelcase
 export const editNote = async (id: string, note: Partial<Omit<NoteBackend, keyof BaseFieldsBackend>>) => {
-  const updatedNote = await db("notes")
-    .where("id", id)
-    .update(note, ["id", "title", "description", "created_at", "updated_at", "user_id"]);
+  const updatedNote = await db("notes").where("id", id).update(note, NOTE_RETURN_FIELDS);
   return updatedNote[0];
 };
 
