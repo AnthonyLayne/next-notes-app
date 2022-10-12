@@ -11,6 +11,7 @@ import {
   notFoundResponse,
   serverErrorResponse,
   signJwt,
+  STANDARD_USER_BACK_TO_FRONT_CONVERSION,
   successResponse,
   SuccessResponse,
 } from "utils/api";
@@ -38,7 +39,10 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
         const backendUser = await getById(jwtInfo.uid);
         if (!backendUser) return badRequestResponse(res, { error: "Bad jwt, invalid uid." }, links);
 
-        user = convertKeys<UserFrontend, Omit<UserBackend, "password">>(backendUser, { created_at: "createdAt" });
+        user = convertKeys<UserFrontend, Omit<UserBackend, "password">>(
+          backendUser,
+          STANDARD_USER_BACK_TO_FRONT_CONVERSION
+        );
 
         return successResponse(res, { user, jwt: jwtInfo.jwtToken }, links, "User has been signed up.");
       }
@@ -68,7 +72,10 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
         }
 
         const backendUser = await addUser(username, bcrypt.hashSync(password, 8));
-        user = convertKeys<UserFrontend, Omit<UserBackend, "password">>(backendUser, { created_at: "createdAt" });
+        user = convertKeys<UserFrontend, Omit<UserBackend, "password">>(
+          backendUser,
+          STANDARD_USER_BACK_TO_FRONT_CONVERSION
+        );
         return successResponse(res, { user, jwt: signJwt(user.id) }, links, "User has been signed up.");
       }
     }
@@ -83,7 +90,10 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
           const validPass = await bcrypt.compare(password, hashedPass);
 
           if (validPass) {
-            user = convertKeys<UserFrontend, Omit<UserBackend, "password">>(backendUser, { created_at: "createdAt" });
+            user = convertKeys<UserFrontend, Omit<UserBackend, "password">>(
+              backendUser,
+              STANDARD_USER_BACK_TO_FRONT_CONVERSION
+            );
 
             if (user) {
               return successResponse(res, { user, jwt: signJwt(user.id) }, links, "Success");

@@ -12,6 +12,8 @@ import {
   serverErrorResponse,
   successResponse,
   SuccessResponse,
+  STANDARD_NOTE_BACK_TO_FRONT_CONVERSION,
+  STANDARD_NOTE_FRONT_TO_BACK_CONVERSION,
 } from "utils/api";
 import { validateFields } from "utils/format";
 
@@ -52,21 +54,20 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
       }
 
       if (title || description) {
-        const noteConvert = convertKeys<NoteBackend, Partial<PutNoteBody>>(reqBodyPut, {
-          archivedAt: "archived_at",
-          deletedAt: "deleted_at",
-        });
+        const noteConvert = convertKeys<NoteBackend, Partial<PutNoteBody>>(
+          reqBodyPut,
+          STANDARD_NOTE_FRONT_TO_BACK_CONVERSION
+        );
 
         /* eslint-disable camelcase */
         const { archived_at, deleted_at } = noteConvert;
         const backendNote: Partial<NoteBackend> = await editNote(id, { title, description, archived_at, deleted_at });
         /* eslint-enable camelcase */
 
-        const frontendNote = convertKeys<NoteFrontend, Partial<NoteBackend>>(backendNote, {
-          created_at: "createdAt",
-          updated_at: "updatedAt",
-          user_id: "userId",
-        });
+        const frontendNote = convertKeys<NoteFrontend, Partial<NoteBackend>>(
+          backendNote,
+          STANDARD_NOTE_BACK_TO_FRONT_CONVERSION
+        );
 
         // eslint-disable-next-line camelcase
         if (!frontendNote) return notFoundResponse(res, links, `No note found for note: ${id}`);

@@ -12,6 +12,7 @@ import {
   serverErrorResponse,
   successResponse,
   SuccessResponse,
+  STANDARD_NOTE_BACK_TO_FRONT_CONVERSION,
 } from "utils/api";
 // import { validateFields } from "utils/format";
 
@@ -46,13 +47,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
         const notes = await getAllNotesById(id);
 
         const frontNotes = notes.map((note) =>
-          convertKeys<NoteFrontend, NoteBackend>(note, {
-            created_at: "createdAt",
-            updated_at: "updatedAt",
-            archived_at: "archivedAt",
-            deleted_at: "deletedAt",
-            user_id: "userId",
-          })
+          convertKeys<NoteFrontend, NoteBackend>(note, STANDARD_NOTE_BACK_TO_FRONT_CONVERSION)
         );
 
         return successResponse(res, frontNotes || [], links, `Fetched notes`);

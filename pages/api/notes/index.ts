@@ -11,6 +11,8 @@ import {
   serverErrorResponse,
   successResponse,
   SuccessResponse,
+  STANDARD_NOTE_BACK_TO_FRONT_CONVERSION,
+  STANDARD_NOTE_FRONT_TO_BACK_CONVERSION,
 } from "utils/api";
 
 // Utils
@@ -30,11 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
 
   const { title, description, userId } = reqBody;
 
-  const noteConvert = convertKeys<NoteBackend, Partial<PostNoteBody>>(reqBody, {
-    userId: "user_id",
-    archivedAt: "archived_at",
-    deletedAt: "deleted_at",
-  });
+  const noteConvert = convertKeys<NoteBackend, Partial<PostNoteBody>>(reqBody, STANDARD_NOTE_FRONT_TO_BACK_CONVERSION);
 
   try {
     const { valid, missingFields } = validateFields(reqBody, REQUIRED_FIELDS, {
@@ -55,11 +53,10 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
         const backendNote: NoteBackend = await addNote({ title, description, user_id, archived_at, deleted_at });
         /* eslint-enable camelcase */
 
-        const frontendNote = convertKeys<NoteFrontend, NoteBackend>(backendNote, {
-          created_at: "createdAt",
-          updated_at: "updatedAt",
-          user_id: "userId",
-        });
+        const frontendNote = convertKeys<NoteFrontend, NoteBackend>(
+          backendNote,
+          STANDARD_NOTE_BACK_TO_FRONT_CONVERSION
+        );
 
         return successResponse(res, frontendNote, links, "Added Note.");
       }
