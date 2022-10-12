@@ -1,9 +1,8 @@
 .wrapper {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: var(--s6);
+  padding-top: var(--s5);
 }
 
 .wrapper .content {
@@ -14,14 +13,11 @@
   min-height: 600px;
   width: min(100%, 900px);
   padding-top: var(--s3);
+  margin-bottom: var(--s5);
   box-shadow: 2px 2px 12px -3px var(--darkBlack);
 }
 
 .wrapper .content > h1 {
-  margin-bottom: var(--s1);
-}
-
-.wrapper .content > h3 {
   margin-bottom: var(--s1);
 }
 
@@ -30,7 +26,7 @@
   flex-direction: column;
   gap: var(--s2);
   width: 300px;
-  margin: var(--s3) 0;
+  margin-bottom: var(--s1);
 }
 
 .wrapper .content > form > .loginButton {
@@ -41,6 +37,16 @@
   width: 100%;
 }
 
-.wrapper .content > .signUp {
+.wrapper .content > h3 {
+  margin-top: var(--s2);
+  margin-bottom: var(--s1);
+}
+
+.wrapper .content > .error {
+  color: var(--errorColor);
+  font-size: var(--h4FontSize);
+}
+
+.wrapper .content > .link {
   color: var(--primaryColor);
 }

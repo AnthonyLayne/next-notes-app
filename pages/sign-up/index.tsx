@@ -1,4 +1,8 @@
 import { EmptyLayout } from "components/common/Layout/EmptyLayout";
-import { SignUp } from "components/pages/SignUp";
+import { Authentication } from "components/pages/Authentication";
+
+function SignUp() {
+  return <Authentication version="sign-up" />;
+}
 
 export default Object.assign(SignUp, { EmptyLayout });

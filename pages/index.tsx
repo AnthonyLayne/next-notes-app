@@ -1,7 +1,8 @@
-import { Login } from "components/pages/Login";
+import { Authentication } from "components/pages/Authentication";
+import { EmptyLayout } from "components/common/Layout/EmptyLayout";
 
-function Home() {
-  return <Login />;
+function Login() {
+  return <Authentication version="sign-in" />;
 }
 
-export default Home;
+export default Object.assign(Login, { EmptyLayout });
