@@ -1,15 +1,20 @@
 export type BaseFieldsBackend = {
   id?: number;
-  created_at?: number;
+  /** ie. 2022-10-12T00:33:42.412Z */
+  created_at?: string;
 };
 
 export type BaseFieldsFrontend = {
   id: number;
-  createdAt: number;
+  /** ie. 2022-10-12T00:33:42.412Z */
+  createdAt: string;
 };
 
 export type NoteBackend = BaseFieldsBackend & {
-  updated_at?: number;
+  /** ie. 2022-10-12T00:33:42.412Z */
+  updated_at?: string;
+  archived_at?: string;
+  deleted_at?: string;
 
   title: string;
   description: string;
@@ -23,7 +28,10 @@ export type UserBackend = BaseFieldsBackend & {
 };
 
 export type NoteFrontend = BaseFieldsFrontend & {
-  updatedAt?: number;
+  /** ie. 2022-10-12T00:33:42.412Z */
+  updatedAt?: string;
+  archivedAt?: string;
+  deletedAt?: string;
 
   title: string;
   description: string;

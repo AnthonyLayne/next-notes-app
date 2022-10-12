@@ -30,8 +30,10 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
 
   const { title, description, userId } = reqBody;
 
-  const idConvert = convertKeys<NoteBackend, Partial<PostNoteBody>>(reqBody, {
+  const noteConvert = convertKeys<NoteBackend, Partial<PostNoteBody>>(reqBody, {
     userId: "user_id",
+    archivedAt: "archived_at",
+    deletedAt: "deleted_at",
   });
 
   try {
@@ -48,10 +50,10 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
     // Necessary for TS
     if (title && description && userId) {
       if (req.method === "POST") {
-        // eslint-disable-next-line camelcase
-        const { user_id } = idConvert;
-        // eslint-disable-next-line camelcase
-        const backendNote: NoteBackend = await addNote({ title, description, user_id });
+        /* eslint-disable camelcase */
+        const { user_id, archived_at, deleted_at } = noteConvert;
+        const backendNote: NoteBackend = await addNote({ title, description, user_id, archived_at, deleted_at });
+        /* eslint-enable camelcase */
 
         const frontendNote = convertKeys<NoteFrontend, NoteBackend>(backendNote, {
           created_at: "createdAt",

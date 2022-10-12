@@ -36,6 +36,8 @@ exports.up = async function up(knex) {
 
       table.boolean("pinned");
       table.timestamp("updated_at");
+      table.timestamp("archived_at");
+      table.timestamp("deleted_at");
     })
     .then(() => knex.raw(onUpdateTrigger("notes")));
 };

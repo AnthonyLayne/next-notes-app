@@ -49,15 +49,13 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
           convertKeys<NoteFrontend, NoteBackend>(note, {
             created_at: "createdAt",
             updated_at: "updatedAt",
+            archived_at: "archivedAt",
+            deleted_at: "deletedAt",
             user_id: "userId",
           })
         );
 
-        if (frontNotes.length === 0 || !frontNotes) {
-          return notFoundResponse(res, links, `No notes found for id: ${id}`);
-        }
-
-        return successResponse(res, frontNotes, links, `Fetched notes`);
+        return successResponse(res, frontNotes || [], links, `Fetched notes`);
       }
     }
 

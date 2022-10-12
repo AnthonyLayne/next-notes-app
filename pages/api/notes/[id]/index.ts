@@ -31,6 +31,8 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
 
   try {
     if (req.method === "DELETE") {
+      // TODO: This (true delete) needs to only happen in a daily cron after 7 days
+      // TODO: Regular delete sets `deleted_at`
       await deleteNoteById(id);
 
       return successResponse(res, null, links, "Deleted note.");
@@ -50,7 +52,15 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
       }
 
       if (title || description) {
-        const backendNote: Partial<NoteBackend> = await editNote(id, { title, description });
+        const noteConvert = convertKeys<NoteBackend, Partial<PutNoteBody>>(reqBodyPut, {
+          archivedAt: "archived_at",
+          deletedAt: "deleted_at",
+        });
+
+        /* eslint-disable camelcase */
+        const { archived_at, deleted_at } = noteConvert;
+        const backendNote: Partial<NoteBackend> = await editNote(id, { title, description, archived_at, deleted_at });
+        /* eslint-enable camelcase */
 
         const frontendNote = convertKeys<NoteFrontend, Partial<NoteBackend>>(backendNote, {
           created_at: "createdAt",

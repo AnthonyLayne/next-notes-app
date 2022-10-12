@@ -40,7 +40,7 @@ export const getAllNotesById = async (userId: string) => {
 };
 
 export const addNote = async (note: NoteBackend) => {
-  const newNote = await db("notes").insert(note, ["description", "title", "id", "created_at", "user_id"]);
+  const newNote = await db("notes").insert(note, ["description", "title", "id", "created_at", "updated_at", "user_id"]);
   return newNote[0];
 };
 
@@ -48,7 +48,7 @@ export const addNote = async (note: NoteBackend) => {
 export const editNote = async (id: string, note: Partial<Omit<NoteBackend, keyof BaseFieldsBackend>>) => {
   const updatedNote = await db("notes")
     .where("id", id)
-    .update(note, ["id", "title", "description", "created_at", "user_id"]);
+    .update(note, ["id", "title", "description", "created_at", "updated_at", "user_id"]);
   return updatedNote[0];
 };
 
