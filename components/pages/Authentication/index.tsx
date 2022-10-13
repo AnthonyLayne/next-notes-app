@@ -53,8 +53,6 @@ export const Authentication = memo(({ version }: TProps) => {
         else if (password === confirmPass) await handleSignUp({ username, password });
         else setError(PASS_MATCH_ERR);
       } catch (e: unknown) {
-        // eslint-disable-next-line no-console
-        console.log((e as { response: unknown })?.response, e);
         setError(getError(e));
       }
     },
