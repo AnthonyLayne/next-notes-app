@@ -4,7 +4,7 @@
 
 ## Tech Stack
 
-Vercel, Next.js, React, Context, Typescript, CSS, Node.js, SQL, Knex, Logdrain
+Vercel, Next.js, React, Context, Typescript, CSS, Node.js, SQL, Knex, Logdrain, Cron Jobs
 
 - Designed note-taking application that allows a user to create, store, edit, and delete notes
 - Working on v2 which will add new features such as collaboration, labels, etc.
