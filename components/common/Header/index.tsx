@@ -19,7 +19,7 @@ export function Header() {
 
   return (
     <div className={styles.headerWrapper}>
-      <div>
+      <header>
         <Hamburger handleClick={toggleSidebar} isOpen={sidebarExpanded} />
 
         <h1 className={styles.noteHeader}>Hold</h1>
@@ -39,13 +39,11 @@ export function Header() {
           className={styles.search}
           input={{ type: "search" }}
         />
-      </div>
 
-      <div>
         <Button version="primary" type="button" onClick={handleSignOut}>
           Sign Out
         </Button>
-      </div>
+      </header>
     </div>
   );
 }

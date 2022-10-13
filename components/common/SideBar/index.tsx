@@ -41,7 +41,7 @@ export function SideBar() {
   // ------------------------------------------------------------------------------------------------------------------
 
   return (
-    <div
+    <nav
       className={cx(styles.sideBarWrapper, { [styles.shrink]: !sidebarExpanded && !temporarilyExpanded })}
       style={{ "--shrinkWidth": shrinkWidth }}
       onFocus={handleTemporaryExpand}
@@ -49,17 +49,21 @@ export function SideBar() {
       onMouseLeave={() => setTemporarilyExpanded(false)}
       onBlur={() => setTemporarilyExpanded(false)}
     >
-      {LINKS.map(({ href, imgSrc, name }, i) => (
-        <Link key={href} href={href}>
-          <a
-            ref={i === 0 ? linkRef : null}
-            className={cx(styles.link, { [styles.selected]: href === literalPathname })}
-          >
-            <img ref={i === 0 ? imgRef : null} src={imgSrc} alt="" />
-            {name}
-          </a>
-        </Link>
-      ))}
-    </div>
+      <ul>
+        {LINKS.map(({ href, imgSrc, name }, i) => (
+          <Link key={href} href={href}>
+            <li>
+              <a
+                ref={i === 0 ? linkRef : null}
+                className={cx(styles.link, { [styles.selected]: href === literalPathname })}
+              >
+                <img ref={i === 0 ? imgRef : null} src={imgSrc} alt="" />
+                {name}
+              </a>
+            </li>
+          </Link>
+        ))}
+      </ul>
+    </nav>
   );
 }
