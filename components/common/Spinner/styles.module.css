@@ -1,0 +1,83 @@
+.loader {
+  --spinnerspeed: 10000s;
+  --loaderSpeed: 1.25s;
+  --spinnerFillRadius: 90px;
+
+  --spinnerSize: 50px;
+  --spinnerThickness: 4px;
+  --spinnerInnerCircle: calc(var(--spinnerSize) - var(--spinnerThickness));
+
+  --innerSize: calc(var(--spinnerInnerCircle) - 10px);
+
+  --exoColorBackground: var(--darkBlack);
+  --exoColorBorder: var(--primaryColor);
+  --exoColorPage: var(--white);
+}
+
+.loader,
+.spinner {
+  border-radius: 80%;
+  display: block;
+  height: var(--spinnerSize);
+  width: var(--spinnerSize);
+  position: relative;
+}
+
+.loader {
+  animation: spin var(--loaderSpeed) linear 0s infinite normal;
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  display: block;
+  position: absolute;
+}
+
+.loader:before {
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  top: 20px;
+  left: 20px;
+  z-index: 4;
+  background-color: var(--exoColorBorder);
+}
+
+.loader:after {
+  top: 3px;
+  left: 3px;
+  border: 4px solid var(--exoColorPage);
+  border-radius: 50%;
+  height: 44px;
+  width: 44px;
+  background: var(--exoColorBackground);
+}
+
+.spinner {
+  background: var(--exoColorBorder);
+  animation: spin var(--spinnerspeed) linear 0s infinite normal;
+}
+
+.spinner:before,
+.spinner:after {
+  content: "";
+  display: block;
+  position: absolute;
+}
+
+.spinner:before {
+  border-radius: 0 var(--spinnerFillRadius) var(--spinnerFillRadius) 0;
+  height: var(--spinnerSize);
+  width: 50%;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  background-image: linear-gradient(var(--exoColorPage), var(--exoColorBorder));
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

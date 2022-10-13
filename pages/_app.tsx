@@ -10,6 +10,7 @@ import { SidebarContextProviderComponent } from "context/sidebarContext";
 
 // Components
 import { EmptyLayout } from "components/common/Layout/EmptyLayout";
+import { Spinner } from "components/common/Spinner";
 
 // Hooks
 import { usePageTitle } from "hooks/usePageTitle";
@@ -18,6 +19,8 @@ import { useRouting } from "hooks/useRouting";
 // Types
 import { TProps as LayoutProps } from "components/common/Layout";
 
+// Styles
+import styles from "./app.module.css";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/index.css";
 
@@ -49,7 +52,13 @@ function NotesApp({ Component, pageProps, router }: AppProps) {
     }
   }, [initiallyLoading]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className={styles.loadingPage}>
+        <Spinner />
+      </div>
+    );
+  }
   // ------------------------------------------------------------------------------------------------------------------
 
   return (
