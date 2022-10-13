@@ -110,6 +110,8 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
 
     return notFoundResponse(res, links, "Only PUT, POST requests available");
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err);
     return serverErrorResponse(res, err as Error, links);
   }
 };
