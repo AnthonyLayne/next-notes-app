@@ -62,7 +62,7 @@ export const editNote = async (id: string, note: Partial<Omit<NoteBackend, keyof
 };
 
 // eslint-disable-next-line camelcase
-export const deleteNoteById = async (id: string) => {
-  await db("notes").where("id", id).del();
+export const deleteNoteByDeletedAt = async (deleted_at: string) => {
+  await db("notes").where("deleted_at", deleted_at).del();
 };
 // --------------------------------------------------------------------------------------------------------------------

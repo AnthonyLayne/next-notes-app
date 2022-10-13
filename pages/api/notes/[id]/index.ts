@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 // Services
-import { editNote, deleteNoteById } from "services/knex";
+import { editNote } from "services/knex";
 
 // Utils
 import {
@@ -32,13 +32,13 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
   const { links } = await apiInit(req, res);
 
   try {
-    if (req.method === "DELETE") {
-      // TODO: This (true delete) needs to only happen in a daily cron after 7 days
-      // TODO: Regular delete sets `deleted_at`
-      await deleteNoteById(id);
+    // if (req.method === "DELETE") {
+    //   // TODO: This (true delete) needs to only happen in a daily cron after 7 days
+    //   // TODO: Regular delete sets `deleted_at`
+    //   await deleteNoteById(id);
 
-      return successResponse(res, null, links, "Deleted note.");
-    }
+    //   return successResponse(res, null, links, "Deleted note.");
+    // }
 
     if (req.method === "PUT") {
       const { title, description } = reqBodyPut;
@@ -76,7 +76,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
       }
     }
 
-    return notFoundResponse(res, links, "Only PUT, DELETE requests available");
+    return notFoundResponse(res, links, "Only PUT requests available");
   } catch (error) {
     return serverErrorResponse(res, error as Error, links);
   }
