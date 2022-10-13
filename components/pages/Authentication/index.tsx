@@ -56,7 +56,7 @@ export const Authentication = memo(({ version }: TProps) => {
         setError(getError(e));
       }
     },
-    [version, handleSignIn, handleSignUp, username, password]
+    [version, handleSignIn, handleSignUp, username, password, confirmPass]
   );
 
   return (
