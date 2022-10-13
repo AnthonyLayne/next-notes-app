@@ -24,7 +24,7 @@ import styles from "./app.module.css";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/index.css";
 
-const MIN_LOAD_TIME_MS = 500;
+const MIN_LOAD_TIME_MS = 750;
 
 type ComponentWithLayout = AppProps["Component"] & { Layout?: FC<LayoutProps> };
 
