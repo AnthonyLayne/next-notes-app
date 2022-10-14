@@ -18,11 +18,11 @@ export function Header() {
   const { searchString, setSearchString } = useNotesContext();
 
   return (
-    <div className={styles.headerWrapper}>
-      <header>
+    <header className={styles.headerWrapper}>
+      <div>
         <Hamburger handleClick={toggleSidebar} isOpen={sidebarExpanded} />
 
-        <h1 className={styles.noteHeader}>Hold</h1>
+        <h1 className={styles.notediv}>Hold</h1>
 
         <Link href="/notes?noteId=0">
           <a className={styles.newButton}>
@@ -39,12 +39,12 @@ export function Header() {
           className={styles.search}
           input={{ type: "search" }}
         />
-      </header>
-      <header>
+      </div>
+      <div>
         <Button version="primary" type="button" onClick={handleSignOut}>
           Sign Out
         </Button>
-      </header>
-    </div>
+      </div>
+    </header>
   );
 }
