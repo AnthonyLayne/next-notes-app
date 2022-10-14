@@ -39,7 +39,8 @@ export function Header() {
           className={styles.search}
           input={{ type: "search" }}
         />
-
+      </header>
+      <header>
         <Button version="primary" type="button" onClick={handleSignOut}>
           Sign Out
         </Button>
