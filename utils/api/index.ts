@@ -11,7 +11,7 @@ import { milliseconds, days } from "utils/time";
 // Types
 import { Links, ApiBadRequestResponse, ApiErrorResponse, ServerResponseError, JwtForm } from "./types";
 
-export const CRON_KEY = getEnvVar("CRON_KEY");
+// export const CRON_KEY = getEnvVar("CRON_KEY");
 
 export const STANDARD_NOTE_FRONT_TO_BACK_CONVERSION = {
   createdAt: "created_at",

@@ -17,7 +17,7 @@ import {
   SuccessResponse,
   //   STANDARD_NOTE_BACK_TO_FRONT_CONVERSION,
   //   STANDARD_NOTE_FRONT_TO_BACK_CONVERSION,
-  CRON_KEY,
+  // CRON_KEY,
 } from "utils/api";
 // import { validateFields } from "utils/format";
 
@@ -31,12 +31,12 @@ export type PutNoteBody = Omit<NoteFrontend, "createdAt" | "userId">;
 export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<Nullable<NoteFrontend>>>) => {
   //   const reqBodyPut = req.body as Partial<PutNoteBody>;
 
-  const { cronKey } = req.query as { cronKey: string };
+  // const { cronKey } = req.query as { cronKey: string };
 
   const { links } = await apiInit(req, res);
 
   try {
-    if (req.method === "DELETE" && cronKey === CRON_KEY) {
+    if (req.method === "DELETE") {
       // TODO: This (true delete) needs to only happen in a daily cron after 7 days
       // TODO: Regular delete sets `deleted_at`
       //   await deleteNoteById(id);
