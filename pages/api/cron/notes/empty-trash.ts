@@ -6,7 +6,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 //   deleteNoteById,
 // } from "services/knex";
 
-// Utils
+// Helpers
 import {
   apiInit,
   //   badRequestResponse,
@@ -17,6 +17,7 @@ import {
   SuccessResponse,
   //   STANDARD_NOTE_BACK_TO_FRONT_CONVERSION,
   //   STANDARD_NOTE_FRONT_TO_BACK_CONVERSION,
+  CRON_KEY,
 } from "utils/api";
 // import { validateFields } from "utils/format";
 
@@ -33,8 +34,6 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
   const { cronKey } = req.query as { cronKey: string };
 
   const { links } = await apiInit(req, res);
-
-  const CRON_KEY = "add to .env";
 
   try {
     if (req.method === "DELETE" && cronKey === CRON_KEY) {
