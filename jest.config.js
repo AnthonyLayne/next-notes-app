@@ -1,21 +1,3 @@
-// const config = {
-//   verbose: true,
-// };
-
-// module.exports = config;
-
-// module.exports = {
-//   testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.next/"],
-//   setupFilesAfterEnv: ["<rootDir>/setupTests.js"],
-//   moduleNameMapper: {
-//     "/^.+.(css|sass|scss)$/": "identity-obj-proxy",
-//   },
-//   transform: {
-//     "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-//     "/^.+.(css|less|scss|sass)$/": "identity-obj-proxy",
-//   },
-// };
-
 const nextJest = require("next/jest");
 
 const createJestConfig = nextJest({
