@@ -99,16 +99,16 @@ export default async (req: NextApiRequest, res: NextApiResponse<SuccessResponse<
               return successResponse(res, { user, jwt: signJwt(user.id) }, links, "Success");
             }
           } else {
-            const badCreds = "Username or Password is incorrect.";
+            const badCreds = "Password is incorrect.";
 
-            return badRequestResponse(res, { badCreds }, links, badCreds);
+            return badRequestResponse(res, { badCreds }, links, badCreds, 403);
           }
         }
         return notFoundResponse(res, links, "Username not found.");
       }
     }
 
-    return notFoundResponse(res, links, "Only PUT, POST requests available");
+    return notFoundResponse(res, links, "Only GET, PUT, POST requests available");
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err);
