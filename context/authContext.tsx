@@ -13,7 +13,7 @@ import { isDev } from "utils/isDev";
 import { UserFrontend } from "services/knex/types";
 import { AuthUser, AuthResponse } from "pages/api/auth";
 
-const getApiAxiosInstance = (jwt: Maybe<Nullable<string>>) => {
+export const getApiAxiosInstance = (jwt: Maybe<Nullable<string>>) => {
   const apiInstance = axios.create({
     baseURL: isDev() ? "http://localhost:3000/api" : "https://next-notes-app-eta.vercel.app/api",
     headers: {
