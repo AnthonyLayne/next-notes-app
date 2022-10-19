@@ -14,7 +14,7 @@
     "rollback": "knex migrate:rollback",
     "reset": "knex migrate:rollback && knex migrate:latest && knex seed:run",
     "seed": "knex seed:run",
-    "test": "jest"
+    "test": "jest --watch"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
