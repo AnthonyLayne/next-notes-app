@@ -79,9 +79,10 @@ export const badRequestResponse = (
   res: NextApiResponse,
   errors: object,
   links: Links,
-  message: string = "Invalid API Request"
+  message: string = "Invalid API Request",
+  status: number = 400
 ) =>
-  res.status(400).send(
+  res.status(status).send(
     JSON.stringify({
       links,
       success: false,
