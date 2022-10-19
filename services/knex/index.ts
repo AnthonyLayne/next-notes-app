@@ -10,8 +10,12 @@ const db: Knex = getKnex();
 
 // ---- Users ---------------------------------------------------------------------------------------------------------
 export const getByUsername = async (username: string) => {
-  const name = await db("users").where("username", username);
-  return name[0] as Maybe<UserBackend>;
+  const users = await db("users").where("username", username);
+  const user = users[0] as Maybe<Optional<UserBackend, "password">>;
+  if (!user) return undefined;
+
+  delete user.password;
+  return user as Maybe<Omit<UserBackend, "password">>;
 };
 
 export const getById = async (id: number) => {
