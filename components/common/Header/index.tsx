@@ -41,7 +41,7 @@ export function Header() {
         />
       </div>
       <div>
-        <Button version="primary" type="button" onClick={handleSignOut}>
+        <Button className={styles.signOut} version="primary" type="button" onClick={handleSignOut}>
           Sign Out
         </Button>
       </div>

@@ -5,12 +5,14 @@ import cx from "classnames";
 
 // Context
 import { useSidebarContext } from "context/sidebarContext";
+import { useAuthContext } from "context/authContext";
 
 // Helpers
 import { getCSSNumberProperty } from "styles/utils";
 
 // Styles
 import styles from "./styles.module.css";
+import { Button } from "../Button";
 
 const LINKS = [
   { href: "/notes", imgSrc: "/icons/filled-note.svg", name: "Notes" },
@@ -22,6 +24,7 @@ export function SideBar() {
   const { pathname, query } = useRouter();
   const literalPathname = pathname.replace("[category]", query.category as string);
 
+  const { handleSignOut } = useAuthContext();
   const { sidebarExpanded } = useSidebarContext();
   const [temporarilyExpanded, setTemporarilyExpanded] = useState(false);
 
@@ -39,10 +42,16 @@ export function SideBar() {
     setShrinkWidth(`${linkPadding * 2 + imgWidth}px`);
   }, [sidebarExpanded, temporarilyExpanded]);
   // ------------------------------------------------------------------------------------------------------------------
+  const width = window.innerWidth;
+  const mobileWidth = width <= 701;
 
   return (
     <nav
-      className={cx(styles.sideBarWrapper, { [styles.shrink]: !sidebarExpanded && !temporarilyExpanded })}
+      className={
+        !mobileWidth
+          ? cx(styles.sideBarWrapper, { [styles.shrink]: !sidebarExpanded && !temporarilyExpanded })
+          : cx(styles.sideBarWrapper, { [styles.open]: sidebarExpanded })
+      }
       style={{ "--shrinkWidth": shrinkWidth }}
       onFocus={handleTemporaryExpand}
       onMouseOver={handleTemporaryExpand}
@@ -63,6 +72,10 @@ export function SideBar() {
             </li>
           </Link>
         ))}
+
+        <Button className={styles.signOut} version="primary" type="button" onClick={handleSignOut}>
+          Sign Out
+        </Button>
       </ul>
     </nav>
   );

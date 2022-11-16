@@ -7,6 +7,10 @@
   transition: width var(--standardTransitionTime);
 }
 
+.sideBarWrapper .signOut {
+  visibility: hidden;
+}
+
 .sideBarWrapper.shrink {
   width: var(--shrinkWidth);
 }
@@ -20,6 +24,7 @@
   overflow: hidden;
   padding: var(--s1) 0;
   padding-left: var(--s2);
+  cursor: pointer;
 
   transition: background-color var(--standardTransitionTime), border-radius var(--standardTransitionTime);
 }
@@ -49,3 +54,49 @@
   min-width: var(--s3);
   width: var(--s3);
 }
+
+@media (max-width: 700px) {
+  .sideBarWrapper {
+    visibility: hidden;
+    position: absolute;
+    margin-top: var(--headerHeight);
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background-color: var(--lightGray);
+    z-index: 1;
+    transition: transform var(--standardTransitionTime);
+    transform: translateX(-100%);
+  }
+  .sideBarWrapper.open {
+    visibility: visible;
+    transform: translateX(0%);
+  }
+
+  .sideBarWrapper .signOut {
+    visibility: visible;
+  }
+
+  .sideBarWrapper > ul .link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    font-weight: var(--bold);
+    overflow: hidden;
+    padding: var(--s1) 0;
+    padding-left: var(--s2);
+  }
+  .sideBarWrapper > ul .link.selected {
+    background-color: var(--primaryColorTransparent);
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+  }
+}
+
+/* @media (min-width: (700px + 1)) {
+  .mobile {
+    /* display: none !important; */
+/* } */
+/* } */
