@@ -37,6 +37,11 @@ export function NotesList() {
             </Link>
           ))}
         </div>
+        <Link href="/notes?noteId=0">
+          <a className={styles.newButton}>
+            <img src="/icons/new-note.svg" alt="" />
+          </a>
+        </Link>
       </div>
     </>
   );

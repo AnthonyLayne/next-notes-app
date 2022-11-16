@@ -58,15 +58,7 @@
   }
 
   .headerWrapper > div:nth-of-type(1) {
-    flex: 2;
-  }
-
-  .headerWrapper > div:nth-of-type(2) {
-    flex: 1;
-    justify-content: flex-end;
-  }
-  .headerWrapper .search {
-    flex: 1;
+    flex: auto;
   }
 
   .headerWrapper .search input {
@@ -74,11 +66,11 @@
   }
 
   .headerWrapper .newButton > img {
-    width: var(--s3);
+    visibility: hidden;
   }
 
   .headerWrapper .newButton {
-    display: flex;
+    visibility: hidden;
   }
 
   .headerWrapper .signOut {
